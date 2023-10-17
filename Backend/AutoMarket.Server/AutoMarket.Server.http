@@ -1,0 +1,6 @@
+@AutoMarket.Server_HostAddress = http://localhost:5052
+
+GET {{AutoMarket.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
