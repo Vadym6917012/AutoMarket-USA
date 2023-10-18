@@ -1,10 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AutoMarket.Server.Core
 {
@@ -17,6 +12,7 @@ namespace AutoMarket.Server.Core
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Seed();
             base.OnModelCreating(builder);
 
             builder.Entity<Car>()

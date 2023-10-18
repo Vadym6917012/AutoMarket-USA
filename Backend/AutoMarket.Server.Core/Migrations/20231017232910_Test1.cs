@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace AutoMarket.Server.Core.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class Test1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -384,6 +386,118 @@ namespace AutoMarket.Server.Core.Migrations
                         principalTable: "Cars",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "42eafc11-f1be-49f3-8c36-18cac92b4f78", null, "Admin", "ADMIN" },
+                    { "d6f85cad-17af-4cac-b8c3-4daf1904b07d", null, "User", "USER" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[,]
+                {
+                    { "88b97f7d-c347-438a-838d-2220d38e4f6a", 0, "220f639b-6d09-41f6-aaf5-93ae1dfa35e4", "admin@autospot.com", true, null, null, false, null, "ADMIN@AUTOSPOT.COM", "ADMIN@AUTOSPOT.COM", "AQAAAAIAAYagAAAAECYoPKTajJOkIXgNbSMxd4zGdOqo5pg6HP+VqgpFcsCMMw5D5IbBgqPahAXDf0eXcg==", null, false, "8e73d6ba-cbb9-44cd-bbbf-e4d04f9e0ac8", false, "admin@autospot.com" },
+                    { "f24fe9b7-9e3c-4edf-93e9-9292d693a57c", 0, "7bcae85d-db34-4c32-8d92-7271cb01b7eb", "user@autospot.com", true, null, null, false, null, "USER@AUTOSPOT.COM", "USER@AUTOSPOT.COM", "AQAAAAIAAYagAAAAEH1TyYCXbYK0spbkE0iK6eO5GL//gA+UB6d5acbBViEh6WT/1SQY4JKumRZnfc0Daw==", null, false, "323b43e6-11ea-448a-9877-1385cd6591d8", false, "user@autospot.com" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "BodyTypes",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Седан" },
+                    { 2, "Хетчбек" },
+                    { 3, "Мінівен" },
+                    { 4, "Купе" },
+                    { 5, "Позашляховик / Кросовер" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "FuelTypes",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Бензин" },
+                    { 2, "Газ" },
+                    { 3, "Газ метан / Бензин" },
+                    { 4, "Газ пропан-бутан / Бензин" },
+                    { 5, "Гібрид (HEV)" },
+                    { 6, "Гібрид (PHEV)" },
+                    { 7, "Дизель" },
+                    { 8, "Електро" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "GearBoxes",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Ручна / Механіка" },
+                    { 2, "Автомат" },
+                    { 3, "Типтронік" },
+                    { 4, "Робот" },
+                    { 5, "Варіатор" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Generations",
+                columns: new[] { "Id", "Name", "YearFrom", "YearTo" },
+                values: new object[,]
+                {
+                    { 1, "E39", 1995, 2000 },
+                    { 2, "E39 [restyling]", 2000, 2004 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ProducingCountries",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Німеччина" },
+                    { 2, "Японія" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[,]
+                {
+                    { "42eafc11-f1be-49f3-8c36-18cac92b4f78", "88b97f7d-c347-438a-838d-2220d38e4f6a" },
+                    { "42eafc11-f1be-49f3-8c36-18cac92b4f78", "f24fe9b7-9e3c-4edf-93e9-9292d693a57c" },
+                    { "d6f85cad-17af-4cac-b8c3-4daf1904b07d", "f24fe9b7-9e3c-4edf-93e9-9292d693a57c" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Makes",
+                columns: new[] { "Id", "Name", "ProducingCountryId" },
+                values: new object[,]
+                {
+                    { 1, "BMW", 1 },
+                    { 2, "Toyota", 2 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Models",
+                columns: new[] { "Id", "MakeId", "Name" },
+                values: new object[,]
+                {
+                    { 1, 1, "5 series" },
+                    { 2, 2, "4Runner" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ModelGeneration",
+                columns: new[] { "GenerationId", "ModelId" },
+                values: new object[,]
+                {
+                    { 1, 1 },
+                    { 2, 1 }
                 });
 
             migrationBuilder.CreateIndex(
