@@ -73,9 +73,9 @@ namespace AutoMarket.Server.Infrastructure
             await _ctx.SaveChangesAsync();
         }
 
-        public async Task<Images> GetByCarIdAsync(int id)
+        public async Task<IEnumerable<Images>> GetByCarIdAsync(int id)
         {
-            return await _ctx.Set<Images>().Where(p => p.Id == id).FindAsync();
+            return await _ctx.Set<Images>().Where(p => p.CarId == id).ToListAsync();
         }
 
         public Images GetById(int id)

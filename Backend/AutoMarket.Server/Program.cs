@@ -1,24 +1,58 @@
-using AutoMapper;
-using AutoMarket.Server.Core;
+﻿using AutoMarket.Server.Core;
 using AutoMarket.Server.Infrastructure;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectingString = builder.Configuration.GetConnectionString("AutoMarketConnection");
-// Add services to the container.
 
 builder.Services.AddDbContext<DataContext>(option =>
 {
     option.UseSqlServer(connectingString);
 });
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
+// Налаштування IdentityCore юзера
+builder.Services.AddIdentityCore<User>(option =>
+{
+    // Налаштування пароля
+    option.Password.RequiredLength = 6;
+    option.Password.RequireDigit = false;
+    option.Password.RequireLowercase = false;
+    option.Password.RequireUppercase = false;
+    option.Password.RequireNonAlphanumeric = false;
 
+    // Налаштування Email
+    option.SignIn.RequireConfirmedEmail = false;
+})
+    .AddRoles<IdentityRole>()
+    .AddRoleManager<RoleManager<IdentityRole>>()
+    .AddEntityFrameworkStores<DataContext>()
+    .AddSignInManager<SignInManager<User>>()
+    .AddUserManager<UserManager<User>>()
+    .AddDefaultTokenProviders();
+
+// Додавання авторизації використовуючи JWT
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(option =>
+{
+    option.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"])),
+        ValidIssuer = builder.Configuration["JWT:Issuer"],
+        ValidateIssuer = true,
+        ValidateAudience = false,
+    };
+});
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddAutoMapper(typeof(AppAutoMapper).Assembly);
 
+// Конфігурація Swagger
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
@@ -34,12 +68,17 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-builder.Services.AddAuthorization();
 
+
+// Додавання Identity та EF
 builder.Services.AddIdentityApiEndpoints<User>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<DataContext>();
 
+// Конфігурація маршрутизації
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
+
+// Додавання репозиторіїв з областями видимості "Scoped"
+builder.Services.AddScoped<JWTServices>();
 builder.Services.AddScoped<Repository<BodyType>>();
 builder.Services.AddScoped<ModelRepository>();
 builder.Services.AddScoped<GenerationRepository>();
@@ -51,15 +90,16 @@ builder.Services.AddScoped<Repository<Modification>>();
 builder.Services.AddScoped<CarRepository>();
 builder.Services.AddScoped<ImagesRepository>();
 
+
+// Додавання контролерів з можливістю відображення та налаштування серіалізації JSON
 builder.Services.AddControllersWithViews()
     .AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
 );
 
-
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Конфігурація конвеєра обробки HTTP-запитів
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -67,9 +107,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapIdentityApi<User>();
-
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

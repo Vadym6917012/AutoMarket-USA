@@ -19,6 +19,7 @@ namespace AutoMarket.Server.Controllers
         }
         
         [HttpGet]
+        [Route("")]
         public async Task<IEnumerable<ImagesDTO>> GetImages()
         {
             var images = await _repository.GetAllAsync();
@@ -28,13 +29,13 @@ namespace AutoMarket.Server.Controllers
         }
 
         [HttpGet]
-        [Route("{id:int}")]
-        public async Task<ImagesDTO> GetById(int id)
+        [Route("{carId:int}")]
+        public async Task<IEnumerable<ImagesDTO>> GetByCarId(int carId)
         {
-            var image = await _repository.GetByIdAsync(id);
-            var imageDTO = _mapper.Map<ImagesDTO>(image);
+            var image = await _repository.GetByCarIdAsync(carId);
+            var imageDTO = _mapper.Map<IEnumerable<ImagesDTO>>(image);
 
-            return imageDTO;
+            return imageDTO.ToList();
         }
     }
 }
