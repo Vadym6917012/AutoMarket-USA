@@ -36,6 +36,33 @@ namespace AutoMarket.Server.Core.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BodyTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Седан"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Хетчбек"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Мінівен"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Купе"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Позашляховик / Кросовер"
+                        });
                 });
 
             modelBuilder.Entity("AutoMarket.Server.Core.Car", b =>
@@ -110,6 +137,48 @@ namespace AutoMarket.Server.Core.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("FuelTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Бензин"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Газ"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Газ метан / Бензин"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Газ пропан-бутан / Бензин"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Гібрид (HEV)"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Гібрид (PHEV)"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Дизель"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Електро"
+                        });
                 });
 
             modelBuilder.Entity("AutoMarket.Server.Core.GearBoxType", b =>
@@ -126,6 +195,33 @@ namespace AutoMarket.Server.Core.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("GearBoxes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Ручна / Механіка"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Автомат"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Типтронік"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Робот"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Варіатор"
+                        });
                 });
 
             modelBuilder.Entity("AutoMarket.Server.Core.Generation", b =>
@@ -148,6 +244,22 @@ namespace AutoMarket.Server.Core.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Generations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "E39",
+                            YearFrom = 1995,
+                            YearTo = 2000
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "E39 [restyling]",
+                            YearFrom = 2000,
+                            YearTo = 2004
+                        });
                 });
 
             modelBuilder.Entity("AutoMarket.Server.Core.Images", b =>
@@ -190,6 +302,20 @@ namespace AutoMarket.Server.Core.Migrations
                     b.HasIndex("ProducingCountryId");
 
                     b.ToTable("Makes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "BMW",
+                            ProducingCountryId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Toyota",
+                            ProducingCountryId = 2
+                        });
                 });
 
             modelBuilder.Entity("AutoMarket.Server.Core.Model", b =>
@@ -211,6 +337,20 @@ namespace AutoMarket.Server.Core.Migrations
                     b.HasIndex("MakeId");
 
                     b.ToTable("Models");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            MakeId = 1,
+                            Name = "5 series"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            MakeId = 2,
+                            Name = "4Runner"
+                        });
                 });
 
             modelBuilder.Entity("AutoMarket.Server.Core.ModelGeneration", b =>
@@ -226,6 +366,18 @@ namespace AutoMarket.Server.Core.Migrations
                     b.HasIndex("GenerationId");
 
                     b.ToTable("ModelGeneration");
+
+                    b.HasData(
+                        new
+                        {
+                            ModelId = 1,
+                            GenerationId = 1
+                        },
+                        new
+                        {
+                            ModelId = 1,
+                            GenerationId = 2
+                        });
                 });
 
             modelBuilder.Entity("AutoMarket.Server.Core.Modification", b =>
@@ -263,6 +415,18 @@ namespace AutoMarket.Server.Core.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProducingCountries");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Німеччина"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Японія"
+                        });
                 });
 
             modelBuilder.Entity("AutoMarket.Server.Core.User", b =>
@@ -334,6 +498,40 @@ namespace AutoMarket.Server.Core.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "88b97f7d-c347-438a-838d-2220d38e4f6a",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "220f639b-6d09-41f6-aaf5-93ae1dfa35e4",
+                            Email = "admin@autospot.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@AUTOSPOT.COM",
+                            NormalizedUserName = "ADMIN@AUTOSPOT.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAECYoPKTajJOkIXgNbSMxd4zGdOqo5pg6HP+VqgpFcsCMMw5D5IbBgqPahAXDf0eXcg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "8e73d6ba-cbb9-44cd-bbbf-e4d04f9e0ac8",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@autospot.com"
+                        },
+                        new
+                        {
+                            Id = "f24fe9b7-9e3c-4edf-93e9-9292d693a57c",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "7bcae85d-db34-4c32-8d92-7271cb01b7eb",
+                            Email = "user@autospot.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "USER@AUTOSPOT.COM",
+                            NormalizedUserName = "USER@AUTOSPOT.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEH1TyYCXbYK0spbkE0iK6eO5GL//gA+UB6d5acbBViEh6WT/1SQY4JKumRZnfc0Daw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "323b43e6-11ea-448a-9877-1385cd6591d8",
+                            TwoFactorEnabled = false,
+                            UserName = "user@autospot.com"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -361,6 +559,20 @@ namespace AutoMarket.Server.Core.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "42eafc11-f1be-49f3-8c36-18cac92b4f78",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "d6f85cad-17af-4cac-b8c3-4daf1904b07d",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -448,6 +660,23 @@ namespace AutoMarket.Server.Core.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "88b97f7d-c347-438a-838d-2220d38e4f6a",
+                            RoleId = "42eafc11-f1be-49f3-8c36-18cac92b4f78"
+                        },
+                        new
+                        {
+                            UserId = "f24fe9b7-9e3c-4edf-93e9-9292d693a57c",
+                            RoleId = "42eafc11-f1be-49f3-8c36-18cac92b4f78"
+                        },
+                        new
+                        {
+                            UserId = "f24fe9b7-9e3c-4edf-93e9-9292d693a57c",
+                            RoleId = "d6f85cad-17af-4cac-b8c3-4daf1904b07d"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

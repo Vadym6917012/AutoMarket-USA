@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AutoMarket.Server.Core
@@ -8,7 +9,7 @@ namespace AutoMarket.Server.Core
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string? ImagePath {  get; set; }
+        public string? ImagePath { get; set; }
         public int CarId {  get; set; }
         public Car? Car { get; set; }
     }
