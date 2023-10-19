@@ -76,7 +76,7 @@ namespace AutoMarket.Server.Controllers
                 return BadRequest(result.Errors);
             }
 
-            return Ok("Акаунт створено успішно");
+            return Ok(new JsonResult(new { title = "Акаунт створено успішно", message = "Ваш акаунт створено успішно, тепер можете увійти в особистий кабінет" }));
         }
 
         #region Private Helper Methods
