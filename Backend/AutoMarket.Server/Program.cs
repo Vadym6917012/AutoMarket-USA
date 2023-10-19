@@ -34,20 +34,6 @@ builder.Services.AddIdentityCore<User>(option =>
     .AddUserManager<UserManager<User>>()
     .AddDefaultTokenProviders();
 
-// Додавання авторизації використовуючи JWT
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(option =>
-{
-    option.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"])),
-        ValidIssuer = builder.Configuration["JWT:Issuer"],
-        ValidateIssuer = true,
-        ValidateAudience = false,
-    };
-});
-
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddAutoMapper(typeof(AppAutoMapper).Assembly);
@@ -97,9 +83,29 @@ builder.Services.AddControllersWithViews()
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
 );
 
+// Додавання авторизації використовуючи JWT
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(option =>
+    {
+        option.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"])),
+            ValidIssuer = builder.Configuration["JWT:Issuer"],
+            ValidateIssuer = true,
+            ValidateAudience = false,
+        };
+    });
+
+builder.Services.AddCors();
+
 var app = builder.Build();
 
 // Конфігурація конвеєра обробки HTTP-запитів
+app.UseCors(opt =>
+{
+    opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins(builder.Configuration["JWT:ClientUrl"]);
+});
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
