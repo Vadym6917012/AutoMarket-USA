@@ -12,4 +12,8 @@ export class NotificationComponent {
   message: string = '';
 
   constructor(public bsModalRef: BsModalRef) {}
+
+  logout(){
+    
+  }
 }
