@@ -1,11 +1,6 @@
 ﻿using AutoMarket.Server.Core;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AutoMarket.Server.Infrastructure
 {
@@ -28,15 +23,16 @@ namespace AutoMarket.Server.Infrastructure
 
             var existingGeneration = _ctx.Set<Generation>().FirstOrDefault(g => g.Name == generationName);
 
-            if (existingGeneration == null) 
+            if (existingGeneration == null)
             {
                 var newGeneration = new Generation { Name = generationName, YearFrom = yearFrom, YearTo = yearTo };
                 _ctx.Set<Generation>().Add(newGeneration);
                 _ctx.Entry(newGeneration).State = EntityState.Detached;
                 _ctx.SaveChanges();
-                _ctx.Set<ModelGeneration>().Add(new ModelGeneration { ModelId = entity.Id, Model = entity,  GenerationId = newGeneration.Id, Generation = newGeneration });
+                _ctx.Set<ModelGeneration>().Add(new ModelGeneration { ModelId = entity.Id, Model = entity, GenerationId = newGeneration.Id, Generation = newGeneration });
                 _ctx.SaveChanges();
-            } else
+            }
+            else
             {
                 _ctx.Set<ModelGeneration>().Add(new ModelGeneration { ModelId = entity.Id, Model = entity, GenerationId = existingGeneration.Id, Generation = existingGeneration });
                 _ctx.SaveChanges();

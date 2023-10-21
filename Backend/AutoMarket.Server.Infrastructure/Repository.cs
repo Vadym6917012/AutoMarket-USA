@@ -7,8 +7,8 @@ namespace AutoMarket.Server.Infrastructure
     public class Repository<T> : IRepository<T> where T : class
     {
         private readonly DataContext _ctx;
-        public Repository(DataContext ctx) 
-        { 
+        public Repository(DataContext ctx)
+        {
             _ctx = ctx ?? throw new ArgumentNullException(nameof(_ctx));
         }
         public async Task AddAsync(T entity)

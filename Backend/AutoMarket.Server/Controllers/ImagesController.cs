@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AutoMarket.Server.Controllers
 {
-    [Route("api/image")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ImagesController : ControllerBase
     {
@@ -17,7 +17,7 @@ namespace AutoMarket.Server.Controllers
             _repository = repository;
             _mapper = mapper;
         }
-        
+
         [HttpGet]
         [Route("")]
         public async Task<IEnumerable<ImagesDTO>> GetImages()

@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using AutoMarket.Server.Core;
 using AutoMarket.Server.Shared.DTOs;
-using Microsoft.Extensions.Configuration;
 
 namespace AutoMarket.Server.Infrastructure
 {

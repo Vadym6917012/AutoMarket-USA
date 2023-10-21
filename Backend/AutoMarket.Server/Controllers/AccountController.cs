@@ -2,13 +2,11 @@
 using AutoMarket.Server.Infrastructure;
 using AutoMarket.Server.Shared.DTOs.Account;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
-using System.Security.Policy;
 using System.Text;
 
 namespace AutoMarket.Server.Controllers
@@ -117,8 +115,8 @@ namespace AutoMarket.Server.Controllers
             try
             {
                 var decodedTokenBytes = WebEncoders.Base64UrlDecode(model.Token);
-                var decodedToken = Encoding.UTF8.GetString(decodedTokenBytes);  
-                
+                var decodedToken = Encoding.UTF8.GetString(decodedTokenBytes);
+
                 var result = await _userManager.ConfirmEmailAsync(user, decodedToken);
                 if (result.Succeeded)
                 {
@@ -254,10 +252,10 @@ namespace AutoMarket.Server.Controllers
         private async Task<bool> SendConfirmEmailAsync(User user)
         {
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token)); 
+            token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
             var url = $"{_config["JWT:ClientUrl"]}/{_config["Email:ConfirmEmailPath"]}?token={token}&email={user.Email}";
 
-            var body = $"<p>Hello: {user.FirstName} {user.LastName}</p>" + 
+            var body = $"<p>Hello: {user.FirstName} {user.LastName}</p>" +
                 "<p>Please confirm your email address by clicking on the following link.</p> +" +
                 $"<p><a href=\"{url}\">Click here</a></p>" +
                 "<p>Thank you,</p>," +

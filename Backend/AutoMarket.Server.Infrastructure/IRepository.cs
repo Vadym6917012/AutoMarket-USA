@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 
 namespace AutoMarket.Server.Infrastructure
 {
@@ -16,6 +11,6 @@ namespace AutoMarket.Server.Infrastructure
         T GetById(int id);
         Task<T> GetFirstAsync(Expression<Func<T, bool>> expression);
         Task<IEnumerable<T>> GetAllAsync();
-       
+
     }
 }
