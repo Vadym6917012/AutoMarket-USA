@@ -11,8 +11,8 @@ namespace AutoMarket.Server.Infrastructure
     {
         private readonly IConfiguration _config;
         private readonly SymmetricSecurityKey _jwtKey;
-        public JWTServices(IConfiguration config) 
-        { 
+        public JWTServices(IConfiguration config)
+        {
             _config = config;
 
             // jwt ключ викориситаний для шифрування та розшифрування jwt токенів
@@ -39,7 +39,7 @@ namespace AutoMarket.Server.Infrastructure
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var jwt = tokenHandler.CreateToken(tokenDescriptor);
-            
+
             return tokenHandler.WriteToken(jwt);
         }
     }

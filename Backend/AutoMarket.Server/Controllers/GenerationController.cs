@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AutoMarket.Server.Controllers
 {
-    [Route("api/generation")]
+    [Route("api/[controller]")]
     [ApiController]
     public class GenerationController : ControllerBase
     {

@@ -3,11 +3,10 @@ using AutoMarket.Server.Core;
 using AutoMarket.Server.Infrastructure;
 using AutoMarket.Server.Shared.DTOs;
 using Microsoft.AspNetCore.Mvc;
-using Swashbuckle;
 
 namespace AutoMarket.Server.Controllers
 {
-    [Route("api/bodytype")]
+    [Route("api/[controller]")]
     [ApiController]
     public class BodyTypeController : ControllerBase
     {
@@ -82,7 +81,7 @@ namespace AutoMarket.Server.Controllers
         {
             var existingEntity = _repository.GetById(id);
 
-            if ( existingEntity == null)
+            if (existingEntity == null)
             {
                 return NotFound();
             }

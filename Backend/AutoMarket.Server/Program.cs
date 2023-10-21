@@ -1,6 +1,5 @@
 ﻿using AutoMarket.Server.Core;
 using AutoMarket.Server.Infrastructure;
-using AutoMarket.Server.Shared.DTOs.Account;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +10,7 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 var connectingString = builder.Configuration.GetConnectionString("AutoMarketConnection");
 
+// Налаштування з`єднання до БД
 builder.Services.AddDbContext<DataContext>(option =>
 {
     option.UseSqlServer(connectingString);

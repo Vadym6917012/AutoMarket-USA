@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AutoMarket.Server.Controllers
 {
-    [Route("api/make")]
+    [Route("api/[controller]")]
     [ApiController]
     public class MakeController : ControllerBase
     {

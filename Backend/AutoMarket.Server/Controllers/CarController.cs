@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AutoMarket.Server.Controllers
 {
-    [Route("api/car")]
+    [Route("api/[controller]")]
     [ApiController]
     public class CarController : ControllerBase
     {
@@ -64,7 +64,7 @@ namespace AutoMarket.Server.Controllers
             await _repository.AddAsyncWithImages(car, images);
 
             return CreatedAtAction("GetById", new { id = car.Id }, _mapper.Map<CarDTO>(car));
-        }      
+        }
 
         [HttpPut]
         [Route("{id:int}")]

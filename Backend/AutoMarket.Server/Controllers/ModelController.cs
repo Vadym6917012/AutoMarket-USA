@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AutoMarket.Server.Controllers
 {
-    [Route("api/model")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ModelController : ControllerBase
     {
@@ -67,7 +67,7 @@ namespace AutoMarket.Server.Controllers
             var createdModelDTO = _mapper.Map<ModelDTO>(model);
 
             // Return the created product
-            return CreatedAtAction("GetById", new {id = createdModelDTO.Id}, createdModelDTO);
+            return CreatedAtAction("GetById", new { id = createdModelDTO.Id }, createdModelDTO);
         }
 
         [HttpPut]

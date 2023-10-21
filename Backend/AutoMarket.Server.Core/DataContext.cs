@@ -40,7 +40,7 @@ namespace AutoMarket.Server.Core
         public DbSet<FuelType> FuelTypes { get; set; }
         public DbSet<Model> Models { get; set; }
         public DbSet<Make> Makes { get; set; }
-        public DbSet<ProducingCountry> ProducingCountries { get; set;}
+        public DbSet<ProducingCountry> ProducingCountries { get; set; }
         public DbSet<Modification> Modifications { get; set; }
         public DbSet<Generation> Generations { get; set; }
         public DbSet<ModelGeneration> ModelGeneration { get; set; }
