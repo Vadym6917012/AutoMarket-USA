@@ -1,5 +1,6 @@
 ﻿using AutoMarket.Server.Core;
 using AutoMarket.Server.Infrastructure;
+using AutoMarket.Server.Shared.DTOs.Account;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +27,7 @@ builder.Services.AddIdentityCore<User>(option =>
     option.Password.RequireNonAlphanumeric = false;
 
     // Налаштування Email
-    option.SignIn.RequireConfirmedEmail = false;
+    option.SignIn.RequireConfirmedEmail = true;
 })
     .AddRoles<IdentityRole>()
     .AddRoleManager<RoleManager<IdentityRole>>()
@@ -55,8 +56,6 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-
-
 // Додавання Identity та EF
 builder.Services.AddIdentityApiEndpoints<User>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<DataContext>();
@@ -76,6 +75,7 @@ builder.Services.AddScoped<Repository<GearBoxType>>();
 builder.Services.AddScoped<Repository<Modification>>();
 builder.Services.AddScoped<CarRepository>();
 builder.Services.AddScoped<ImagesRepository>();
+builder.Services.AddScoped<EmailService>();
 
 
 // Додавання контролерів з можливістю відображення та налаштування серіалізації JSON
