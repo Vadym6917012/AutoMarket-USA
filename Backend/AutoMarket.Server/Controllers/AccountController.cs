@@ -51,6 +51,11 @@ namespace AutoMarket.Server.Controllers
                 return Unauthorized("Неправильне ім`я або пароль");
             }
 
+            if (user.EmailConfirmed == false)
+            {
+                return Unauthorized("Підтвердіть ваш email.");
+            }
+
             var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
             if (!result.Succeeded)
             {
