@@ -1,1 +1,29 @@
-/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+
+body {
+    line-height: 1;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 14px;
+	background: #f5f7f9;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Raleway', sans-serif;
+	margin-bottom: 10px;
+	font-weight: 600;
+}
+a {
+	transition: 0.3s ease-in-out;
+	-webkit-transition: 0.3s ease-in-out;
+	-ms-transition: 0.3s ease-in-out;
+	-moz-transition: 0.3s ease-in-out;
+}
+
+img {
+	width: 100%;
+}
+
+.wrapper {
+	padding: 50px 0;
+}
+

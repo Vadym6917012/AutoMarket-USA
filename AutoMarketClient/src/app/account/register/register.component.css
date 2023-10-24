@@ -1,0 +1,28 @@
+.form-signup {
+    background: #fff;
+	border: 1px solid #ddd;
+	padding: 25px 30px;
+}
+
+.form-signup .btn {
+    background: #5dc302;
+	color: #fff;
+    text-decoration: none;
+} 
+
+.form-signup .btn:hover {
+    background: #48da26;
+} 
+
+.registered {
+    margin-top: 30px;
+    text-align: center;
+    color: #666;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+.registered:hover {
+    color: #5dc302;
+    text-decoration: underline;
+}

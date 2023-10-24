@@ -1,10 +1,11 @@
 import { SharedService } from './../../shared/shared.service';
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../account.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { take } from 'rxjs';
 import { User } from 'src/app/shared/models/account/user';
+
 
 @Component({
   selector: 'app-register',
@@ -15,6 +16,8 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup = new FormGroup ({});
   submitted = false;
   errorMessages: string[] = [];
+
+  isTextFieldType = false;
 
   constructor(private accountService: AccountService, 
   private formBuilder: FormBuilder,
@@ -31,13 +34,18 @@ export class RegisterComponent implements OnInit {
     this.initializeForm();
   }
 
+  togglePasswordFieldType(){
+    this.isTextFieldType = !this.isTextFieldType;
+  }
+
   initializeForm() {
     this.registerForm = this.formBuilder.group({
       firstName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(15)]],
       lastName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(15)]],
       email: ['', [Validators.required, Validators.pattern('^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$')]],
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]],
-    })
+      confirmPassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]]
+    }, {validator: this.sharedService.checkingPasswords})
   }
 
   register() {
