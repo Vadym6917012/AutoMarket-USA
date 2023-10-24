@@ -15,6 +15,8 @@ export class LoginComponent implements OnInit {
   submitted = false;
   errorMessages: string[] = [];
 
+  isTextFieldType = false;
+
   constructor(private accountService: AccountService, 
     private formBuilder: FormBuilder,
     private router: Router) {
@@ -56,6 +58,10 @@ export class LoginComponent implements OnInit {
         }
       })
     }
+  }
+
+  togglePasswordFieldType(){
+    this.isTextFieldType = !this.isTextFieldType;
   }
 
   resendEmailConfirmationLink() {
