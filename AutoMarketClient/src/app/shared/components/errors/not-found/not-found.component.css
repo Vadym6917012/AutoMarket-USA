@@ -1,0 +1,35 @@
+.error-page-wrap {
+	padding: 100px 0;
+}
+
+.error-page-wrap .error-main {
+	text-align: center;
+}
+.error-page-wrap .error-main h2 {
+	font-size: 350px;
+	color: #708388;
+	font-weight: 900;
+	line-height: 350px;
+}
+.error-page-wrap .error-main h3 {
+	font-size: 40px;
+	color: #708388;
+	font-weight: 900;
+	line-height: 50px;
+	letter-spacing: 5px;
+	display: inline-block;
+	border: 5px solid #bdcfd4;
+	padding: 20px 40px;
+	margin-top: -20px;
+}
+
+.error-msg {
+	margin-top: 50px;
+}
+.error-msg p {
+	max-width: 500px;
+	margin: auto;
+	line-height: 24px;
+	font-size: 16px;
+	color: #666;
+}
