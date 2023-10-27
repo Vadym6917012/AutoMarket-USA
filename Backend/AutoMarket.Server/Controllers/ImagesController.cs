@@ -37,5 +37,20 @@ namespace AutoMarket.Server.Controllers
 
             return imageDTO.ToList();
         }
+
+        [HttpGet]
+        [Route("get-by-car-name")]
+        public ActionResult GetPhotoByName(string name)
+        {
+            var fileStream = _repository.GetPhotoByName(name);
+
+            if (fileStream != null)
+            {
+                return File(fileStream, "image/jpeg");
+            } else
+            { 
+                return NotFound(); 
+            }
+        }
     }
 }

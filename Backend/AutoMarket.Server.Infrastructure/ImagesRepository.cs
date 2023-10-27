@@ -16,7 +16,13 @@ namespace AutoMarket.Server.Infrastructure
             _hostingEnvironment = hostingEnvironment ?? throw new ArgumentNullException(nameof(_hostingEnvironment));
         }
 
-        public string AddImages(IFormFile images)
+        public async Task AddAsync(Images entities)
+        {
+            _ctx.Set<Images>().Add(entities);
+            await _ctx.SaveChangesAsync();
+        }
+
+        public string AddImagesToDirectory(IFormFile images)
         {
             if (images != null && images.Length > 0)
             {
@@ -26,7 +32,6 @@ namespace AutoMarket.Server.Infrastructure
                 if (!Directory.Exists(uploadsFolder))
                 {
                     Directory.CreateDirectory(uploadsFolder);
-
                 }
                 var filePathCombained = Path.Combine(uploadsFolder, uniqueFileName);
 
@@ -41,6 +46,17 @@ namespace AutoMarket.Server.Infrastructure
             {
                 return null;
             }
+        }
+
+        public string GetPhotoByName(string name)
+        {
+            var filePath = Path.Combine(_hostingEnvironment.WebRootPath, "User Photos", name);
+
+            if (File.Exists(filePath))
+            {
+                return filePath;
+            }
+            return null;
         }
 
         public void RemoveImages(ICollection<Images> images)
@@ -61,6 +77,7 @@ namespace AutoMarket.Server.Infrastructure
             }
         }
 
+
         public async Task DeleteAsync(Images entity)
         {
             _ctx.Set<Images>().Remove(entity);
@@ -80,6 +97,11 @@ namespace AutoMarket.Server.Infrastructure
         public async Task<IEnumerable<Images>> GetAllAsync()
         {
             return await _ctx.Set<Images>().ToListAsync();
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _ctx.SaveChangesAsync();
         }
     }
 }

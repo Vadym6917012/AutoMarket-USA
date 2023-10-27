@@ -17,35 +17,8 @@ namespace AutoMarket.Server.Infrastructure
         }
         public async Task AddAsync(Car entity)
         {
-            await _ctx.Set<Car>().AddAsync(entity);
+            _ctx.Set<Car>().AddAsync(entity);
             await _ctx.SaveChangesAsync();
-        }
-
-        public async Task AddAsyncWithImages(Car entity, List<IFormFile> images)
-        {
-            await _ctx.Set<Car>().AddAsync(entity);
-
-            Upload(entity, images);
-
-            _ctx.SaveChanges();
-        }
-
-        public void Upload(Car entity, List<IFormFile> images)
-        {
-            if (images != null)
-            {
-                foreach (var image in images)
-                {
-                    var filePath = _imagesRepository.AddImages(image);
-
-                    if (!string.IsNullOrEmpty(filePath))
-                    {
-                        var imageAdded = new Images { ImagePath = filePath, CarId = entity.Id, Car = entity };
-                        _ctx.Set<Images>().AddAsync(imageAdded);
-                        _ctx.SaveChanges();
-                    }
-                }
-            }
         }
 
         public async Task UpdateAsync(Car entity)
@@ -83,7 +56,21 @@ namespace AutoMarket.Server.Infrastructure
 
         public async Task<IEnumerable<Car>> GetAllAsync()
         {
-            return await _ctx.Set<Car>().Include(i => i.Images).ToListAsync();
+            return await _ctx.Set<Car>()
+                .Include(m => m.Model)
+                .Include(m => m.Modification)
+                .Include(b => b.BodyType)
+                .Include(g => g.GearBoxType)
+                .Include(f => f.FuelType)
+                .Include(i => i.Images)
+                .ToListAsync();
+        }
+
+        public async Task SaveChangesAsync()
+        {
+           await _ctx.SaveChangesAsync();
         }
     }
 }
+
+

@@ -1,0 +1,55 @@
+<header class="header">
+    <div class="container">
+            <div class="navbar-brand">
+                <a routerLink="/"><img src="./assets/images/logo.png" alt="logo" class="img-fluid" /></a>
+            </div>
+            <nav class="navbar navbar-expand-lg bg-light">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/" routerLinkActive="active"
+                                [routerLinkActiveOptions]="{exact:true}">Головна</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/car/car-list">Пошук авто</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Про нас</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Зв`язатися з нами</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav" *ngIf="(accountService.user$ | async) === null">
+                        <li class="nav-item auth-btn">
+                            <a class="nav-link btn" routerLink="/account/register">
+                                Реєстрація
+                            </a>
+                        </li>
+                        <li class="nav-item auth-btn">
+                            <a class="nav-link btn" routerLink="/account/login" >
+                                Вхід в кабінет
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav" *ngIf="(accountService.user$ | async) as user">
+                        <li class="nav-item dropdow">
+                            <a class="nav-link btn dropdown-toggle" data-bs-toggle="dropdown">Привіт, {{user.firstName}}</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Налаштування</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn" (click)="logout()">
+                                Вийти
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </nav>
+    </div>
+</header>

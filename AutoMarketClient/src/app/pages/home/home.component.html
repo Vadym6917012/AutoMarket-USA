@@ -1,0 +1,71 @@
+<section class="searchwrap section">
+  <div class="container">
+    <h3>Пошук б/у автомобілів в США</h3>
+    <p>Шукайте серед понад 9000 активних оголошень та розміщуйте безкоштовні необмежені оголошення!</p>
+    <div class="searchbar">
+      <div class="row">
+        <div class="col-md-6">
+          <input type="text" class="form-control" placeholder="Марка">
+        </div>
+        <div class="col-md-2">
+          <select class="form-control">
+            <option>Price</option>
+            <option>$500 - $999</option>
+            <option>$1000 - $1099</option>
+            <option>$2000 - $2499</option>
+            <option>$2500 - $2999</option>
+            <option>$3000 - $3499</option>
+            <option>$3500 - $3999</option>
+            <option>About $4000</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <select class="form-control">
+            <option>City</option>
+            <option>New York</option>
+            <option>San Joes</option>
+            <option>Atlanta</option>
+            <option>Kennesaw</option>
+            <option>Merry Land</option>
+            <option>Star City</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <input type="submit" class="btn" value="Пошук">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="fetured-cars section">
+  <div class="container">
+    <div class="top-title">
+      <h3>Пошук б/у автомобілів в США</h3>
+      <p>Шукайте серед понад 9000 активних оголошень та розміщуйте безкоштовні необмежені оголошення!</p>
+    </div>
+    <div class="carousel_cards">
+      <owl-carousel-o id="slider" [options]="customOptions">
+        <ng-container>
+          <ng-template carouselSlide>
+            <div class="home-card">
+              <div class="card-image">
+                <img src="../../../assets/images/porsche-1851246_1920.jpg" alt="">
+              </div>
+              <div class="card-heading">
+                Audi Q8 2006
+              </div>
+              <div class="card-text">
+                Audi Q8 is a full-size luxury crossover SUV coupé made by Audi that was launched in 2018.
+              </div>
+              <div class="card-text">
+                $67.400
+              </div>
+              <a routerLink="/detaiils/" class="card-button">Детальніше</a>
+            </div>
+          </ng-template>
+        </ng-container>
+      </owl-carousel-o>
+    </div>
+  </div>
+</section>

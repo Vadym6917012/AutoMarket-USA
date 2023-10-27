@@ -1,0 +1,36 @@
+<table class="table" *ngFor="let car of carInfo">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">ModelId</th>
+        <th scope="col">ModificationId</th>
+        <th scope="col">VIN</th>
+        <th scope="col">BodyTypeId</th>
+        <th scope="col">GearBoxTypeId</th>
+        <th scope="col">FuelTypeId</th>
+        <th scope="col">Year</th>
+        <th scope="col">Price</th>
+        <th scope="col">Mileage</th>
+        <th scope="col">Description</th>
+        <th scope="col">UserId</th>
+        <th scope="col">Image</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">{{car.id}}</th>
+        <th scope="row">{{car.modelName}}</th>
+        <th scope="row">{{car.modificationName}}</th>
+        <th scope="row">{{car.vin}}</th>
+        <th scope="row">{{car.bodyTypeName}}</th>
+        <th scope="row">{{car.gearBoxTypeName}}</th>
+        <th scope="row">{{car.fuelTypeName}}</th>
+        <th scope="row">{{car.year}}</th>
+        <th scope="row">{{car.price}}</th>
+        <th scope="row">{{car.mileage}}</th>
+        <th scope="row">{{car.description}}</th>
+        <th scope="row">{{car.userId}}</th>
+        <th scope="row"><img *ngFor="let image of carImages[car.id]" [src]="image.imagePathToDisplay"></th>
+      </tr>
+    </tbody>
+  </table>

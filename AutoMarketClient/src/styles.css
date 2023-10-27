@@ -12,6 +12,12 @@ h1, h2, h3, h4, h5, h6 {
 	margin-bottom: 10px;
 	font-weight: 600;
 }
+
+.section {
+	padding: 50px 0;
+	overflow: hidden;
+}
+
 a {
 	transition: 0.3s ease-in-out;
 	-webkit-transition: 0.3s ease-in-out;
@@ -25,5 +31,56 @@ img {
 
 .wrapper {
 	padding: 50px 0;
+}
+
+#slider .owl-nav div.owl-prev, 
+#slider .owl-nav div.owl-next {
+    color: #fff;
+    font-size: 18px;
+    margin-top: -20px;
+    position: absolute;
+    top: 50%;
+    text-align: center;
+    line-height: 39px;
+    opacity: 0;
+    border:1px solid #fff;
+    width: 40px;
+    height: 40px;
+}
+#slider .owl-nav div.owl-prev{
+    left: 10%;
+    -webkit-transition: 0.4s;
+    -moz-transition: 0.4s;
+    -o-transition: 0.4s;
+    -ms-transition: 0.4s;
+}
+#slider .owl-nav div.owl-next {
+    right: 10%;
+    -webkit-transition: 0.4s;
+    -moz-transition: 0.4s;
+    -o-transition: 0.4s;
+    -ms-transition: 0.4s;
+}
+#slider:hover .owl-nav div.owl-next{
+    right: 2%;
+    -webkit-transition: 0.4s;
+    -moz-transition: 0.4s;
+    -o-transition: 0.4s;
+    -ms-transition: 0.4s;
+    opacity: 1;
+}
+#slider:hover .owl-nav div.owl-prev{
+    left: 2%;
+    -webkit-transition: 0.4s;
+    -moz-transition: 0.4s;
+    -o-transition: 0.4s;
+    -ms-transition: 0.4s;
+    opacity: 1;
+}
+#slider:hover .owl-nav div.owl-next:hover,
+#slider:hover .owl-nav div.owl-prev:hover{
+    color:#fff;
+    background: #5dc302;
+    border: 1px solid #5dc302;
 }
 
