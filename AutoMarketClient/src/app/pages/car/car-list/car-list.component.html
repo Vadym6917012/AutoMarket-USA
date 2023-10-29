@@ -30,7 +30,8 @@
         <th scope="row">{{car.mileage}}</th>
         <th scope="row">{{car.description}}</th>
         <th scope="row">{{car.userId}}</th>
-        <th scope="row"><img *ngFor="let image of carImages[car.id]" [src]="image.imagePathToDisplay"></th>
+        <th scope="row"><img *ngFor="let image of car.imagesPath" [src]="image"></th>
+        <!--<th scope="row"><img *ngFor="let image of carImages[car.id]" [src]="image.imagePathToDisplay"></th>-->
       </tr>
     </tbody>
   </table>

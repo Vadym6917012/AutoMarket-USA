@@ -1,0 +1,15 @@
+.footer-brand {
+    width: 190px;
+    text-decoration: none;
+}
+
+.copyright {
+    text-align: center;
+    text-decoration: none;
+    padding: 20px 0;
+}
+
+.copyright a {
+    color: black;
+    text-decoration: none;
+}

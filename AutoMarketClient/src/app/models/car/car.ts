@@ -11,4 +11,5 @@ export interface Car {
     mileage: number;
     description: string;
     userId: string;
+    imagesPath: string[];
 }
