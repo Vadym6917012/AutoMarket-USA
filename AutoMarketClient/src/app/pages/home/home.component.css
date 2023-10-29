@@ -93,6 +93,11 @@
 	border-radius: 8px 8px 0px 0;
 }
 
+.card-image img:hover {
+	-webkit-transform: scale(1);
+	transform: scale(1);
+}
+
 .card-heading {
 	font-size: 18px;
 	font-weight: bold;
