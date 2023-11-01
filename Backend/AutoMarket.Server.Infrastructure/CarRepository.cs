@@ -59,6 +59,7 @@ namespace AutoMarket.Server.Infrastructure
             return await _ctx.Set<Car>()
                 .Include(m => m.Model)
                 .Include(m => m.Modification)
+                .Include(g => g.Generation)
                 .Include(b => b.BodyType)
                 .Include(g => g.GearBoxType)
                 .Include(f => f.FuelType)

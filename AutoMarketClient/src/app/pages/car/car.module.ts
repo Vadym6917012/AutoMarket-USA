@@ -1,17 +1,23 @@
+import { FormsModule } from '@angular/forms';
 import { SharedModule } from './../../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CarListComponent } from './car-list/car-list.component';
 import { CarRoutingModule } from './car-routing.module';
+import { CarAddComponent } from './car-add/car-add.component';
+import { CarDetailsComponent } from './car-details/car-details.component';
 
 @NgModule({
   declarations: [
-    CarListComponent
+    CarListComponent,
+    CarAddComponent,
+    CarDetailsComponent
   ],
   imports: [
     CommonModule,
     CarRoutingModule,
-    SharedModule
+    SharedModule,
+    FormsModule
   ]
 })
 export class CarModule { }

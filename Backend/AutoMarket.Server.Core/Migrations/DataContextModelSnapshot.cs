@@ -85,6 +85,9 @@ namespace AutoMarket.Server.Core.Migrations
                     b.Property<int>("GearBoxTypeId")
                         .HasColumnType("int");
 
+                    b.Property<int>("GenerationId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Mileage")
                         .HasColumnType("int");
 
@@ -113,6 +116,8 @@ namespace AutoMarket.Server.Core.Migrations
                     b.HasIndex("FuelTypeId");
 
                     b.HasIndex("GearBoxTypeId");
+
+                    b.HasIndex("GenerationId");
 
                     b.HasIndex("ModelId");
 
@@ -402,6 +407,20 @@ namespace AutoMarket.Server.Core.Migrations
                     b.HasIndex("ModelId");
 
                     b.ToTable("Modifications");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ModelId = 1,
+                            Name = "520i AT (150 hp)"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ModelId = 1,
+                            Name = "520i MT (150 hp)"
+                        });
                 });
 
             modelBuilder.Entity("AutoMarket.Server.Core.ProducingCountry", b =>
@@ -505,33 +524,33 @@ namespace AutoMarket.Server.Core.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "26a4b801-1cc6-4810-8ac0-0cf05ce04951",
+                            Id = "185eb234-8154-483e-a7dc-7cbd7697ee7c",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "829724cd-a4d6-4def-8fae-ce8ed92fc0e0",
+                            ConcurrencyStamp = "5382a1a4-ce65-4c02-a11d-c3fbdd80ac23",
                             Email = "admin@autospot.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@AUTOSPOT.COM",
                             NormalizedUserName = "ADMIN@AUTOSPOT.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBz3y8AKJOExcyutAlTFT+Kqb8cItDZpkCWZqp7xBQW9hAskjjUpnyqyYW+hJaLVGA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEF+8F4mqFiW7C7hNqFjBda8NXIVANdeAA8kg3tAx2Cth2rkquNFax6gIHSEztLjGpA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c82c2ffb-d3ee-43fc-bb0a-a6a34d3b7072",
+                            SecurityStamp = "80b8579f-8ad1-4bcf-bf2b-328e28e1781c",
                             TwoFactorEnabled = false,
                             UserName = "admin@autospot.com"
                         },
                         new
                         {
-                            Id = "32439914-c414-4375-bb6d-88eddfc04376",
+                            Id = "350f07f1-3aac-43c5-9f9a-50abe0021ed4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9fbf5a65-1209-4ea0-bf4e-837feb049be3",
+                            ConcurrencyStamp = "4f30e31d-d77a-441e-b895-b3f258fa24ed",
                             Email = "user@autospot.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@AUTOSPOT.COM",
                             NormalizedUserName = "USER@AUTOSPOT.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOU3jTyZviFsCYwZcw11OjHde9xY4enf7J9Y8RhXQcM20LQ751WeiDRo7mdr/sfp6w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJwnbzf9mtg3ahJKIReVgIblemmvXCIZ0vaT6WPzAWHmmRtLforItiMucKEyrojYTQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7b134f4b-0a3b-40a8-aaf4-31d980a354ec",
+                            SecurityStamp = "94225162-998b-4ac4-a47c-27f7e1ac8618",
                             TwoFactorEnabled = false,
                             UserName = "user@autospot.com"
                         });
@@ -566,13 +585,13 @@ namespace AutoMarket.Server.Core.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "5163ea3d-50a4-4f0f-8b16-ba60df61a9ed",
+                            Id = "a8865224-cb31-4b5f-9a42-f68601d73c5d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "40bca976-415a-4db0-a65f-aedbb14532e2",
+                            Id = "ff8968ba-6759-4f60-8a56-7d7790f64e05",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -667,18 +686,18 @@ namespace AutoMarket.Server.Core.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "26a4b801-1cc6-4810-8ac0-0cf05ce04951",
-                            RoleId = "5163ea3d-50a4-4f0f-8b16-ba60df61a9ed"
+                            UserId = "185eb234-8154-483e-a7dc-7cbd7697ee7c",
+                            RoleId = "a8865224-cb31-4b5f-9a42-f68601d73c5d"
                         },
                         new
                         {
-                            UserId = "32439914-c414-4375-bb6d-88eddfc04376",
-                            RoleId = "5163ea3d-50a4-4f0f-8b16-ba60df61a9ed"
+                            UserId = "350f07f1-3aac-43c5-9f9a-50abe0021ed4",
+                            RoleId = "a8865224-cb31-4b5f-9a42-f68601d73c5d"
                         },
                         new
                         {
-                            UserId = "32439914-c414-4375-bb6d-88eddfc04376",
-                            RoleId = "40bca976-415a-4db0-a65f-aedbb14532e2"
+                            UserId = "350f07f1-3aac-43c5-9f9a-50abe0021ed4",
+                            RoleId = "ff8968ba-6759-4f60-8a56-7d7790f64e05"
                         });
                 });
 
@@ -721,6 +740,12 @@ namespace AutoMarket.Server.Core.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("AutoMarket.Server.Core.Generation", "Generation")
+                        .WithMany("Cars")
+                        .HasForeignKey("GenerationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("AutoMarket.Server.Core.Model", "Model")
                         .WithMany("Cars")
                         .HasForeignKey("ModelId")
@@ -741,6 +766,8 @@ namespace AutoMarket.Server.Core.Migrations
                     b.Navigation("FuelType");
 
                     b.Navigation("GearBoxType");
+
+                    b.Navigation("Generation");
 
                     b.Navigation("Model");
 
@@ -885,6 +912,8 @@ namespace AutoMarket.Server.Core.Migrations
 
             modelBuilder.Entity("AutoMarket.Server.Core.Generation", b =>
                 {
+                    b.Navigation("Cars");
+
                     b.Navigation("ModelGenerations");
                 });
 

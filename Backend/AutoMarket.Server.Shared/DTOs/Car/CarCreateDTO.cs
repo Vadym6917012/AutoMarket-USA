@@ -8,7 +8,9 @@ namespace AutoMarket.Server.Shared.DTOs.Car
 {
     public class CarCreateDTO
     {
+        public int Id {  get; set; }
         public int ModelId { get; set; }
+        public int GenerationId { get; set; }
         public int ModificationId { get; set; }
         public string? VIN { get; set; }
         public int BodyTypeId { get; set; }

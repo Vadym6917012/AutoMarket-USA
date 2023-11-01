@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CarListComponent } from './car-list/car-list.component';
 import { RouterModule, Routes } from '@angular/router';
+import { CarAddComponent } from './car-add/car-add.component';
 
 const routes: Routes = [
-  {path: 'car-list', component: CarListComponent},
+  { path: 'car-list', component: CarListComponent },
+  { path: 'car-add', component: CarAddComponent }
 
 ]
 

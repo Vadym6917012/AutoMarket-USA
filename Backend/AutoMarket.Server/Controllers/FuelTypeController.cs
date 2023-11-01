@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using AutoMarket.Server.Core;
 using AutoMarket.Server.Infrastructure;
-using AutoMarket.Server.Shared.DTOs;
+using AutoMarket.Server.Shared.DTOs.FuelType;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AutoMarket.Server.Controllers

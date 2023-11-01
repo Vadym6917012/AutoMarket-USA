@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Car } from 'src/app/models/car/car';
-import { Image } from 'src/app/models/image/image';
+import { Image } from 'src/app/models/photos/image';
 import { CarService } from 'src/app/services/car.service';
 import { ImageService } from 'src/app/services/image.service';
 

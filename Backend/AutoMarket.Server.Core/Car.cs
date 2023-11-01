@@ -9,6 +9,7 @@ namespace AutoMarket.Server.Core
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int ModelId { get; set; }
+        public int GenerationId { get; set; }
         public int ModificationId { get; set; }
         public string? VIN { get; set; }
         public int BodyTypeId { get; set; }
@@ -22,6 +23,7 @@ namespace AutoMarket.Server.Core
 
 
         public Model? Model { get; set; }
+        public Generation? Generation { get; set; }
         public Modification? Modification { get; set; }
         public BodyType? BodyType { get; set; }
         public GearBoxType? GearBoxType { get; set; }

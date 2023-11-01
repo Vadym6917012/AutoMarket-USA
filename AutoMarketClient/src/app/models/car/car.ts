@@ -1,6 +1,7 @@
 export interface Car {
     id: number;
     modelName: string;
+    generationName: string;
     modificationName: string;
     vin: string;
     bodyTypeName: string;
