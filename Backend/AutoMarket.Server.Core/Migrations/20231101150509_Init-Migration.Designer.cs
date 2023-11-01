@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AutoMarket.Server.Core.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231101120144_Init-Migration")]
+    [Migration("20231101150509_Init-Migration")]
     partial class InitMigration
     {
         /// <inheritdoc />
@@ -465,6 +465,9 @@ namespace AutoMarket.Server.Core.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
