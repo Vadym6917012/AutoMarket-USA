@@ -1,4 +1,5 @@
-﻿using AutoMarket.Server.Core;
+﻿using AutoMarket.Server;
+using AutoMarket.Server.Core;
 using AutoMarket.Server.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -77,6 +79,7 @@ builder.Services.AddScoped<CarRepository>();
 builder.Services.AddScoped<ImagesRepository>();
 builder.Services.AddScoped<EmailService>();
 builder.Services.AddScoped<ProducingCountryRepository>();
+builder.Services.AddScoped<ContextSeedService>();
 
 
 // Додавання контролерів з можливістю відображення та налаштування серіалізації JSON
@@ -119,6 +122,23 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
     };
 });
 
+builder.Services.AddAuthorization(opt =>
+{
+    opt.AddPolicy("AdminPolicy", policy => policy.RequireRole("Admin"));
+    opt.AddPolicy("ManagerPolicy", policy => policy.RequireRole("Manager"));
+    opt.AddPolicy("MemberPolicy", policy => policy.RequireRole("Member"));
+
+    opt.AddPolicy("AdminOrManagerPolicy", policy => policy.RequireRole("Admin", "Manager"));
+    opt.AddPolicy("AdminAndManagerPolicy", policy => policy.RequireRole("Admin").RequireRole("Manager"));
+    opt.AddPolicy("AllRolePolicy", policy => policy.RequireRole("Admin", "Manager", "Member"));
+
+    opt.AddPolicy("AdminEmailPolicy", policy => policy.RequireClaim(ClaimTypes.Email, "admin@automarket.com"));
+    opt.AddPolicy("AdminSurnamePolicy", policy => policy.RequireClaim(ClaimTypes.Surname, "admin"));
+    opt.AddPolicy("ManagerEmailAndManagerSurnamePolicy", policy => policy.RequireClaim(ClaimTypes.Surname, "manager")
+        .RequireClaim(ClaimTypes.Email, "manager@automarket.com"));
+    opt.AddPolicy("VIPPolicy", policy => policy.RequireAssertion(context => SD.VIPPolicy(context)));
+});
+
 var app = builder.Build();
 
 // Конфігурація конвеєра обробки HTTP-запитів
@@ -149,5 +169,23 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+#region ContextSeed
+
+using var scope = app.Services.CreateScope();
+
+try
+{
+    var contextSeedService = scope.ServiceProvider.GetService<ContextSeedService>();
+    await contextSeedService.InitializeContextAsync();
+}
+catch (Exception ex)
+{
+
+    var logger = scope.ServiceProvider.GetService<ILogger<Program>>();
+    logger.LogError(ex.Message, "Не вдалося ініціалізувати та заповнити базу даних");
+}
+
+#endregion
 
 app.Run();
