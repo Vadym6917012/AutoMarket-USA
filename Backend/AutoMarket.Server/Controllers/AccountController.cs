@@ -39,7 +39,7 @@ namespace AutoMarket.Server.Controllers
         public async Task<ActionResult<UserDTO>> RefreshUserToken()
         {
             var user = await _userManager.FindByNameAsync(User.FindFirst(ClaimTypes.Email)?.Value);
-            return CreateApplicationUserDTO(user);
+            return await CreateApplicationUserDTO(user);
         }
 
         [HttpPost("login")]
@@ -62,7 +62,7 @@ namespace AutoMarket.Server.Controllers
                 return Unauthorized("Неправильне ім`я або пароль");
             }
 
-            return CreateApplicationUserDTO(user);
+            return await CreateApplicationUserDTO(user);
         }
 
         [HttpPost("register")]
@@ -239,13 +239,13 @@ namespace AutoMarket.Server.Controllers
 
         #region Private Helper Methods
 
-        private UserDTO CreateApplicationUserDTO(User user)
+        private async Task<UserDTO> CreateApplicationUserDTO(User user)
         {
             return new UserDTO
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                JWT = _jwtService.CreateJWT(user),
+                JWT = await _jwtService.CreateJWT(user),
             };
         }
 

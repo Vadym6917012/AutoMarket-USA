@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AutoMarket.Server.Core.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class InitMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -397,24 +397,6 @@ namespace AutoMarket.Server.Core.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[,]
-                {
-                    { "a8865224-cb31-4b5f-9a42-f68601d73c5d", null, "Admin", "ADMIN" },
-                    { "ff8968ba-6759-4f60-8a56-7d7790f64e05", null, "User", "USER" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[,]
-                {
-                    { "185eb234-8154-483e-a7dc-7cbd7697ee7c", 0, "5382a1a4-ce65-4c02-a11d-c3fbdd80ac23", "admin@autospot.com", true, null, null, false, null, "ADMIN@AUTOSPOT.COM", "ADMIN@AUTOSPOT.COM", "AQAAAAIAAYagAAAAEF+8F4mqFiW7C7hNqFjBda8NXIVANdeAA8kg3tAx2Cth2rkquNFax6gIHSEztLjGpA==", null, false, "80b8579f-8ad1-4bcf-bf2b-328e28e1781c", false, "admin@autospot.com" },
-                    { "350f07f1-3aac-43c5-9f9a-50abe0021ed4", 0, "4f30e31d-d77a-441e-b895-b3f258fa24ed", "user@autospot.com", true, null, null, false, null, "USER@AUTOSPOT.COM", "USER@AUTOSPOT.COM", "AQAAAAIAAYagAAAAEJwnbzf9mtg3ahJKIReVgIblemmvXCIZ0vaT6WPzAWHmmRtLforItiMucKEyrojYTQ==", null, false, "94225162-998b-4ac4-a47c-27f7e1ac8618", false, "user@autospot.com" }
-                });
-
-            migrationBuilder.InsertData(
                 table: "BodyTypes",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
@@ -469,16 +451,6 @@ namespace AutoMarket.Server.Core.Migrations
                 {
                     { 1, "Німеччина" },
                     { 2, "Японія" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUserRoles",
-                columns: new[] { "RoleId", "UserId" },
-                values: new object[,]
-                {
-                    { "a8865224-cb31-4b5f-9a42-f68601d73c5d", "185eb234-8154-483e-a7dc-7cbd7697ee7c" },
-                    { "a8865224-cb31-4b5f-9a42-f68601d73c5d", "350f07f1-3aac-43c5-9f9a-50abe0021ed4" },
-                    { "ff8968ba-6759-4f60-8a56-7d7790f64e05", "350f07f1-3aac-43c5-9f9a-50abe0021ed4" }
                 });
 
             migrationBuilder.InsertData(

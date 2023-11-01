@@ -7,68 +7,6 @@ namespace AutoMarket.Server.Core
     {
         public static void Seed(this ModelBuilder builder)
         {
-            #region Identity Entities
-
-            string ADMIN_ROLE_ID = Guid.NewGuid().ToString();
-            string USER_ROLE_ID = Guid.NewGuid().ToString();
-
-            builder.Entity<IdentityRole>().HasData(new IdentityRole
-            {
-                Id = ADMIN_ROLE_ID,
-                Name = "Admin",
-                NormalizedName = "ADMIN",
-            }, new IdentityRole
-            {
-                Id = USER_ROLE_ID,
-                Name = "User",
-                NormalizedName = "USER"
-            });
-
-            string ADMIN_ID = Guid.NewGuid().ToString();
-            string USER_ID = Guid.NewGuid().ToString();
-
-            var admin = new User
-            {
-                Id = ADMIN_ID,
-                UserName = "admin@autospot.com",
-                Email = "admin@autospot.com",
-                EmailConfirmed = true,
-                NormalizedEmail = "admin@autospot.com".ToUpper(),
-                NormalizedUserName = "admin@autospot.com".ToUpper(),
-            };
-            var user = new User
-            {
-                Id = USER_ID,
-                UserName = "user@autospot.com",
-                Email = "user@autospot.com",
-                EmailConfirmed = true,
-                NormalizedEmail = "user@autospot.com".ToUpper(),
-                NormalizedUserName = "user@autospot.com".ToUpper(),
-            };
-
-            PasswordHasher<User> hasher = new PasswordHasher<User>();
-
-            admin.PasswordHash = hasher.HashPassword(admin, "admin$Password1");
-            user.PasswordHash = hasher.HashPassword(user, "user$Password1");
-
-            builder.Entity<User>().HasData(admin, user);
-
-            builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
-            {
-                RoleId = ADMIN_ROLE_ID,
-                UserId = ADMIN_ID,
-            }, new IdentityUserRole<string>
-            {
-                RoleId = ADMIN_ROLE_ID,
-                UserId = USER_ID,
-            }, new IdentityUserRole<string>
-            {
-                RoleId = USER_ROLE_ID,
-                UserId = USER_ID,
-            });
-
-            #endregion
-
             #region BodyTypes Entities
 
             builder.Entity<BodyType>().HasData(new BodyType

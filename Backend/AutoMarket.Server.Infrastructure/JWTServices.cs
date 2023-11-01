@@ -1,4 +1,5 @@
 ﻿using AutoMarket.Server.Core;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -10,15 +11,17 @@ namespace AutoMarket.Server.Infrastructure
     public class JWTServices
     {
         private readonly IConfiguration _config;
+        private readonly UserManager<User> _userManager;
         private readonly SymmetricSecurityKey _jwtKey;
-        public JWTServices(IConfiguration config)
+        public JWTServices(IConfiguration config, UserManager<User> userManager)
         {
             _config = config;
+            _userManager = userManager;
 
             // jwt ключ викориситаний для шифрування та розшифрування jwt токенів
             _jwtKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:Key"]));
         }
-        public string CreateJWT(User user)
+        public async Task<string> CreateJWT(User user)
         {
             var userClaims = new List<Claim>
             {
@@ -27,6 +30,10 @@ namespace AutoMarket.Server.Infrastructure
                 new Claim(ClaimTypes.GivenName, user.FirstName),
                 new Claim(ClaimTypes.GivenName, user.LastName),
             };
+
+            var roles = await _userManager.GetRolesAsync(user);
+
+            userClaims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
             var credentials = new SigningCredentials(_jwtKey, SecurityAlgorithms.HmacSha256Signature);
             var tokenDescriptor = new SecurityTokenDescriptor

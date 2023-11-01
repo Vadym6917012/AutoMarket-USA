@@ -520,40 +520,6 @@ namespace AutoMarket.Server.Core.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "185eb234-8154-483e-a7dc-7cbd7697ee7c",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "5382a1a4-ce65-4c02-a11d-c3fbdd80ac23",
-                            Email = "admin@autospot.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN@AUTOSPOT.COM",
-                            NormalizedUserName = "ADMIN@AUTOSPOT.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEF+8F4mqFiW7C7hNqFjBda8NXIVANdeAA8kg3tAx2Cth2rkquNFax6gIHSEztLjGpA==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "80b8579f-8ad1-4bcf-bf2b-328e28e1781c",
-                            TwoFactorEnabled = false,
-                            UserName = "admin@autospot.com"
-                        },
-                        new
-                        {
-                            Id = "350f07f1-3aac-43c5-9f9a-50abe0021ed4",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "4f30e31d-d77a-441e-b895-b3f258fa24ed",
-                            Email = "user@autospot.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "USER@AUTOSPOT.COM",
-                            NormalizedUserName = "USER@AUTOSPOT.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJwnbzf9mtg3ahJKIReVgIblemmvXCIZ0vaT6WPzAWHmmRtLforItiMucKEyrojYTQ==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "94225162-998b-4ac4-a47c-27f7e1ac8618",
-                            TwoFactorEnabled = false,
-                            UserName = "user@autospot.com"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -581,20 +547,6 @@ namespace AutoMarket.Server.Core.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "a8865224-cb31-4b5f-9a42-f68601d73c5d",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "ff8968ba-6759-4f60-8a56-7d7790f64e05",
-                            Name = "User",
-                            NormalizedName = "USER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -682,23 +634,6 @@ namespace AutoMarket.Server.Core.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "185eb234-8154-483e-a7dc-7cbd7697ee7c",
-                            RoleId = "a8865224-cb31-4b5f-9a42-f68601d73c5d"
-                        },
-                        new
-                        {
-                            UserId = "350f07f1-3aac-43c5-9f9a-50abe0021ed4",
-                            RoleId = "a8865224-cb31-4b5f-9a42-f68601d73c5d"
-                        },
-                        new
-                        {
-                            UserId = "350f07f1-3aac-43c5-9f9a-50abe0021ed4",
-                            RoleId = "ff8968ba-6759-4f60-8a56-7d7790f64e05"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
