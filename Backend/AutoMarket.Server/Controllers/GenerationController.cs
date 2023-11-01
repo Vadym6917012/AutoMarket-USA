@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using AutoMarket.Server.Core;
 using AutoMarket.Server.Infrastructure;
-using AutoMarket.Server.Shared.DTOs;
+using AutoMarket.Server.Shared.DTOs.Generation;
 using Microsoft.AspNetCore.Mvc;
+using System.Web;
 
 namespace AutoMarket.Server.Controllers
 {
@@ -10,10 +11,10 @@ namespace AutoMarket.Server.Controllers
     [ApiController]
     public class GenerationController : ControllerBase
     {
-        public readonly Repository<Generation> _repository;
+        public readonly GenerationRepository _repository;
         public readonly IMapper _mapper;
 
-        public GenerationController(Repository<Generation> repository, IMapper mapper)
+        public GenerationController(GenerationRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
@@ -26,6 +27,14 @@ namespace AutoMarket.Server.Controllers
             var generationDTOs = _mapper.Map<IEnumerable<GenerationDTO>>(generations);
 
             return generationDTOs.ToList();
+        }
+
+        [HttpGet]
+        [Route("get-generation-by-model/{modelId:int}")]
+        public IActionResult GetGenerationsByModel(int modelId)
+        {
+            var generations = _repository.GetGenerationsByModel(modelId);
+            return Ok(generations);
         }
 
         [HttpGet]

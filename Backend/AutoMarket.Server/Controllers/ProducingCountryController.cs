@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using AutoMarket.Server.Core;
 using AutoMarket.Server.Infrastructure;
-using AutoMarket.Server.Shared.DTOs;
+using AutoMarket.Server.Shared.DTOs.ProducingCountry;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AutoMarket.Server.Controllers
@@ -10,10 +10,10 @@ namespace AutoMarket.Server.Controllers
     [ApiController]
     public class ProducingCountryController : Controller
     {
-        private readonly Repository<ProducingCountry> _repository;
+        private readonly ProducingCountryRepository _repository;
         private readonly IMapper _mapper;
 
-        public ProducingCountryController(Repository<ProducingCountry> repository, IMapper mapper)
+        public ProducingCountryController(ProducingCountryRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;

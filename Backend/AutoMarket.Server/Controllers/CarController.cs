@@ -86,7 +86,7 @@ namespace AutoMarket.Server.Controllers
                 }
             }
 
-            return CreatedAtAction("GetById", new { id = car.Id }, _mapper.Map<CarCreateDTO>(car));
+            return Ok(new JsonResult(new {title = "Оголошення додано успішно", message = "Ваше оголошення додано успішно", id = car.Id}));
         }
 
         [HttpPut]
@@ -108,7 +108,7 @@ namespace AutoMarket.Server.Controllers
             _mapper.Map(carDTO, existingEntity);
             await _repository.UpdateAsync(existingEntity);
 
-            return Ok(_mapper.Map<CarDTO>(existingEntity));
+            return Ok(new JsonResult(new { title = "Оголошення оновлено успішно", message = "Ваше оголошення було оновлено успішно", id = existingEntity.Id }));
         }
 
         [HttpDelete]
@@ -119,12 +119,12 @@ namespace AutoMarket.Server.Controllers
 
             if (existingEntity == null)
             {
-                return NotFound();
+                return NotFound(new JsonResult(new { title = "Такого оголошення не існує", message = "Ваше оголошення не знайдене тому не було видалено" }));
             }
 
             await _repository.DeleteAsync(existingEntity);
 
-            return NoContent();
+            return Ok(new JsonResult(new { title = "Оголошення видалено успішно", message = "Ваше оголошення було видалено успішно" }));
         }
     }
 }

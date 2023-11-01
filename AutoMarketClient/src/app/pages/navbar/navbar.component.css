@@ -1,13 +1,13 @@
 .active {
-    background-color: #5dc302 !important;
-    color: #fff !important;
+    background-color: #ff8c00 ;
+    color: #fff ;
     text-decoration: none;
 }
 
 header {
     padding: 10px 0;
     background: none;
-    color: #333;
+    color: #141414;
 }
 
 .container {
@@ -27,12 +27,12 @@ header {
 }
 
 .navbar-nav>.auth-btn>a {
-    background: #2f3b3e;
+    background: #1c1d1f;
     color: #fff;
 }
 
 .navbar-nav>.auth-btn:hover>a, .navbar-nav>.auth-btn>a:hover {
-    background: #5dc302;
+    background: #ff8c00;
 	color: #fff;
     text-decoration: none;
     transition: 1s ease-in-out;
@@ -45,7 +45,7 @@ header {
 }
 
 .navbar-nav>li>a:hover, .navbar-nav>li:hover>a {
-	background: #5dc302;
+	background: #ff8c00;
 	color: #fff;
     text-decoration: none;
     transition: 0.3s ease-in-out;

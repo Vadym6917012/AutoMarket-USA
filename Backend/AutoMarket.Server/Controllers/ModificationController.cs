@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using AutoMarket.Server.Core;
 using AutoMarket.Server.Infrastructure;
-using AutoMarket.Server.Shared.DTOs;
+using AutoMarket.Server.Shared.DTOs.Modification;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AutoMarket.Server.Controllers
@@ -10,10 +10,10 @@ namespace AutoMarket.Server.Controllers
     [ApiController]
     public class ModificationController : ControllerBase
     {
-        public readonly Repository<Modification> _repository;
+        public readonly ModificationRepository _repository;
         public readonly IMapper _mapper;
 
-        public ModificationController(Repository<Modification> repository, IMapper mapper)
+        public ModificationController(ModificationRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
@@ -89,6 +89,13 @@ namespace AutoMarket.Server.Controllers
             await _repository.DeleteAsync(existingEntity);
 
             return NoContent();
+        }
+
+        [HttpGet("get-modification-by-model/{modelId:int}")]
+        public IActionResult GetModificationsByModel(int modelId)
+        {
+                var modification = _repository.GetModificationByModel(modelId);
+                return Ok(modification);
         }
     }
 }

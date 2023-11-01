@@ -318,6 +318,7 @@ namespace AutoMarket.Server.Core.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ModelId = table.Column<int>(type: "int", nullable: false),
+                    GenerationId = table.Column<int>(type: "int", nullable: false),
                     ModificationId = table.Column<int>(type: "int", nullable: false),
                     VIN = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BodyTypeId = table.Column<int>(type: "int", nullable: false),
@@ -353,6 +354,12 @@ namespace AutoMarket.Server.Core.Migrations
                         name: "FK_Cars_GearBoxes_GearBoxTypeId",
                         column: x => x.GearBoxTypeId,
                         principalTable: "GearBoxes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Cars_Generations_GenerationId",
+                        column: x => x.GenerationId,
+                        principalTable: "Generations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -394,8 +401,8 @@ namespace AutoMarket.Server.Core.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "40bca976-415a-4db0-a65f-aedbb14532e2", null, "User", "USER" },
-                    { "5163ea3d-50a4-4f0f-8b16-ba60df61a9ed", null, "Admin", "ADMIN" }
+                    { "a8865224-cb31-4b5f-9a42-f68601d73c5d", null, "Admin", "ADMIN" },
+                    { "ff8968ba-6759-4f60-8a56-7d7790f64e05", null, "User", "USER" }
                 });
 
             migrationBuilder.InsertData(
@@ -403,8 +410,8 @@ namespace AutoMarket.Server.Core.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "26a4b801-1cc6-4810-8ac0-0cf05ce04951", 0, "829724cd-a4d6-4def-8fae-ce8ed92fc0e0", "admin@autospot.com", true, null, null, false, null, "ADMIN@AUTOSPOT.COM", "ADMIN@AUTOSPOT.COM", "AQAAAAIAAYagAAAAEBz3y8AKJOExcyutAlTFT+Kqb8cItDZpkCWZqp7xBQW9hAskjjUpnyqyYW+hJaLVGA==", null, false, "c82c2ffb-d3ee-43fc-bb0a-a6a34d3b7072", false, "admin@autospot.com" },
-                    { "32439914-c414-4375-bb6d-88eddfc04376", 0, "9fbf5a65-1209-4ea0-bf4e-837feb049be3", "user@autospot.com", true, null, null, false, null, "USER@AUTOSPOT.COM", "USER@AUTOSPOT.COM", "AQAAAAIAAYagAAAAEOU3jTyZviFsCYwZcw11OjHde9xY4enf7J9Y8RhXQcM20LQ751WeiDRo7mdr/sfp6w==", null, false, "7b134f4b-0a3b-40a8-aaf4-31d980a354ec", false, "user@autospot.com" }
+                    { "185eb234-8154-483e-a7dc-7cbd7697ee7c", 0, "5382a1a4-ce65-4c02-a11d-c3fbdd80ac23", "admin@autospot.com", true, null, null, false, null, "ADMIN@AUTOSPOT.COM", "ADMIN@AUTOSPOT.COM", "AQAAAAIAAYagAAAAEF+8F4mqFiW7C7hNqFjBda8NXIVANdeAA8kg3tAx2Cth2rkquNFax6gIHSEztLjGpA==", null, false, "80b8579f-8ad1-4bcf-bf2b-328e28e1781c", false, "admin@autospot.com" },
+                    { "350f07f1-3aac-43c5-9f9a-50abe0021ed4", 0, "4f30e31d-d77a-441e-b895-b3f258fa24ed", "user@autospot.com", true, null, null, false, null, "USER@AUTOSPOT.COM", "USER@AUTOSPOT.COM", "AQAAAAIAAYagAAAAEJwnbzf9mtg3ahJKIReVgIblemmvXCIZ0vaT6WPzAWHmmRtLforItiMucKEyrojYTQ==", null, false, "94225162-998b-4ac4-a47c-27f7e1ac8618", false, "user@autospot.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -469,9 +476,9 @@ namespace AutoMarket.Server.Core.Migrations
                 columns: new[] { "RoleId", "UserId" },
                 values: new object[,]
                 {
-                    { "5163ea3d-50a4-4f0f-8b16-ba60df61a9ed", "26a4b801-1cc6-4810-8ac0-0cf05ce04951" },
-                    { "40bca976-415a-4db0-a65f-aedbb14532e2", "32439914-c414-4375-bb6d-88eddfc04376" },
-                    { "5163ea3d-50a4-4f0f-8b16-ba60df61a9ed", "32439914-c414-4375-bb6d-88eddfc04376" }
+                    { "a8865224-cb31-4b5f-9a42-f68601d73c5d", "185eb234-8154-483e-a7dc-7cbd7697ee7c" },
+                    { "a8865224-cb31-4b5f-9a42-f68601d73c5d", "350f07f1-3aac-43c5-9f9a-50abe0021ed4" },
+                    { "ff8968ba-6759-4f60-8a56-7d7790f64e05", "350f07f1-3aac-43c5-9f9a-50abe0021ed4" }
                 });
 
             migrationBuilder.InsertData(
@@ -499,6 +506,15 @@ namespace AutoMarket.Server.Core.Migrations
                 {
                     { 1, 1 },
                     { 2, 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Modifications",
+                columns: new[] { "Id", "ModelId", "Name" },
+                values: new object[,]
+                {
+                    { 1, 1, "520i AT (150 hp)" },
+                    { 2, 1, "520i MT (150 hp)" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -554,6 +570,11 @@ namespace AutoMarket.Server.Core.Migrations
                 name: "IX_Cars_GearBoxTypeId",
                 table: "Cars",
                 column: "GearBoxTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cars_GenerationId",
+                table: "Cars",
+                column: "GenerationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cars_ModelId",
@@ -627,9 +648,6 @@ namespace AutoMarket.Server.Core.Migrations
                 name: "Cars");
 
             migrationBuilder.DropTable(
-                name: "Generations");
-
-            migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
@@ -640,6 +658,9 @@ namespace AutoMarket.Server.Core.Migrations
 
             migrationBuilder.DropTable(
                 name: "GearBoxes");
+
+            migrationBuilder.DropTable(
+                name: "Generations");
 
             migrationBuilder.DropTable(
                 name: "Modifications");

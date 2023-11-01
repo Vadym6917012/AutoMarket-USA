@@ -1,7 +1,17 @@
 ﻿using AutoMapper;
 using AutoMarket.Server.Core;
 using AutoMarket.Server.Shared.DTOs;
+using AutoMarket.Server.Shared.DTOs.BodyType;
 using AutoMarket.Server.Shared.DTOs.Car;
+using AutoMarket.Server.Shared.DTOs.FuelType;
+using AutoMarket.Server.Shared.DTOs.GearBox;
+using AutoMarket.Server.Shared.DTOs.Generation;
+using AutoMarket.Server.Shared.DTOs.Images;
+using AutoMarket.Server.Shared.DTOs.Make;
+using AutoMarket.Server.Shared.DTOs.Model;
+using AutoMarket.Server.Shared.DTOs.ModelGeneration;
+using AutoMarket.Server.Shared.DTOs.Modification;
+using AutoMarket.Server.Shared.DTOs.ProducingCountry;
 
 namespace AutoMarket.Server.Infrastructure
 {
@@ -16,6 +26,7 @@ namespace AutoMarket.Server.Infrastructure
             CreateMap<Car, CarDTO>()
                 .ForMember(dest => dest.ModelName, opt => opt.MapFrom(src => src.Model.Name))
                 .ForMember(dest => dest.ModificationName, opt => opt.MapFrom(src => src.Modification.Name))
+                .ForMember(dest => dest.GenerationName, opt => opt.MapFrom(src => src.Generation.Name))
                 .ForMember(dest => dest.BodyTypeName, opt => opt.MapFrom(src => src.BodyType.Name))
                 .ForMember(dest => dest.GearBoxTypeName, opt => opt.MapFrom(src => src.GearBoxType.Name))
                 .ForMember(dest => dest.FuelTypeName, opt => opt.MapFrom(src => src.FuelType.Name))

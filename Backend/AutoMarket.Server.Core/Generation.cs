@@ -12,6 +12,7 @@ namespace AutoMarket.Server.Core
         public int YearFrom { get; set; }
         public int YearTo { get; set; }
 
+        public virtual ICollection<Car>? Cars { get; set; }
         public virtual ICollection<ModelGeneration>? ModelGenerations { get; set; }
     }
 }

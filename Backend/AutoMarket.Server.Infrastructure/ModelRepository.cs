@@ -70,5 +70,12 @@ namespace AutoMarket.Server.Infrastructure
         {
             return await _ctx.Set<Model>().Include(m => m.ModelGenerations).ThenInclude(mg => mg.Generation).ToListAsync();
         }
+
+        public IEnumerable<Model> GetModelByMake(int makeId)
+        {
+            return _ctx.Set<Model>()
+                .Where(m => m.MakeId == makeId)
+                .ToList();
+        }
     }
 }

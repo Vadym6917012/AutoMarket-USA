@@ -69,14 +69,14 @@ builder.Services.AddScoped<JWTServices>();
 builder.Services.AddScoped<Repository<BodyType>>();
 builder.Services.AddScoped<ModelRepository>();
 builder.Services.AddScoped<GenerationRepository>();
-builder.Services.AddScoped<Repository<Make>>();
-builder.Services.AddScoped<Repository<ProducingCountry>>();
+builder.Services.AddScoped<MakeRepository>();
 builder.Services.AddScoped<Repository<FuelType>>();
 builder.Services.AddScoped<Repository<GearBoxType>>();
-builder.Services.AddScoped<Repository<Modification>>();
+builder.Services.AddScoped<ModificationRepository>();
 builder.Services.AddScoped<CarRepository>();
 builder.Services.AddScoped<ImagesRepository>();
 builder.Services.AddScoped<EmailService>();
+builder.Services.AddScoped<ProducingCountryRepository>();
 
 
 // Додавання контролерів з можливістю відображення та налаштування серіалізації JSON

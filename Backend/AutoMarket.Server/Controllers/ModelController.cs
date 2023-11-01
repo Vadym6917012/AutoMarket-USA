@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using AutoMarket.Server.Core;
 using AutoMarket.Server.Infrastructure;
-using AutoMarket.Server.Shared.DTOs;
+using AutoMarket.Server.Shared.DTOs.Model;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AutoMarket.Server.Controllers
@@ -106,6 +106,14 @@ namespace AutoMarket.Server.Controllers
             await _repository.DeleteAsync(existingEntity);
 
             return NoContent();
+        }
+
+        [HttpGet]
+        [Route("get-model-by-make/{makeId:int}")]
+        public IActionResult GetModelsByMake(int makeId)
+        {
+            var model = _repository.GetModelByMake(makeId);
+            return Ok(model);
         }
     }
 }

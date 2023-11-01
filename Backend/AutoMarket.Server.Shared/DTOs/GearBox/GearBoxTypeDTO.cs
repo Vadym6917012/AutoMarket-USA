@@ -1,6 +1,6 @@
-﻿namespace AutoMarket.Server.Shared.DTOs
+﻿namespace AutoMarket.Server.Shared.DTOs.GearBox
 {
-    public class ProducingCountryDTO
+    public class GearBoxTypeDTO
     {
         public int Id { get; set; }
         public string? Name { get; set; }

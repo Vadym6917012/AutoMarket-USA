@@ -1,4 +1,4 @@
-﻿namespace AutoMarket.Server.Shared.DTOs
+﻿namespace AutoMarket.Server.Shared.DTOs.ModelGeneration
 {
     public class ModelGenerationDTO
     {

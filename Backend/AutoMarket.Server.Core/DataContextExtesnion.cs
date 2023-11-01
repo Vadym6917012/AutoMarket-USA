@@ -236,6 +236,22 @@ namespace AutoMarket.Server.Core
             });
 
             #endregion
+
+            #region Modification Entity
+
+            builder.Entity<Modification>().HasData(new Modification
+            {
+                Id = 1,
+                Name = "520i AT (150 hp)",
+                ModelId = 1,
+            }, new Modification
+            {
+                Id = 2,
+                Name = "520i MT (150 hp)",
+                ModelId = 1,
+            });
+
+            #endregion
         }
     }
 }

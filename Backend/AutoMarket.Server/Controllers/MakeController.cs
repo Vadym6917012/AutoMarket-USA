@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using AutoMarket.Server.Core;
 using AutoMarket.Server.Infrastructure;
-using AutoMarket.Server.Shared.DTOs;
+using AutoMarket.Server.Shared.DTOs.Make;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AutoMarket.Server.Controllers
@@ -10,10 +10,10 @@ namespace AutoMarket.Server.Controllers
     [ApiController]
     public class MakeController : ControllerBase
     {
-        private readonly Repository<Make> _repository;
+        private readonly MakeRepository _repository;
         private readonly IMapper _mapper;
 
-        public MakeController(Repository<Make> repository, IMapper mapper)
+        public MakeController(MakeRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
@@ -89,6 +89,14 @@ namespace AutoMarket.Server.Controllers
             await _repository.DeleteAsync(existingEntity);
 
             return NoContent();
+        }
+
+        [HttpGet]
+        [Route("get-make-by-country/{producingCountryId:int}")]
+        public IActionResult GetMakeByProducingCountry(int producingCountryId)
+        {
+            var make = _repository.GetMakeByCountry(producingCountryId);
+            return Ok(make);
         }
     }
 }

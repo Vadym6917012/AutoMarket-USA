@@ -38,6 +38,14 @@ namespace AutoMarket.Server.Infrastructure
             return _ctx.Set<Generation>().Find(id);
         }
 
+        public IEnumerable<Generation> GetGenerationsByModel(int modelId)
+        {
+            return _ctx.Set<ModelGeneration>()
+                .Where(mg => mg.ModelId == modelId)
+                .Select(mg => mg.Generation)
+                .ToList();
+        }
+
         public async Task<Generation> GetFirstAsync(Expression<Func<Generation, bool>> expression)
         {
             return await _ctx.Set<Generation>().FirstOrDefaultAsync(expression);
