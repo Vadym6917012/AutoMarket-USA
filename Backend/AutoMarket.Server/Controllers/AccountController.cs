@@ -59,8 +59,21 @@ namespace AutoMarket.Server.Controllers
             var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
             if (!result.Succeeded)
             {
+                if (!user.UserName.Equals(SD.AdminUserName))
+                {
+                    await _userManager.AccessFailedAsync(user);
+                }
+
+                if (user.AccessFailedCount >= SD.MaximumLoginAttempts)
+                {
+                    await _userManager.SetLockoutEndDateAsync(user, DateTime.UtcNow.AddDays(1));
+                    return Unauthorized(string.Format("Ваш акаунт було заблоковано. Вам потрібно зачекати до {0} щоб залогінитися", user.LockoutEnd));
+                }
                 return Unauthorized("Неправильне ім`я або пароль");
             }
+
+            await _userManager.ResetAccessFailedCountAsync(user);
+            await _userManager.SetLockoutEndDateAsync(user, null);
 
             return await CreateApplicationUserDTO(user);
         }
