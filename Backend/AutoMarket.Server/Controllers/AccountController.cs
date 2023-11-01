@@ -39,6 +39,12 @@ namespace AutoMarket.Server.Controllers
         public async Task<ActionResult<UserDTO>> RefreshUserToken()
         {
             var user = await _userManager.FindByNameAsync(User.FindFirst(ClaimTypes.Email)?.Value);
+
+            if (await _userManager.IsLockedOutAsync(user))
+            {
+                return Unauthorized("You have been locked out");
+            }
+
             return await CreateApplicationUserDTO(user);
         }
 
