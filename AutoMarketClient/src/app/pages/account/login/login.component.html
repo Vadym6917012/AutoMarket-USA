@@ -7,7 +7,7 @@
                         <h3 class="mb-3 font-weight-normal">Вхід</h3>
                     </div>
                     <div class="form-floating mb-3">
-                        <input formControlName="userName" type="text" placeholder="Email" class="form-control"
+                        <input formControlName="userName" type="text" placeholder="Email" class="form-control shadow-none"
                             [class.is-invalid]="submitted && loginForm.get('userName')?.errors">
                         <label for="userName">Email</label>
                         <span class="text-danger" *ngIf="submitted && loginForm.get('userName')?.hasError('required')">
@@ -18,7 +18,7 @@
                         <span id="eye" (click)="togglePasswordFieldType()" class="input-group-text"><i
                                 [class]="isTextFieldType ? 'bi bi-eye-slash' :'bi bi-eye'"></i></span>
                         <div class="form-floating">
-                            <input formControlName="password" [type]="isTextFieldType ? 'text' :'password'" placeholder="Password" class="form-control"
+                            <input formControlName="password" [type]="isTextFieldType ? 'text' :'password'" placeholder="Password" class="form-control shadow-none"
                                 [class.is-invalid]="submitted && loginForm.get('password')?.errors">
                             <label for="password">Пароль</label>
                             <span class="text-danger" *ngIf="submitted && loginForm.get('password')?.hasError('required')">

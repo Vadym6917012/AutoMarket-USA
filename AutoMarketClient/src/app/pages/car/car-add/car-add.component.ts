@@ -2,16 +2,27 @@ import { ModelService } from './../../../services/model.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { BodyType } from 'src/app/models/body-type/body-type';
+import { DriveTrain } from 'src/app/models/drive-train/drive-train';
+import { FuelType } from 'src/app/models/fuel-type/fuel-type';
+import { GearBox } from 'src/app/models/gearbox/gearbox';
 import { Generation } from 'src/app/models/generation/generation';
 import { Make } from 'src/app/models/make/make';
 import { Model } from 'src/app/models/model/model';
 import { Modification } from 'src/app/models/modification/modification';
 import { ProducingCountry } from 'src/app/models/producing-country/producing-country';
+import { TechnicalCondition } from 'src/app/models/technical-condition/technical-condition';
+import { AccountService } from 'src/app/services/account.service';
+import { BodyTypeService } from 'src/app/services/body-type.service';
 import { CarService } from 'src/app/services/car.service';
+import { DriveTrainService } from 'src/app/services/drive-train.service';
+import { FuelTypeService } from 'src/app/services/fuel-type.service';
+import { GearBoxTypeService } from 'src/app/services/gear-box-type.service';
 import { GenerationService } from 'src/app/services/generation.service';
 import { MakeService } from 'src/app/services/make.service';
 import { ModificationService } from 'src/app/services/modification.service';
 import { ProducingCountryService } from 'src/app/services/producing-country.service';
+import { TechnicalConditionService } from 'src/app/services/technical-condition.service';
 import { SharedService } from 'src/app/shared/shared.service';
 
 @Component({
@@ -27,21 +38,18 @@ export class CarAddComponent implements OnInit {
   submitted = false;
 
   countries: ProducingCountry[] = [];
-  makes: Make[] = [];
-  models: Model[] = [];
-  generations: Generation[] = [];
-  modifications: Modification[] = [];
-
-  selectedCountryId: number = 0;
-  selectedMakeId: number = 0;
-  selectedModelId: number = 0;
-  selectedGenerationId?: number = 0;
-  selectedModificationId?: number = 0;
+  bodytypes: BodyType[] = [];
+  gearboxes: GearBox[] = [];
+  fueltypes: FuelType[] = [];
+  drivetrains: DriveTrain[] = [];
+  technicalconditions: TechnicalCondition[] = [];
 
   filteredMakes: Make[] = [];
   filteredModels: Model[] = [];
   filteredGenerations: Generation[] = [];
   filteredModifications: Modification[] = [];
+
+  currentUser = this.accountService.user$;
 
   constructor(private carService: CarService,
     private countryServise: ProducingCountryService,
@@ -49,14 +57,25 @@ export class CarAddComponent implements OnInit {
     private generationSerice: GenerationService,
     private modelService: ModelService,
     private modificationService: ModificationService,
+    private bodyTypeService: BodyTypeService,
+    private gearBoxService: GearBoxTypeService,
+    private fuelTypeService: FuelTypeService,
+    private driveTrainService: DriveTrainService,
+    private technicalConditionService: TechnicalConditionService,
     private formBuilder: FormBuilder,
     private sharedService: SharedService,
-    private router: Router) { }
+    private router: Router,
+    private accountService: AccountService) { }
 
   ngOnInit(): void {
     this.initializeForm();
     this.getCountries();
-    
+    this.getBodyTypes();
+    this.getGearBoxes();
+    this.getFuelTypes();
+    this.getDriveTrain();
+    this.getTechnicalCondition();
+
     this.addCarForm.get('countryId')?.valueChanges.subscribe((countryId) => {
 
       if (countryId) {
@@ -103,6 +122,12 @@ export class CarAddComponent implements OnInit {
         this.filteredModifications = data;
       });
     });
+
+    this.currentUser.subscribe((user) => {
+      if (user) {
+        this.addCarForm.patchValue({ userId: user.id });
+      }
+    });
   }
 
   onImagesSelected(event: any) {
@@ -119,11 +144,14 @@ export class CarAddComponent implements OnInit {
       vin: ['', [Validators.required]],
       bodyTypeId: ['', [Validators.required]],
       gearBoxTypeId: ['', [Validators.required]],
+      driveTrainId: ['', [Validators.required]],
+      technicalConditionId: ['', [Validators.required]],
       fuelTypeId: ['', [Validators.required]],
       year: ['', [Validators.required]],
       price: ['', [Validators.required]],
       mileage: ['', [Validators.required]],
       description: ['', [Validators.required]],
+      userId: [''],
     });
   }
 
@@ -137,9 +165,8 @@ export class CarAddComponent implements OnInit {
       this.carService.addCar(carData, this.selectedImages).subscribe({
         next: (response: any) => {
           this.sharedService.showNotification(true, response.value.title, response.value.message);
-
-          if (response.id) {
-            this.router.navigateByUrl(`/car/car-details/${response.id}`)
+          if (response.value.id) {
+            this.router.navigateByUrl(`/car/car-details/${response.value.id}`)
           }
           console.log(response);
         },
@@ -160,47 +187,33 @@ export class CarAddComponent implements OnInit {
     })
   }
 
-  getGenerations() {
-    this.generationSerice.getGenerations().subscribe(data => {
-      this.generations = data;
+  getBodyTypes() {
+    this.bodyTypeService.getBodyTypes().subscribe(data => {
+      this.bodytypes = data;
     })
   }
 
-  getModels() {
-    this.modelService.getModels().subscribe(data => {
-      this.models = data;
+  getGearBoxes() {
+    this.gearBoxService.getGearBoxes().subscribe(data => {
+      this.gearboxes = data;
     })
   }
 
-  getModifications() {
-    this.modificationService.getModifications().subscribe(data => {
-      this.modifications = data;
+  getFuelTypes() {
+    this.fuelTypeService.getFuelTypes().subscribe(data => {
+      this.fueltypes = data;
     })
   }
 
-  onCountrySelect() {
-    this.selectedMakeId = 0;
-    this.selectedModelId = 0;
-    this.selectedGenerationId = 0;
-    this.selectedModificationId = 0;
-
-    if (this.selectedCountryId === 0) {
-      this.makeService.getMakes().subscribe(data => {
-        this.filteredMakes = data;
-        console.log(this.filteredMakes);
-      });
-    } else {
-      this.makeService.getMakeByCountry(this.selectedCountryId).subscribe(data => {
-        this.filteredMakes = data;
-        console.log(this.filteredMakes);
-      });
-    }
+  getDriveTrain() {
+    this.driveTrainService.getDriveTrains().subscribe(data => {
+      this.drivetrains = data;
+    })
   }
 
-  onModelSelect() {
-    this.selectedGenerationId = 0;
-    this.selectedModificationId = 0;
-
-    
+  getTechnicalCondition() {
+    this.technicalConditionService.getTechnicalConditions().subscribe(data => {
+      this.technicalconditions = data;
+    })
   }
 }

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AutoMarket.Server.Core.Migrations
 {
     /// <inheritdoc />
-    public partial class InitMigration : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -69,6 +69,19 @@ namespace AutoMarket.Server.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DriveTrains",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DriveTrains", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "FuelTypes",
                 columns: table => new
                 {
@@ -120,6 +133,20 @@ namespace AutoMarket.Server.Core.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ProducingCountries", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TechnicalConditions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TechnicalConditions", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -229,6 +256,27 @@ namespace AutoMarket.Server.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "RefreshTokens",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Token = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    DateCreatedUtc = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateExpiresUtc = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RefreshTokens", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RefreshTokens_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Makes",
                 columns: table => new
                 {
@@ -324,11 +372,13 @@ namespace AutoMarket.Server.Core.Migrations
                     VIN = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BodyTypeId = table.Column<int>(type: "int", nullable: false),
                     GearBoxTypeId = table.Column<int>(type: "int", nullable: false),
+                    DriveTrainId = table.Column<int>(type: "int", nullable: false),
                     FuelTypeId = table.Column<int>(type: "int", nullable: false),
                     Year = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Mileage = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TechnicalConditionId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
@@ -343,6 +393,12 @@ namespace AutoMarket.Server.Core.Migrations
                         name: "FK_Cars_BodyTypes_BodyTypeId",
                         column: x => x.BodyTypeId,
                         principalTable: "BodyTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Cars_DriveTrains_DriveTrainId",
+                        column: x => x.DriveTrainId,
+                        principalTable: "DriveTrains",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -374,6 +430,12 @@ namespace AutoMarket.Server.Core.Migrations
                         column: x => x.ModificationId,
                         principalTable: "Modifications",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Cars_TechnicalConditions_TechnicalConditionId",
+                        column: x => x.TechnicalConditionId,
+                        principalTable: "TechnicalConditions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -407,6 +469,16 @@ namespace AutoMarket.Server.Core.Migrations
                     { 3, "Мінівен" },
                     { 4, "Купе" },
                     { 5, "Позашляховик / Кросовер" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "DriveTrains",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Передній" },
+                    { 2, "Задній" },
+                    { 3, "Повний" }
                 });
 
             migrationBuilder.InsertData(
@@ -452,6 +524,17 @@ namespace AutoMarket.Server.Core.Migrations
                 {
                     { 1, "Німеччина" },
                     { 2, "Японія" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "TechnicalConditions",
+                columns: new[] { "Id", "Description", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Пошкодження або раніше відремонтовані пошкодження відсутні", "Повністю непошкоджене" },
+                    { 2, "Пошкодження усунуті, не потребує ремонту", "Професійно відремонтовані пошкодження" },
+                    { 3, "Після ДТП, сліди граду, пошкодження кузова, несправність рульового управління, коробки передач, осей і т.д.", "Не відремонтовані пошкодження" },
+                    { 4, "Через ДТП, пожежу, несправності двигуна і т.д.", "Не на ходу / На запчастини" }
                 });
 
             migrationBuilder.InsertData(
@@ -535,6 +618,11 @@ namespace AutoMarket.Server.Core.Migrations
                 column: "BodyTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Cars_DriveTrainId",
+                table: "Cars",
+                column: "DriveTrainId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Cars_FuelTypeId",
                 table: "Cars",
                 column: "FuelTypeId");
@@ -558,6 +646,11 @@ namespace AutoMarket.Server.Core.Migrations
                 name: "IX_Cars_ModificationId",
                 table: "Cars",
                 column: "ModificationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cars_TechnicalConditionId",
+                table: "Cars",
+                column: "TechnicalConditionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cars_UserId",
@@ -588,6 +681,11 @@ namespace AutoMarket.Server.Core.Migrations
                 name: "IX_Modifications_ModelId",
                 table: "Modifications",
                 column: "ModelId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RefreshTokens_UserId",
+                table: "RefreshTokens",
+                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -615,6 +713,9 @@ namespace AutoMarket.Server.Core.Migrations
                 name: "ModelGeneration");
 
             migrationBuilder.DropTable(
+                name: "RefreshTokens");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -627,6 +728,9 @@ namespace AutoMarket.Server.Core.Migrations
                 name: "BodyTypes");
 
             migrationBuilder.DropTable(
+                name: "DriveTrains");
+
+            migrationBuilder.DropTable(
                 name: "FuelTypes");
 
             migrationBuilder.DropTable(
@@ -637,6 +741,9 @@ namespace AutoMarket.Server.Core.Migrations
 
             migrationBuilder.DropTable(
                 name: "Modifications");
+
+            migrationBuilder.DropTable(
+                name: "TechnicalConditions");
 
             migrationBuilder.DropTable(
                 name: "Models");

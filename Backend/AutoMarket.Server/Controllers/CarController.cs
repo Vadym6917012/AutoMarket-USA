@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using AutoMarket.Server.Core;
+using AutoMarket.Server.Core.Models;
 using AutoMarket.Server.Infrastructure;
 using AutoMarket.Server.Shared.DTOs;
 using AutoMarket.Server.Shared.DTOs.Car;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AutoMarket.Server.Controllers
 {
@@ -22,7 +24,7 @@ namespace AutoMarket.Server.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet("get-cars")]
         public async Task<IEnumerable<CarDTO>> GetCars()
         {
             var cars = await _repository.GetAllAsync();
@@ -31,14 +33,40 @@ namespace AutoMarket.Server.Controllers
             return carDTOs.ToList();
         }
 
-        [HttpGet]
-        [Route("{id:int}")]
+        [HttpGet("get-car/{id}")]
         public async Task<CarDTO> GetById(int id)
         {
             var car = await _repository.GetByIdAsync(id);
             var carDTO = _mapper.Map<CarDTO>(car);
 
             return carDTO;
+        }
+
+        [HttpGet("get-car-by-userid/{id}")]
+        public async Task<IEnumerable<CarDTO>> GetCarByUserId(string id)
+        {
+            var car = await _repository.GetCarByUserId(id);
+            var carDTO = _mapper.Map<IEnumerable<CarDTO>>(car);
+
+            return carDTO.ToList();
+        }
+
+        [HttpGet("car-home-filter")]
+        public async Task<IEnumerable<CarDTO>> CarFilter([FromQuery] CarHomeFilter filter)
+        {
+            var car = await _repository.HomeFilter(filter);
+            var carDTO = _mapper.Map<IEnumerable<CarDTO>>(car);
+
+            return carDTO.ToList();
+        }
+
+        [HttpGet("get-cars-by-count/{count}")]
+        public async Task<IEnumerable<CarDTO>> GetByCount(int count)
+        {
+            var cars = await _repository.GetByCount(count);
+            var carDto = _mapper.Map<IEnumerable<CarDTO>>(cars);
+
+            return carDto.ToList();
         }
 
         [HttpPost("create")]
@@ -86,23 +114,22 @@ namespace AutoMarket.Server.Controllers
                 }
             }
 
-            return Ok(new JsonResult(new {title = "Оголошення додано успішно", message = "Ваше оголошення додано успішно", id = car.Id}));
+            return Ok(new JsonResult(new { title = "Оголошення додано успішно", message = "Ваше оголошення додано успішно", id = car.Id }));
         }
 
-        [HttpPut]
-        [Route("{id:int}")]
-        public async Task<IActionResult> UpdateCar(int id, [FromBody] CarDTO carDTO)
+        [HttpPut("update-car")]
+        public async Task<IActionResult> UpdateCar([FromBody] CarCreateDTO carDTO)
         {
-            var existingEntity = _repository.GetById(id);
+            if (carDTO == null)
+            {
+                return BadRequest("Invalid data");
+            }
+
+            var existingEntity = _repository.GetById(carDTO.Id);
 
             if (existingEntity == null)
             {
                 return NotFound();
-            }
-
-            if (carDTO == null)
-            {
-                return BadRequest("Invalid data");
             }
 
             _mapper.Map(carDTO, existingEntity);
@@ -111,11 +138,10 @@ namespace AutoMarket.Server.Controllers
             return Ok(new JsonResult(new { title = "Оголошення оновлено успішно", message = "Ваше оголошення було оновлено успішно", id = existingEntity.Id }));
         }
 
-        [HttpDelete]
-        [Route("{id:int}")]
-        public async Task<IActionResult> DeleteCar(int id)
+        [HttpDelete("delete-car/{carId}")]
+        public async Task<IActionResult> DeleteCar(int carId)
         {
-            var existingEntity = _repository.GetById(id);
+            var existingEntity = _repository.GetById(carId);
 
             if (existingEntity == null)
             {

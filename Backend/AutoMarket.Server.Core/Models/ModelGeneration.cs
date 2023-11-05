@@ -1,4 +1,4 @@
-﻿namespace AutoMarket.Server.Core
+﻿namespace AutoMarket.Server.Core.Models
 {
     public class ModelGeneration
     {

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using AutoMarket.Server.Core;
+using AutoMarket.Server.Core.Models;
 using AutoMarket.Server.Infrastructure;
 using AutoMarket.Server.Shared.DTOs.Model;
 using Microsoft.AspNetCore.Mvc;

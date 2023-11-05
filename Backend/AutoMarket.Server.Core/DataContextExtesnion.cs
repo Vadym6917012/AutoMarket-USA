@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMarket.Server.Core.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace AutoMarket.Server.Core
@@ -187,6 +188,50 @@ namespace AutoMarket.Server.Core
                 Id = 2,
                 Name = "520i MT (150 hp)",
                 ModelId = 1,
+            });
+
+            #endregion
+
+            #region DriveTrain Entity
+
+            builder.Entity<DriveTrain>().HasData(new DriveTrain
+            {
+                Id = 1,
+                Name = "Передній"
+            }, new DriveTrain
+            {
+                Id = 2,
+                Name = "Задній"
+            }, new DriveTrain
+            {
+                Id = 3,
+                Name = "Повний"
+            });
+
+            #endregion
+
+            #region TechnicalCondition Entity
+
+            builder.Entity<TechnicalCondition>().HasData(new TechnicalCondition
+            {
+                Id = 1,
+                Name = "Повністю непошкоджене",
+                Description = "Пошкодження або раніше відремонтовані пошкодження відсутні"
+            }, new TechnicalCondition
+            {
+                Id = 2,
+                Name = "Професійно відремонтовані пошкодження",
+                Description = "Пошкодження усунуті, не потребує ремонту"
+            }, new TechnicalCondition
+            {
+                Id = 3,
+                Name = "Не відремонтовані пошкодження",
+                Description = "Після ДТП, сліди граду, пошкодження кузова, несправність рульового управління, коробки передач, осей і т.д."
+            }, new TechnicalCondition
+            {
+                Id = 4,
+                Name = "Не на ходу / На запчастини",
+                Description = "Через ДТП, пожежу, несправності двигуна і т.д."
             });
 
             #endregion

@@ -5,13 +5,13 @@
 }
 
 .form-signup .btn {
-    background: #5dc302;
+    background: #ff8c00;
 	color: #fff;
     text-decoration: none;
 } 
 
 .form-signup .btn:hover {
-    background: #48da26;
+    background: #1c1d1f;
 } 
 
 .registered {
@@ -23,6 +23,6 @@
 }
 
 .registered:hover {
-    color: #5dc302;
+    color: #ff8c00;
     text-decoration: underline;
 }

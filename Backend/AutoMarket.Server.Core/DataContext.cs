@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using AutoMarket.Server.Core.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace AutoMarket.Server.Core
@@ -37,6 +38,7 @@ namespace AutoMarket.Server.Core
         public DbSet<Car> Cars { get; set; }
         public DbSet<BodyType> BodyTypes { get; set; }
         public DbSet<GearBoxType> GearBoxes { get; set; }
+        public DbSet<DriveTrain> DriveTrains { get; set; }
         public DbSet<FuelType> FuelTypes { get; set; }
         public DbSet<Model> Models { get; set; }
         public DbSet<Make> Makes { get; set; }
@@ -44,5 +46,7 @@ namespace AutoMarket.Server.Core
         public DbSet<Modification> Modifications { get; set; }
         public DbSet<Generation> Generations { get; set; }
         public DbSet<ModelGeneration> ModelGeneration { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
+        public DbSet<TechnicalCondition> TechnicalConditions { get; set;}
     }
 }

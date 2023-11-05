@@ -22,7 +22,7 @@ namespace AutoMarket.Server.Core.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("AutoMarket.Server.Core.BodyType", b =>
+            modelBuilder.Entity("AutoMarket.Server.Core.Models.BodyType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -65,7 +65,7 @@ namespace AutoMarket.Server.Core.Migrations
                         });
                 });
 
-            modelBuilder.Entity("AutoMarket.Server.Core.Car", b =>
+            modelBuilder.Entity("AutoMarket.Server.Core.Models.Car", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -78,6 +78,9 @@ namespace AutoMarket.Server.Core.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DriveTrainId")
+                        .HasColumnType("int");
 
                     b.Property<int>("FuelTypeId")
                         .HasColumnType("int");
@@ -100,6 +103,9 @@ namespace AutoMarket.Server.Core.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("TechnicalConditionId")
+                        .HasColumnType("int");
+
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
@@ -113,6 +119,8 @@ namespace AutoMarket.Server.Core.Migrations
 
                     b.HasIndex("BodyTypeId");
 
+                    b.HasIndex("DriveTrainId");
+
                     b.HasIndex("FuelTypeId");
 
                     b.HasIndex("GearBoxTypeId");
@@ -123,12 +131,47 @@ namespace AutoMarket.Server.Core.Migrations
 
                     b.HasIndex("ModificationId");
 
+                    b.HasIndex("TechnicalConditionId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Cars");
                 });
 
-            modelBuilder.Entity("AutoMarket.Server.Core.FuelType", b =>
+            modelBuilder.Entity("AutoMarket.Server.Core.Models.DriveTrain", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DriveTrains");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Передній"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Задній"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Повний"
+                        });
+                });
+
+            modelBuilder.Entity("AutoMarket.Server.Core.Models.FuelType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -186,7 +229,7 @@ namespace AutoMarket.Server.Core.Migrations
                         });
                 });
 
-            modelBuilder.Entity("AutoMarket.Server.Core.GearBoxType", b =>
+            modelBuilder.Entity("AutoMarket.Server.Core.Models.GearBoxType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -229,7 +272,7 @@ namespace AutoMarket.Server.Core.Migrations
                         });
                 });
 
-            modelBuilder.Entity("AutoMarket.Server.Core.Generation", b =>
+            modelBuilder.Entity("AutoMarket.Server.Core.Models.Generation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -267,7 +310,7 @@ namespace AutoMarket.Server.Core.Migrations
                         });
                 });
 
-            modelBuilder.Entity("AutoMarket.Server.Core.Images", b =>
+            modelBuilder.Entity("AutoMarket.Server.Core.Models.Images", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -291,7 +334,7 @@ namespace AutoMarket.Server.Core.Migrations
                     b.ToTable("Images");
                 });
 
-            modelBuilder.Entity("AutoMarket.Server.Core.Make", b =>
+            modelBuilder.Entity("AutoMarket.Server.Core.Models.Make", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -326,7 +369,7 @@ namespace AutoMarket.Server.Core.Migrations
                         });
                 });
 
-            modelBuilder.Entity("AutoMarket.Server.Core.Model", b =>
+            modelBuilder.Entity("AutoMarket.Server.Core.Models.Model", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -361,7 +404,7 @@ namespace AutoMarket.Server.Core.Migrations
                         });
                 });
 
-            modelBuilder.Entity("AutoMarket.Server.Core.ModelGeneration", b =>
+            modelBuilder.Entity("AutoMarket.Server.Core.Models.ModelGeneration", b =>
                 {
                     b.Property<int>("ModelId")
                         .HasColumnType("int");
@@ -388,7 +431,7 @@ namespace AutoMarket.Server.Core.Migrations
                         });
                 });
 
-            modelBuilder.Entity("AutoMarket.Server.Core.Modification", b =>
+            modelBuilder.Entity("AutoMarket.Server.Core.Models.Modification", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -423,7 +466,7 @@ namespace AutoMarket.Server.Core.Migrations
                         });
                 });
 
-            modelBuilder.Entity("AutoMarket.Server.Core.ProducingCountry", b =>
+            modelBuilder.Entity("AutoMarket.Server.Core.Models.ProducingCountry", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -451,7 +494,80 @@ namespace AutoMarket.Server.Core.Migrations
                         });
                 });
 
-            modelBuilder.Entity("AutoMarket.Server.Core.User", b =>
+            modelBuilder.Entity("AutoMarket.Server.Core.Models.RefreshToken", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DateCreatedUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateExpiresUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens");
+                });
+
+            modelBuilder.Entity("AutoMarket.Server.Core.Models.TechnicalCondition", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TechnicalConditions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Пошкодження або раніше відремонтовані пошкодження відсутні",
+                            Name = "Повністю непошкоджене"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Пошкодження усунуті, не потребує ремонту",
+                            Name = "Професійно відремонтовані пошкодження"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Після ДТП, сліди граду, пошкодження кузова, несправність рульового управління, коробки передач, осей і т.д.",
+                            Name = "Не відремонтовані пошкодження"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Через ДТП, пожежу, несправності двигуна і т.д.",
+                            Name = "Не на ходу / На запчастини"
+                        });
+                });
+
+            modelBuilder.Entity("AutoMarket.Server.Core.Models.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -658,48 +774,62 @@ namespace AutoMarket.Server.Core.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("AutoMarket.Server.Core.Car", b =>
+            modelBuilder.Entity("AutoMarket.Server.Core.Models.Car", b =>
                 {
-                    b.HasOne("AutoMarket.Server.Core.BodyType", "BodyType")
+                    b.HasOne("AutoMarket.Server.Core.Models.BodyType", "BodyType")
                         .WithMany("Cars")
                         .HasForeignKey("BodyTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AutoMarket.Server.Core.FuelType", "FuelType")
+                    b.HasOne("AutoMarket.Server.Core.Models.DriveTrain", "DriveTrain")
+                        .WithMany("Cars")
+                        .HasForeignKey("DriveTrainId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AutoMarket.Server.Core.Models.FuelType", "FuelType")
                         .WithMany("Cars")
                         .HasForeignKey("FuelTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AutoMarket.Server.Core.GearBoxType", "GearBoxType")
+                    b.HasOne("AutoMarket.Server.Core.Models.GearBoxType", "GearBoxType")
                         .WithMany("Cars")
                         .HasForeignKey("GearBoxTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AutoMarket.Server.Core.Generation", "Generation")
+                    b.HasOne("AutoMarket.Server.Core.Models.Generation", "Generation")
                         .WithMany("Cars")
                         .HasForeignKey("GenerationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AutoMarket.Server.Core.Model", "Model")
+                    b.HasOne("AutoMarket.Server.Core.Models.Model", "Model")
                         .WithMany("Cars")
                         .HasForeignKey("ModelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AutoMarket.Server.Core.Modification", "Modification")
+                    b.HasOne("AutoMarket.Server.Core.Models.Modification", "Modification")
                         .WithMany("Cars")
                         .HasForeignKey("ModificationId")
                         .IsRequired();
 
-                    b.HasOne("AutoMarket.Server.Core.User", "User")
+                    b.HasOne("AutoMarket.Server.Core.Models.TechnicalCondition", "TechnicalCondition")
+                        .WithMany("Cars")
+                        .HasForeignKey("TechnicalConditionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AutoMarket.Server.Core.Models.User", "User")
                         .WithMany("Cars")
                         .HasForeignKey("UserId");
 
                     b.Navigation("BodyType");
+
+                    b.Navigation("DriveTrain");
 
                     b.Navigation("FuelType");
 
@@ -711,12 +841,14 @@ namespace AutoMarket.Server.Core.Migrations
 
                     b.Navigation("Modification");
 
+                    b.Navigation("TechnicalCondition");
+
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("AutoMarket.Server.Core.Images", b =>
+            modelBuilder.Entity("AutoMarket.Server.Core.Models.Images", b =>
                 {
-                    b.HasOne("AutoMarket.Server.Core.Car", "Car")
+                    b.HasOne("AutoMarket.Server.Core.Models.Car", "Car")
                         .WithMany("Images")
                         .HasForeignKey("CarId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -725,9 +857,9 @@ namespace AutoMarket.Server.Core.Migrations
                     b.Navigation("Car");
                 });
 
-            modelBuilder.Entity("AutoMarket.Server.Core.Make", b =>
+            modelBuilder.Entity("AutoMarket.Server.Core.Models.Make", b =>
                 {
-                    b.HasOne("AutoMarket.Server.Core.ProducingCountry", "ProducingCountry")
+                    b.HasOne("AutoMarket.Server.Core.Models.ProducingCountry", "ProducingCountry")
                         .WithMany("Makes")
                         .HasForeignKey("ProducingCountryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -736,9 +868,9 @@ namespace AutoMarket.Server.Core.Migrations
                     b.Navigation("ProducingCountry");
                 });
 
-            modelBuilder.Entity("AutoMarket.Server.Core.Model", b =>
+            modelBuilder.Entity("AutoMarket.Server.Core.Models.Model", b =>
                 {
-                    b.HasOne("AutoMarket.Server.Core.Make", "Make")
+                    b.HasOne("AutoMarket.Server.Core.Models.Make", "Make")
                         .WithMany("Models")
                         .HasForeignKey("MakeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -747,15 +879,15 @@ namespace AutoMarket.Server.Core.Migrations
                     b.Navigation("Make");
                 });
 
-            modelBuilder.Entity("AutoMarket.Server.Core.ModelGeneration", b =>
+            modelBuilder.Entity("AutoMarket.Server.Core.Models.ModelGeneration", b =>
                 {
-                    b.HasOne("AutoMarket.Server.Core.Generation", "Generation")
+                    b.HasOne("AutoMarket.Server.Core.Models.Generation", "Generation")
                         .WithMany("ModelGenerations")
                         .HasForeignKey("GenerationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AutoMarket.Server.Core.Model", "Model")
+                    b.HasOne("AutoMarket.Server.Core.Models.Model", "Model")
                         .WithMany("ModelGenerations")
                         .HasForeignKey("ModelId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -766,15 +898,26 @@ namespace AutoMarket.Server.Core.Migrations
                     b.Navigation("Model");
                 });
 
-            modelBuilder.Entity("AutoMarket.Server.Core.Modification", b =>
+            modelBuilder.Entity("AutoMarket.Server.Core.Models.Modification", b =>
                 {
-                    b.HasOne("AutoMarket.Server.Core.Model", "Model")
+                    b.HasOne("AutoMarket.Server.Core.Models.Model", "Model")
                         .WithMany("Modifications")
                         .HasForeignKey("ModelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Model");
+                });
+
+            modelBuilder.Entity("AutoMarket.Server.Core.Models.RefreshToken", b =>
+                {
+                    b.HasOne("AutoMarket.Server.Core.Models.User", "User")
+                        .WithMany("RefreshTokens")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -788,7 +931,7 @@ namespace AutoMarket.Server.Core.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("AutoMarket.Server.Core.User", null)
+                    b.HasOne("AutoMarket.Server.Core.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -797,7 +940,7 @@ namespace AutoMarket.Server.Core.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("AutoMarket.Server.Core.User", null)
+                    b.HasOne("AutoMarket.Server.Core.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -812,7 +955,7 @@ namespace AutoMarket.Server.Core.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AutoMarket.Server.Core.User", null)
+                    b.HasOne("AutoMarket.Server.Core.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -821,46 +964,51 @@ namespace AutoMarket.Server.Core.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("AutoMarket.Server.Core.User", null)
+                    b.HasOne("AutoMarket.Server.Core.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("AutoMarket.Server.Core.BodyType", b =>
+            modelBuilder.Entity("AutoMarket.Server.Core.Models.BodyType", b =>
                 {
                     b.Navigation("Cars");
                 });
 
-            modelBuilder.Entity("AutoMarket.Server.Core.Car", b =>
+            modelBuilder.Entity("AutoMarket.Server.Core.Models.Car", b =>
                 {
                     b.Navigation("Images");
                 });
 
-            modelBuilder.Entity("AutoMarket.Server.Core.FuelType", b =>
+            modelBuilder.Entity("AutoMarket.Server.Core.Models.DriveTrain", b =>
                 {
                     b.Navigation("Cars");
                 });
 
-            modelBuilder.Entity("AutoMarket.Server.Core.GearBoxType", b =>
+            modelBuilder.Entity("AutoMarket.Server.Core.Models.FuelType", b =>
                 {
                     b.Navigation("Cars");
                 });
 
-            modelBuilder.Entity("AutoMarket.Server.Core.Generation", b =>
+            modelBuilder.Entity("AutoMarket.Server.Core.Models.GearBoxType", b =>
+                {
+                    b.Navigation("Cars");
+                });
+
+            modelBuilder.Entity("AutoMarket.Server.Core.Models.Generation", b =>
                 {
                     b.Navigation("Cars");
 
                     b.Navigation("ModelGenerations");
                 });
 
-            modelBuilder.Entity("AutoMarket.Server.Core.Make", b =>
+            modelBuilder.Entity("AutoMarket.Server.Core.Models.Make", b =>
                 {
                     b.Navigation("Models");
                 });
 
-            modelBuilder.Entity("AutoMarket.Server.Core.Model", b =>
+            modelBuilder.Entity("AutoMarket.Server.Core.Models.Model", b =>
                 {
                     b.Navigation("Cars");
 
@@ -869,19 +1017,26 @@ namespace AutoMarket.Server.Core.Migrations
                     b.Navigation("Modifications");
                 });
 
-            modelBuilder.Entity("AutoMarket.Server.Core.Modification", b =>
+            modelBuilder.Entity("AutoMarket.Server.Core.Models.Modification", b =>
                 {
                     b.Navigation("Cars");
                 });
 
-            modelBuilder.Entity("AutoMarket.Server.Core.ProducingCountry", b =>
+            modelBuilder.Entity("AutoMarket.Server.Core.Models.ProducingCountry", b =>
                 {
                     b.Navigation("Makes");
                 });
 
-            modelBuilder.Entity("AutoMarket.Server.Core.User", b =>
+            modelBuilder.Entity("AutoMarket.Server.Core.Models.TechnicalCondition", b =>
                 {
                     b.Navigation("Cars");
+                });
+
+            modelBuilder.Entity("AutoMarket.Server.Core.Models.User", b =>
+                {
+                    b.Navigation("Cars");
+
+                    b.Navigation("RefreshTokens");
                 });
 #pragma warning restore 612, 618
         }

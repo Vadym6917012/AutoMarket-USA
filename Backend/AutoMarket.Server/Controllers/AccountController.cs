@@ -1,4 +1,5 @@
 ﻿using AutoMarket.Server.Core;
+using AutoMarket.Server.Core.Models;
 using AutoMarket.Server.Infrastructure;
 using AutoMarket.Server.Shared.DTOs.Account;
 using Microsoft.AspNetCore.Authorization;
@@ -19,31 +20,46 @@ namespace AutoMarket.Server.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly EmailService _emailService;
+        private readonly DataContext _context;
         private readonly IConfiguration _config;
 
         public AccountController(JWTServices jwtService,
             SignInManager<User> signInManager,
             UserManager<User> userManager,
             EmailService emailService,
+            DataContext context,
             IConfiguration config)
         {
             _jwtService = jwtService;
             _signInManager = signInManager;
             _userManager = userManager;
             _emailService = emailService;
+            _context = context;
             _config = config;
         }
 
         [Authorize]
-        [HttpGet("refresh-user-token")]
-        public async Task<ActionResult<UserDTO>> RefreshUserToken()
+        [HttpGet("refresh-token")]
+        public async Task<ActionResult<UserDTO>> RefreshToken()
+        {
+            var token = Request.Cookies["identityAppRefreshToken"];
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (IsValidRefreshTokenAsync(userId, token).GetAwaiter().GetResult())
+            {
+                var user = await _userManager.FindByIdAsync(userId);
+                if (user == null) return Unauthorized("Invalid or expired token, please try to login");
+                return await CreateApplicationUserDTO(user);
+            }
+
+            return Unauthorized("Invalid or expired token, please try to login");
+        }
+
+        [Authorize]
+        [HttpGet("refresh-page")]
+        public async Task<ActionResult<UserDTO>> RefreshPage()
         {
             var user = await _userManager.FindByNameAsync(User.FindFirst(ClaimTypes.Email)?.Value);
-
-            if (await _userManager.IsLockedOutAsync(user))
-            {
-                return Unauthorized("You have been locked out");
-            }
 
             return await CreateApplicationUserDTO(user);
         }
@@ -260,8 +276,10 @@ namespace AutoMarket.Server.Controllers
 
         private async Task<UserDTO> CreateApplicationUserDTO(User user)
         {
+            await SaveRefreshTokenAsync(user);
             return new UserDTO
             {
+                Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 JWT = await _jwtService.CreateJWT(user),
@@ -306,6 +324,46 @@ namespace AutoMarket.Server.Controllers
             var emailSend = new EmailSendDTO(to: user.Email, "Forgot username or password", body);
 
             return await _emailService.SendEmailAsync(emailSend);
+        }
+
+        private async Task SaveRefreshTokenAsync(User user)
+        {
+            var refreshToken = _jwtService.CreateRefreshToken(user);
+
+            var existingRefreshToken = await _context.RefreshTokens.SingleOrDefaultAsync(x => x.UserId == user.Id);
+            if (existingRefreshToken != null)
+            {
+                existingRefreshToken.Token = refreshToken.Token;
+                existingRefreshToken.DateCreatedUtc = refreshToken.DateCreatedUtc;
+                existingRefreshToken.DateExpiresUtc = refreshToken.DateExpiresUtc;
+            }
+            else
+            {
+                user.RefreshTokens.Add(refreshToken);
+            }
+
+            await _context.SaveChangesAsync();
+
+            var cookieOptions = new CookieOptions
+            {
+                Expires = refreshToken.DateExpiresUtc,
+                IsEssential = true,
+                HttpOnly = true,
+            };
+
+            Response.Cookies.Append("identityAppRefreshToken", refreshToken.Token, cookieOptions);
+        }
+
+        private async Task<bool> IsValidRefreshTokenAsync(string userId, string token)
+        {
+            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(token)) return false;
+
+            var fetchedRefreshToken = await _context.RefreshTokens
+                .FirstOrDefaultAsync(x => x.UserId == userId && x.Token == token);
+            if (fetchedRefreshToken == null) return false;
+            if (fetchedRefreshToken.IsExpired) return false;
+
+            return true;
         }
 
         #endregion

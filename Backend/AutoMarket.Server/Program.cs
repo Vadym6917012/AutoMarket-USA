@@ -1,5 +1,6 @@
 ﻿using AutoMarket.Server;
 using AutoMarket.Server.Core;
+using AutoMarket.Server.Core.Models;
 using AutoMarket.Server.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -80,6 +81,8 @@ builder.Services.AddScoped<ImagesRepository>();
 builder.Services.AddScoped<EmailService>();
 builder.Services.AddScoped<ProducingCountryRepository>();
 builder.Services.AddScoped<ContextSeedService>();
+builder.Services.AddScoped<Repository<DriveTrain>>();
+builder.Services.AddScoped<Repository<TechnicalCondition>>();
 
 
 // Додавання контролерів з можливістю відображення та налаштування серіалізації JSON
@@ -99,6 +102,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidIssuer = builder.Configuration["JWT:Issuer"],
             ValidateIssuer = true,
             ValidateAudience = false,
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.Zero
         };
     });
 

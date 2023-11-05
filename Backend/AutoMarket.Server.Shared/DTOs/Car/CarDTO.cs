@@ -3,12 +3,15 @@
     public class CarDTO
     {
         public int Id { get; set; }
+        public string? MakeName { get; set; }
         public string? ModelName { get; set; }
         public string? GenerationName { get; set; }
         public string? ModificationName { get; set; }
         public string? VIN { get; set; }
         public string? BodyTypeName { get; set; }
         public string? GearBoxTypeName { get; set; }
+        public string? DriveTrainName { get; set; }
+        public string? TechnicalConditionName { get; set; }
         public string? FuelTypeName { get; set; }
         public int Year { get; set; }
         public decimal Price { get; set; }

@@ -1,39 +1,325 @@
-<table class="table" *ngFor="let car of carInfo">
-    <thead>
-      <tr>
-        <th scope="col">Id</th>
-        <th scope="col">ModelId</th>
-        <th scope="col">Покоління</th>
-        <th scope="col">ModificationId</th>
-        <th scope="col">VIN</th>
-        <th scope="col">BodyTypeId</th>
-        <th scope="col">GearBoxTypeId</th>
-        <th scope="col">FuelTypeId</th>
-        <th scope="col">Year</th>
-        <th scope="col">Price</th>
-        <th scope="col">Mileage</th>
-        <th scope="col">Description</th>
-        <th scope="col">UserId</th>
-        <th scope="col">Image</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">{{car.id}}</th>
-        <th scope="row">{{car.modelName}}</th>
-        <th scope="row">{{car.generationName}}</th>
-        <th scope="row">{{car.modificationName}}</th>
-        <th scope="row">{{car.vin}}</th>
-        <th scope="row">{{car.bodyTypeName}}</th>
-        <th scope="row">{{car.gearBoxTypeName}}</th>
-        <th scope="row">{{car.fuelTypeName}}</th>
-        <th scope="row">{{car.year}}</th>
-        <th scope="row">{{car.price}}</th>
-        <th scope="row">{{car.mileage}}</th>
-        <th scope="row">{{car.description}}</th>
-        <th scope="row">{{car.userId}}</th>
-        <th scope="row"><img *ngFor="let image of car.imagesPath" [src]="image"></th>
-        <!--<th scope="row"><img *ngFor="let image of carImages[car.id]" [src]="image.imagePathToDisplay"></th>-->
-      </tr>
-    </tbody>
-  </table>
+<div class="sub-header">
+  <img src="../../../../assets/images/subbanner.jpg" alt="sub-banner">
+  <div class="sub-header-wrapper">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-12">
+          <div class="sub-header-text-wrapper text-center">
+            <h1><span class="orange-span">Пошук</span> автомобіля</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="section car-list">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <form class="search-filter-options">
+          <div class="d-flex justify-content-between row align-items-end">
+            <div class="col-lg-3 col-md-6">
+              <div class="products-ordering-list"> <span>Price</span>
+                <select [(ngModel)]="selectedSortOption" class="form-select car-list-select shadow-none"
+                  [ngModelOptions]="{standalone: true}">
+                  <option value="" disabled selected>Сортувати за ціною</option>
+                  <option value="default" (click)="sortCars()">За замовчуванням</option>
+                  <option value="asc" (click)="sortCars()">За зростанням</option>
+                  <option value="desc" (click)="sortCars()">За спаданням</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="filter-by-grid-list"> <span>View As</span>
+                <div class="filter-tab-area">
+                  <ul class="nav nav-tabs" role="tablist">
+                    <li> <a  (click)="toggleView('grid')" data-toggle="tab" aria-selected="false"><i [class.active]="selectedView === 'grid'"
+                           class="bi bi-border-all"></i></a>
+                    </li>
+                    <li> <a  (click)="toggleView('list')" data-toggle="tab" aria-selected="true"><i [class.active]="selectedView === 'list'"
+                           class="bi bi-border-width"></i></a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="tab-content">
+      <div id="listing_list" class="tab-pane active">
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="car-model-layout-list" *ngFor="let car of carInfo">
+              <div class="car-thumbnail-area">
+                <div class="item-thumb">
+                  <img src="{{car.imagesPath[0]}}" class="img-fluid full-width" alt="image">
+                </div>
+                <div class="car-overlay-info">
+                  <div class="car-type luxury">Luxury</div>
+                </div>
+              </div>
+              <div class="car-description-area">
+                <div class="car-description-content">
+                  <h5 class="title"><a routerLink="/car/car-details/{{car.id}}" class="text-light-black">{{car.makeName}} {{car.modelName}}
+                      {{car.generationName}}</a></h5>
+                  <div class="car-rating">
+                    <div class="rating-value">
+                      <p><i class="bi bi-fuel-pump-fill"></i> {{car.fuelTypeName}}</p>
+                    </div>
+                    <div class="rating-icon">
+                      <p>${{car.price}}</p>
+                    </div>
+                  </div>
+                  <div class="car-meta">
+                    <div class="car-modification">
+                      {{car.modificationName}}
+                    </div>
+                    <div class="car-number">
+                      VIN: {{car.vin}}
+                    </div>
+                  </div>
+                  <div class="car-summary">
+                    <p>{{car.description | slice:0:124}}</p>
+                  </div>
+                </div>
+                <div class="car-description-footer">
+                  <a routerLink="/car/car-details/{{car.id}}" class="view btn-car">Детальніше</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <aside class="col-lg-4">
+            <div class="side-search-bar">
+              <div class="title-icon">
+                <h5 class="title"><i class="bi bi-search"></i> Фільтр</h5>
+              </div>
+              <div class="widget-search-filter">
+                <div class="widget-content">
+                  <form>
+                    <div class="form-group mb-3">
+                      <select class="car-list-filter-select form-control shadow-none">
+                        <option value="" selected>Обрати марку</option>
+                      </select>
+                    </div>
+                    <div class="form-group mb-3">
+                      <select class="car-list-filter-select form-control shadow-none">
+                        <option value="" selected>Обрати модель</option>
+                      </select>
+                    </div>
+                    <div class="form-group mb-3">
+                      <select class="car-list-filter-select form-control shadow-none">
+                        <option value="" selected>Обрати покоління</option>
+                      </select>
+                    </div>
+                    <div class="form-group mb-3">
+                      <select class="car-list-filter-select form-control shadow-none">
+                        <option value="" selected>Обрати модифікацію</option>
+                      </select>
+                    </div>
+                    <div class="form-group d-flex mb-3">
+                      <div class="input-wrap mr-3">
+                        <label for="price-input">Від:</label>
+                        <input type="text" placeholder="$" id="price-input" class="form-control shadow-none car-list-filter-select">
+                      </div>
+                      <div class="input-wrap">
+                        <label for="price-input">До:</label>
+                        <input type="text" placeholder="$" class="form-control shadow-none car-list-filter-select">
+                      </div>
+                    </div>
+                    <div class="form-submit text-center">
+                      <button type="submit" class="btn car-list-btn">Фільтрувати</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+      <div id="listing_grid" class="tab-pane fade">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="right-search-filter-box">
+              <div class="car-model-sec">
+                <div class="row">
+                  <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
+                    <div class="car-model text-center">
+                      <div class="car-sec car-bottom-space">
+                        <div class="car-title">
+                          <h4 class="text-light-black">Ghibli</h4>
+                          <h5 class="text-light-black">YOU'RE NOT LIKE EVERYONE ELSE</h5>
+                          <p class="text-dark-grey">A masterful combination of style, power, sporty handling and
+                            comfort.</p>
+                        </div>
+                        <img src="https://via.placeholder.com/364x266" class="img-fluid full-width"
+                          alt="Car Model Image">
+                        <div class="car-details"> <a href="#" class="btn-third transparent-btn">Discover More</a>
+                          <a href="#" class="btn-second orange-btn">Build &amp; Price</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
+                    <div class="car-model text-center">
+                      <div class="car-sec car-bottom-space">
+                        <div class="car-title">
+                          <h4 class="text-light-black">Levante</h4>
+                          <h5 class="text-light-black">YOU'RE NOT LIKE EVERYONE ELSE</h5>
+                          <p class="text-dark-grey">A masterful combination of style, power, sporty handling and
+                            comfort.</p>
+                        </div>
+                        <img src="https://via.placeholder.com/364x266" class="img-fluid full-width"
+                          alt="Car Model Image">
+                        <div class="car-details"> <a href="#" class="btn-third transparent-btn">Discover More</a>
+                          <a href="#" class="btn-second orange-btn">Build &amp; Price</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
+                    <div class="car-model text-center">
+                      <div class="car-sec">
+                        <div class="car-title">
+                          <h4 class="text-light-black">Quattroporte</h4>
+                          <h5 class="text-light-black">YOU'RE NOT LIKE EVERYONE ELSE</h5>
+                          <p class="text-dark-grey">A masterful combination of style, power, sporty handling and
+                            comfort.</p>
+                        </div>
+                        <img src="https://via.placeholder.com/364x266" class="img-fluid full-width"
+                          alt="Car Model Image">
+                        <div class="car-details"> <a href="#" class="btn-third transparent-btn">Discover More</a>
+                          <a href="#" class="btn-second orange-btn">Build &amp; Price</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
+                    <div class="car-model text-center">
+                      <div class="car-sec car-bottom-space">
+                        <div class="car-title">
+                          <h4 class="text-light-black">Levante</h4>
+                          <h5 class="text-light-black">YOU'RE NOT LIKE EVERYONE ELSE</h5>
+                          <p class="text-dark-grey">A masterful combination of style, power, sporty handling and
+                            comfort.</p>
+                        </div>
+                        <img src="https://via.placeholder.com/364x266" class="img-fluid full-width"
+                          alt="Car Model Image">
+                        <div class="car-details"> <a href="#" class="btn-third transparent-btn">Discover More</a>
+                          <a href="#" class="btn-second orange-btn">Build &amp; Price</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
+                    <div class="car-model text-center">
+                      <div class="car-sec car-bottom-space">
+                        <div class="car-title">
+                          <h4 class="text-light-black">Levante</h4>
+                          <h5 class="text-light-black">YOU'RE NOT LIKE EVERYONE ELSE</h5>
+                          <p class="text-dark-grey">A masterful combination of style, power, sporty handling and
+                            comfort.</p>
+                        </div>
+                        <img src="https://via.placeholder.com/364x266" class="img-fluid full-width"
+                          alt="Car Model Image">
+                        <div class="car-details"> <a href="#" class="btn-third transparent-btn">Discover More</a>
+                          <a href="#" class="btn-second orange-btn">Build &amp; Price</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
+                    <div class="car-model text-center">
+                      <div class="car-sec">
+                        <div class="car-title">
+                          <h4 class="text-light-black">Quattroporte</h4>
+                          <h5 class="text-light-black">YOU'RE NOT LIKE EVERYONE ELSE</h5>
+                          <p class="text-dark-grey">A masterful combination of style, power, sporty handling and
+                            comfort.</p>
+                        </div>
+                        <img src="https://via.placeholder.com/364x266" class="img-fluid full-width"
+                          alt="Car Model Image">
+                        <div class="car-details"> <a href="#" class="btn-third transparent-btn">Discover More</a>
+                          <a href="#" class="btn-second orange-btn">Build &amp; Price</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
+                    <div class="car-model text-center">
+                      <div class="car-sec car-bottom-space">
+                        <div class="car-title">
+                          <h4 class="text-light-black">Ghibli</h4>
+                          <h5 class="text-light-black">YOU'RE NOT LIKE EVERYONE ELSE</h5>
+                          <p class="text-dark-grey">A masterful combination of style, power, sporty handling and
+                            comfort.</p>
+                        </div>
+                        <img src="https://via.placeholder.com/364x266" class="img-fluid full-width"
+                          alt="Car Model Image">
+                        <div class="car-details"> <a href="#" class="btn-third transparent-btn">Discover More</a>
+                          <a href="#" class="btn-second orange-btn">Build &amp; Price</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
+                    <div class="car-model text-center">
+                      <div class="car-sec car-bottom-space">
+                        <div class="car-title">
+                          <h4 class="text-light-black">Levante</h4>
+                          <h5 class="text-light-black">YOU'RE NOT LIKE EVERYONE ELSE</h5>
+                          <p class="text-dark-grey">A masterful combination of style, power, sporty handling and
+                            comfort.</p>
+                        </div>
+                        <img src="https://via.placeholder.com/364x266" class="img-fluid full-width"
+                          alt="Car Model Image">
+                        <div class="car-details"> <a href="#" class="btn-third transparent-btn">Discover More</a>
+                          <a href="#" class="btn-second orange-btn">Build &amp; Price</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
+                    <div class="car-model text-center">
+                      <div class="car-sec car-bottom-space">
+                        <div class="car-title">
+                          <h4 class="text-light-black">Levante</h4>
+                          <h5 class="text-light-black">YOU'RE NOT LIKE EVERYONE ELSE</h5>
+                          <p class="text-dark-grey">A masterful combination of style, power, sporty handling and
+                            comfort.</p>
+                        </div>
+                        <img src="https://via.placeholder.com/364x266" class="img-fluid full-width"
+                          alt="Car Model Image">
+                        <div class="car-details"> <a href="#" class="btn-third transparent-btn">Discover More</a>
+                          <a href="#" class="btn-second orange-btn">Build &amp; Price</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <nav class="custom-pagination">
+          <ul class="pagination">
+            <li class="page-item "><a class="page-link" href="#">Previous</a>
+            </li>
+            <li class="page-item active"><a class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">2</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">3</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">Next</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</section>

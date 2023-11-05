@@ -8,19 +8,19 @@
                     </div>
                     <div class="form-floating mb-3">
                         <select formControlName="countryId" class="form-select" >
-                            <option selected value="0">Країна виробник</option>
+                            <option selected value="">Країна виробник</option>
                             <option *ngFor="let county of countries" [value]="county.id">{{county.name}}</option>
                         </select>
                     </div>
                     <div class="form-floating mb-3">
                         <select formControlName="makeId" class="form-select">
-                            <option selected value="0">Марка</option>
+                            <option selected disabled value="">Марка</option>
                             <option *ngFor="let make of filteredMakes" [value]="make.id">{{make.name}}</option>
                         </select>
                     </div>
                     <div class="form-floating mb-3">
                         <select formControlName="modelId" class="form-select">
-                            <option selected value="0">Модель</option>
+                            <option selected disabled value="">Модель</option>
                             <option *ngFor="let model of filteredModels" [value]="model.id">{{model.name}}</option>
                         </select>
                         <!-- <input formControlName="modelId" type="number" placeholder="Модель" class="form-control"
@@ -32,7 +32,7 @@
                     </div>
                     <div class="form-floating mb-3">
                         <select formControlName="generationId" class="form-select">
-                            <option selected value="0">Покоління</option>
+                            <option selected disabled value="">Покоління</option>
                             <option *ngFor="let generation of filteredGenerations" [value]="generation.id">{{generation.name}}</option>
                         </select>
                         <!-- <input formControlName="generationId" type="number" placeholder="Покоління" 
@@ -44,7 +44,7 @@
                     </div>
                     <div class="form-floating mb-3">
                         <select formControlName="modificationId" class="form-select">
-                            <option selected value="0">Модифікація</option>
+                            <option selected disabled value="">Модифікація</option>
                             <option *ngFor="let modification of filteredModifications" [value]="modification.id">{{modification.name}}</option>
                         </select>
                         <!-- <input formControlName="modificationId" type="number" placeholder="Модифікація" class="form-control"
@@ -63,28 +63,64 @@
                         </span>
                     </div>
                     <div class="form-floating mb-3">
-                        <input formControlName="bodyTypeId" type="number" placeholder="Тип кузова" class="form-control"
+                        <select formControlName="bodyTypeId" class="form-select">
+                            <option selected disabled value="">Тип кузова</option>
+                            <option *ngFor="let bodyType of bodytypes" [value]="bodyType.id">{{bodyType.name}}</option>
+                        </select>
+                        <!-- <input formControlName="bodyTypeId" type="number" placeholder="Тип кузова" class="form-control"
                             [class.is-invalid]="submitted && addCarForm.get('bodyTypeId')?.errors">
                         <label for="bodyTypeId">Тип кузова</label>
                         <span class="text-danger" *ngIf="submitted && addCarForm.get('bodyTypeId')?.hasError('required')">
                             Тип кузоав обов'язковий
-                        </span>
+                        </span> -->
                     </div>
                     <div class="form-floating mb-3">
-                        <input formControlName="gearBoxTypeId" type="number" placeholder="Тип коробки передач" class="form-control"
+                        <select formControlName="gearBoxTypeId" class="form-select">
+                            <option selected disabled value="">Тип коробки передач</option>
+                            <option *ngFor="let gearbox of gearboxes" [value]="gearbox.id">{{gearbox.name}}</option>
+                        </select>
+                        <!-- <input formControlName="gearBoxTypeId" type="number" placeholder="Тип коробки передач" class="form-control"
                             [class.is-invalid]="submitted && addCarForm.get('gearBoxId')?.errors">
                         <label for="gearBoxTypeId">Тип коробки передач</label>
                         <span class="text-danger" *ngIf="submitted && addCarForm.get('gearBoxTypeId')?.hasError('required')">
                             Тип коробки передач обов`язковий
-                        </span>
+                        </span> -->
                     </div>
                     <div class="form-floating mb-3">
-                        <input formControlName="fuelTypeId" type="number" placeholder="Тип палива" class="form-control"
+                        <select formControlName="driveTrainId" class="form-select">
+                            <option selected disabled value="">Тип приводу</option>
+                            <option *ngFor="let drivetrain of drivetrains" [value]="drivetrain.id">{{drivetrain.name}}</option>
+                        </select>
+                        <!-- <input formControlName="gearBoxTypeId" type="number" placeholder="Тип коробки передач" class="form-control"
+                            [class.is-invalid]="submitted && addCarForm.get('gearBoxId')?.errors">
+                        <label for="gearBoxTypeId">Тип коробки передач</label>
+                        <span class="text-danger" *ngIf="submitted && addCarForm.get('gearBoxTypeId')?.hasError('required')">
+                            Тип коробки передач обов`язковий
+                        </span> -->
+                    </div>
+                    <div class="form-floating mb-3">
+                        <select formControlName="technicalConditionId" class="form-select">
+                            <option selected disabled value="">Технічний стан</option>
+                            <option *ngFor="let technicalCondition of technicalconditions" [value]="technicalCondition.id">{{technicalCondition.name}}</option>
+                        </select>
+                        <!-- <input formControlName="gearBoxTypeId" type="number" placeholder="Тип коробки передач" class="form-control"
+                            [class.is-invalid]="submitted && addCarForm.get('gearBoxId')?.errors">
+                        <label for="gearBoxTypeId">Тип коробки передач</label>
+                        <span class="text-danger" *ngIf="submitted && addCarForm.get('gearBoxTypeId')?.hasError('required')">
+                            Тип коробки передач обов`язковий
+                        </span> -->
+                    </div>
+                    <div class="form-floating mb-3">
+                        <select formControlName="fuelTypeId" class="form-select">
+                            <option selected disabled value="">Тип палива</option>
+                            <option *ngFor="let fueltype of fueltypes" [value]="fueltype.id">{{fueltype.name}}</option>
+                        </select>
+                        <!-- <input formControlName="fuelTypeId" type="number" placeholder="Тип палива" class="form-control"
                             [class.is-invalid]="submitted && addCarForm.get('fuelTypeId')?.errors">
                         <label for="fuelTypeId">Тип палива</label>
                         <span class="text-danger" *ngIf="submitted && addCarForm.get('fuelTypeId')?.hasError('required')">
                             Тип палива обов`язковий
-                        </span>
+                        </span> -->
                     </div>
                     <div class="form-floating mb-3">
                         <input formControlName="year" type="number" placeholder="Рік" class="form-control"
