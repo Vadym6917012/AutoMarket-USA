@@ -51,6 +51,7 @@ namespace AutoMarket.Server.Infrastructure
                 .Include(d => d.DriveTrain)
                 .Include(t => t.TechnicalCondition)
                 .Include(f => f.FuelType)
+                .Include(u => u.User)
                 .Include(i => i.Images).FirstAsync(c => c.Id == id);
         }
 
@@ -91,6 +92,102 @@ namespace AutoMarket.Server.Infrastructure
                 .Include(d => d.DriveTrain)
                 .Include(t => t.TechnicalCondition)
                 .Include(f => f.FuelType)
+                .Include(u => u.User)
+                .Include(i => i.Images);
+
+            var filteredCars = await query.ToListAsync();
+
+            return filteredCars;
+        }
+
+        public async Task<IEnumerable<Car>> CarFilter(CarFilter filter)
+        {
+            var query = _ctx.Set<Car>().AsQueryable();
+
+            if (filter.MakeId.HasValue)
+            {
+                query = query.Include(src => src.Model).ThenInclude(src => src.Make).Where(car => car.Model.Make.Id == filter.MakeId);
+            }
+
+            if (filter.ModelId.HasValue)
+            {
+                query = query.Where(car => car.ModelId == filter.ModelId);
+            }
+
+            if (filter.GenerationId.HasValue)
+            {
+                query = query.Where(car => car.GenerationId == filter.GenerationId);
+            }
+
+            if (filter.ModificationId.HasValue)
+            {
+                query = query.Where(car => car.ModificationId == filter.ModificationId);
+            }
+
+            if (filter.BodyTypeId.HasValue)
+            {
+                query = query.Where(car => car.BodyTypeId == filter.BodyTypeId);
+            }
+
+            if (filter.GearBoxTypeId.HasValue)
+            {
+                query = query.Where(car => car.GearBoxTypeId == filter.GearBoxTypeId);
+            }
+
+            if (filter.DriveTrainId.HasValue)
+            {
+                query = query.Where(car => car.DriveTrainId == filter.DriveTrainId);
+            }
+
+            if (filter.TechnicalConditionId.HasValue)
+            {
+                query = query.Where(car => car.TechnicalConditionId == filter.TechnicalConditionId);
+            }
+
+            if (filter.FuelTypeId.HasValue)
+            {
+                query = query.Where(car => car.FuelTypeId == filter.FuelTypeId);
+            }
+
+            if (filter.YearFrom.HasValue)
+            {
+                query = query.Where(car => car.Year >= filter.YearFrom);
+            }
+
+            if (filter.YearTo.HasValue)
+            {
+                query = query.Where(car => car.Year <= filter.YearTo);
+            }
+
+            if (filter.MileageFrom.HasValue)
+            {
+                query = query.Where(car => car.Mileage >= filter.MileageFrom);
+            }
+
+            if (filter.MileageTo.HasValue)
+            {
+                query = query.Where(car => car.Mileage <= filter.MileageTo);
+            }
+
+            if (filter.PriceFrom.HasValue)
+            {
+                query = query.Where(car => car.Price >= filter.PriceFrom);
+            }
+
+            if (filter.PriceTo.HasValue)
+            {
+                query = query.Where(car => car.Price <= filter.PriceTo);
+            }
+
+            query = query.Include(m => m.Model).ThenInclude(m => m.Make).ThenInclude(c => c.ProducingCountry)
+                .Include(m => m.Modification)
+                .Include(g => g.Generation)
+                .Include(b => b.BodyType)
+                .Include(g => g.GearBoxType)
+                .Include(d => d.DriveTrain)
+                .Include(t => t.TechnicalCondition)
+                .Include(f => f.FuelType)
+                .Include(u => u.User)
                 .Include(i => i.Images);
 
             var filteredCars = await query.ToListAsync();
@@ -112,6 +209,7 @@ namespace AutoMarket.Server.Infrastructure
                 .Include(t => t.TechnicalCondition)
                 .Include(f => f.FuelType)
                 .Include(i => i.Images)
+                .Include(u => u.User)
                 .ToListAsync();
         }
 
@@ -137,6 +235,7 @@ namespace AutoMarket.Server.Infrastructure
                 .Include(t => t.TechnicalCondition)
                 .Include(f => f.FuelType)
                 .Include(i => i.Images)
+                .Include(u => u.User)
                 .ToListAsync();
         }
 

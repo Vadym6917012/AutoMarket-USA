@@ -35,8 +35,10 @@ namespace AutoMarket.Server.Infrastructure
                 .ForMember(dest => dest.DriveTrainName, opt => opt.MapFrom(src => src.DriveTrain.Name))
                 .ForMember(dest => dest.TechnicalConditionName, opt => opt.MapFrom(src => src.TechnicalCondition.Name))
                 .ForMember(dest => dest.FuelTypeName, opt => opt.MapFrom(src => src.FuelType.Name))
-                .ForMember(dest => dest.ImagesPath, opt => opt.MapFrom(src => src.Images.Select(p => p.ImagePathToDisplay)));
-             
+                .ForMember(dest => dest.ImagesPath, opt => opt.MapFrom(src => src.Images.Select(p => p.ImagePathToDisplay)))
+                .ForMember(dest => dest.UserEmail, opt => opt.MapFrom(src => src.User.Email))
+                .ForMember(dest => dest.UserPhoneNumber, opt => opt.MapFrom(src => src.User.PhoneNumber));
+
             CreateMap<FuelType, FuelTypeDTO>().ReverseMap();
             CreateMap<GearBoxType, GearBoxTypeDTO>().ReverseMap();
             CreateMap<Generation, GenerationDTO>().ReverseMap();

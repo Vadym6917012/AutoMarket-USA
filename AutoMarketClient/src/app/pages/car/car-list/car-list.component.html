@@ -98,34 +98,88 @@
               </div>
               <div class="widget-search-filter">
                 <div class="widget-content">
-                  <form>
+                  <form [formGroup]="carFilter" (ngSubmit)="filter()" autocomplete="off">
                     <div class="form-group mb-3">
-                      <select class="car-list-filter-select form-control shadow-none">
+                      <select formControlName="makeId" class="car-list-filter-select form-control shadow-none">
                         <option value="" selected>Обрати марку</option>
+                        <option *ngFor="let make of makes" [value]="make.id">{{make.name}}</option>
                       </select>
                     </div>
                     <div class="form-group mb-3">
-                      <select class="car-list-filter-select form-control shadow-none">
+                      <select formControlName="modelId" class="car-list-filter-select form-control shadow-none">
                         <option value="" selected>Обрати модель</option>
+                        <option *ngFor="let model of filteredModels" [value]="model.id">{{model.name}}</option>
                       </select>
                     </div>
                     <div class="form-group mb-3">
-                      <select class="car-list-filter-select form-control shadow-none">
+                      <select formControlName="generationId" class="car-list-filter-select form-control shadow-none">
                         <option value="" selected>Обрати покоління</option>
+                        <option *ngFor="let generation of filteredGenerations" [value]="generation.id">{{generation.name}}</option>
                       </select>
                     </div>
                     <div class="form-group mb-3">
-                      <select class="car-list-filter-select form-control shadow-none">
+                      <select formControlName="modificationId" class="car-list-filter-select form-control shadow-none">
                         <option value="" selected>Обрати модифікацію</option>
+                        <option *ngFor="let modification of filteredModifications" [value]="modification.id">{{modification.name}}</option>
+                      </select>
+                    </div>
+                    <div class="form-group mb-3">
+                      <select formControlName="bodyTypeId" class="car-list-filter-select form-control shadow-none">
+                        <option value="" selected>Обрати тип кузова</option>
+                        <option *ngFor="let bodyType of bodytypes" [value]="bodyType.id">{{bodyType.name}}</option>
+                      </select>
+                    </div>
+                    <div class="form-group mb-3">
+                      <select formControlName="driveTrainId" class="car-list-filter-select form-control shadow-none">
+                        <option value="" selected>Обрати тип приводу</option>
+                        <option *ngFor="let drivetrain of drivetrains" [value]="drivetrain.id">{{drivetrain.name}}</option>
+                      </select>
+                    </div>
+                    <div class="form-group mb-3">
+                      <select formControlName="technicalConditionId" class="car-list-filter-select form-control shadow-none">
+                        <option value="" selected>Обрати тип технічного стану</option>
+                        <option *ngFor="let technicalCondition of technicalconditions" [value]="technicalCondition.id">{{technicalCondition.name}}</option>
+                      </select>
+                    </div>
+                    <div class="form-group mb-3">
+                      <select formControlName="gearBoxTypeId" class="car-list-filter-select form-control shadow-none">
+                        <option value="" selected>Обрати тип коробки передач</option>
+                        <option *ngFor="let gearbox of gearboxes" [value]="gearbox.id">{{gearbox.name}}</option>
+                      </select>
+                    </div>
+                    <div class="form-group mb-3">
+                      <select formControlName="fuelTypeId" class="car-list-filter-select form-control shadow-none">
+                        <option value="" selected>Обрати тип палива</option>
+                        <option *ngFor="let fueltype of fueltypes" [value]="fueltype.id">{{fueltype.name}}</option>
                       </select>
                     </div>
                     <div class="form-group d-flex mb-3">
                       <div class="input-wrap mr-3">
-                        <label for="price-input">Від:</label>
+                        <label for="price-input">Рік від:</label>
+                        <input type="text" placeholder="Рік від" id="price-input" class="form-control shadow-none car-list-filter-select">
+                      </div>
+                      <div class="input-wrap">
+                        <label for="price-input">Рік до:</label>
+                        <input type="text" placeholder="Рік до" class="form-control shadow-none car-list-filter-select">
+                      </div>
+                    </div>
+                    <div class="form-group d-flex mb-3">
+                      <div class="input-wrap mr-3">
+                        <label for="price-input">Пробіг від:</label>
+                        <input type="text" placeholder="Пробіг від" id="price-input" class="form-control shadow-none car-list-filter-select">
+                      </div>
+                      <div class="input-wrap">
+                        <label for="price-input">Пробіг до:</label>
+                        <input type="text" placeholder="Пробіг до" class="form-control shadow-none car-list-filter-select">
+                      </div>
+                    </div>
+                    <div class="form-group d-flex mb-3">
+                      <div class="input-wrap mr-3">
+                        <label for="price-input">Ціна від:</label>
                         <input type="text" placeholder="$" id="price-input" class="form-control shadow-none car-list-filter-select">
                       </div>
                       <div class="input-wrap">
-                        <label for="price-input">До:</label>
+                        <label for="price-input">Ціна до:</label>
                         <input type="text" placeholder="$" class="form-control shadow-none car-list-filter-select">
                       </div>
                     </div>

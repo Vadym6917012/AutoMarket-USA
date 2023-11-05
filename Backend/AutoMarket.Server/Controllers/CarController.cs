@@ -52,9 +52,18 @@ namespace AutoMarket.Server.Controllers
         }
 
         [HttpGet("car-home-filter")]
-        public async Task<IEnumerable<CarDTO>> CarFilter([FromQuery] CarHomeFilter filter)
+        public async Task<IEnumerable<CarDTO>> CarHomeFilter([FromQuery] CarHomeFilter filter)
         {
             var car = await _repository.HomeFilter(filter);
+            var carDTO = _mapper.Map<IEnumerable<CarDTO>>(car);
+
+            return carDTO.ToList();
+        }
+
+        [HttpGet("car-filter")]
+        public async Task<IEnumerable<CarDTO>> CarFilter([FromQuery] CarFilter filter)
+        {
+            var car = await _repository.CarFilter(filter);
             var carDTO = _mapper.Map<IEnumerable<CarDTO>>(car);
 
             return carDTO.ToList();
