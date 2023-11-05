@@ -15,6 +15,8 @@ namespace AutoMarket.Server.Shared.DTOs.Car
         public string? VIN { get; set; }
         public int BodyTypeId { get; set; }
         public int GearBoxTypeId { get; set; }
+        public int DriveTrainId { get; set; }
+        public int TechnicalConditionId { get; set; }
         public int FuelTypeId { get; set; }
         public int Year { get; set; }
         public decimal Price { get; set; }

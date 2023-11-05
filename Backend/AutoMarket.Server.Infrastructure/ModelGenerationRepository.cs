@@ -1,4 +1,5 @@
 ﻿using AutoMarket.Server.Core;
+using AutoMarket.Server.Core.Models;
 using System.Linq.Expressions;
 
 namespace AutoMarket.Server.Infrastructure

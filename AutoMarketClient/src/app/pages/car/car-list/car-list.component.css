@@ -1,0 +1,431 @@
+.sub-header {
+    height: 650px;
+    width: 100%;
+    background-color: rgba(0, 0, 0, .3);
+}
+
+.sub-header img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: brightness(40%);
+}
+
+.sub-header-wrapper {
+    position: absolute;
+    bottom: 15%;
+    left: 0%;
+    right: 0;
+    transform: translate(0%, 0%);
+}
+
+.sub-header .sub-header-text-wrapper {
+    max-width: 700px;
+    margin: 0 auto;
+    word-break: break-word;
+}
+
+.sub-header .sub-header-text-wrapper h1 {
+    font-size: 50px;
+    margin-top: 20px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    padding-bottom: 15px;
+    color: #ffffff;
+}
+
+.search-filter-options {
+    margin-bottom: 60px;
+}
+
+.search-filter-options .filter-by-grid-list {
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+.search-filter-options .filter-by-grid-list>span {
+    display: inline-block;
+    line-height: 1em;
+    margin-right: 20px;
+    margin-top: -3px;
+}
+
+.search-filter-options .filter-by-grid-list .filter-tab-area {
+    margin-bottom: 0;
+    overflow: hidden;
+}
+
+.search-filter-options .filter-by-grid-list .filter-tab-area .nav-tabs {
+    border-bottom: 0 solid;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.search-filter-options .filter-by-grid-list .filter-tab-area .nav-tabs>li {
+    display: inline-block;
+}
+
+.search-filter-options .filter-by-grid-list .filter-tab-area .nav-tabs>li>a i {
+    border-radius: 0;
+    color: #dddddd;
+    font-size: 22px;
+    height: auto;
+    line-height: 1em;
+    margin-right: 5px;
+    padding: 0;
+    font-weight: 600;
+    transition: all 0.25s ease 0s;
+}
+
+.search-filter-options .filter-by-grid-list .filter-tab-area .nav-tabs>li>a i.active {
+    color: #ff8500;
+}
+
+.car-list-select {
+    font-size: 14px;
+    height: 58px;
+    margin: 0;
+    border-radius: 0%;
+    border: 0;
+    background-color: #f5f7f9;
+    border-bottom: 1px solid #eee;
+}
+
+.car-list-select:hover {
+    border-color: #dbdbdb;
+}
+
+.car-model-layout-list {
+    display: flex;
+    -webkit-box-align: center;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+    box-shadow: 3px 3px 11px rgba(0, 0, 0, 0.07);
+    border: 1px solid #eee;
+    height: 200px;
+}
+
+.car-thumbnail-area {
+    position: relative;
+    overflow: hidden;
+    width: 50%;
+    max-height: 200px;
+}
+
+.item-thumb {
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+}
+
+.item-thumb img {
+    object-fit: cover;
+    height: 200px;
+}
+
+.car-model-layout-list:hover .item-thumb>img {
+    transform: scale(1.1) rotate(-3deg);
+    transition: 0.5s;
+}
+
+.item-thumb:before {
+    content: "";
+    height: 100%;
+    width: 100%;
+    bottom: 0;
+    top: 0;
+    position: absolute;
+    background-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.5));
+    z-index: 2;
+}
+
+.car-model-layout-list .car-overlay-info {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 3;
+}
+
+.car-model-layout-list .car-overlay-info .car-type {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: #fff;
+    display: inline-block;
+    font-size: 11px;
+    font-weight: normal;
+    height: 18px;
+    line-height: 18px;
+    margin-bottom: 0;
+    padding: 0 10px;
+    text-transform: uppercase;
+}
+
+.car-model-layout-list .car-overlay-info .car-type.luxury {
+    background-color: #ff8500;
+}
+
+.car-description-area {
+    width: 50%;
+}
+
+.car-model-layout-list .car-description-area .car-description-content {
+    padding: 18px 20px 24px;
+}
+
+.car-rating {
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.car-meta {
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.car-meta>div {
+    margin-bottom: 18px;
+}
+
+.car-meta>div i {
+    margin-right: 4px;
+    color: #6c6d72;
+}
+
+.car-summary p {
+    font-size: 13px;
+    margin: 0;
+}
+
+.car-description-footer {
+    border-top: 1px solid #eee;
+    background-color: #f5f5f5;
+    display: flex;
+    flex-wrap: wrap;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    padding: 13px 20px;
+}
+
+.car-description-footer a.book i {
+    margin-right: 4px;
+}
+
+.right-section-car-box {
+    padding: 30px 15px 15px 15px;
+    background: #fff;
+    box-shadow: 3px 3px 11px rgba(0, 0, 0, 0.06);
+}
+
+.title-head {
+    padding: 30px 15px 0px;
+    margin-bottom: 0px;
+    border-bottom: 1px solid #eee;
+    background: #fff;
+    box-shadow: 3px 3px 11px rgba(0, 0, 0, 0.06);
+}
+
+.right-section-car-box>.row>div {
+    border-right: 1px solid #eee;
+    margin-bottom: 50px;
+}
+
+.car-model-layout-list {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+    box-shadow: 3px 3px 11px rgba(0, 0, 0, 0.07);
+    border: 1px solid #eee;
+}
+
+.car-thumbnail-area {
+    position: relative;
+    overflow: hidden;
+    width: 50%;
+}
+
+.car-description-area {
+    width: 50%;
+}
+
+.car-description-content {
+    padding: 18px 20px 24px;
+}
+
+.title {
+    margin-bottom: 15px;
+}
+
+.title span {
+    float: right;
+    position: relative;
+}
+
+.car-details {
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.car-summary p {
+    font-size: 13px;
+    margin: 0;
+}
+
+.car-description-footer {
+    border-top: 1px solid #eee;
+    background-color: #f5f5f5;
+    display: flex;
+    flex-wrap: wrap;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: flex-end;
+    padding: 13.5px 20px;
+}
+
+.car-description-footer a.book i {
+    margin-right: 4px;
+}
+
+.side-search-bar {
+    box-shadow: 3px 3px 11px rgba(0, 0, 0, 0.06);
+    border: 1px solid #eee;
+    padding: 0;
+    background-color: #fff;
+    border-top: 0;
+}
+
+.side-search-bar .title-icon {
+    padding: 20px 30px 0px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #eee;
+    border-top: 1px solid #eee;
+}
+
+.side-search-bar .title-icon .title {
+    display: flex;
+    align-items: center;
+}
+
+.title-icon > .title > i {
+    color: #a7a7a7;
+    font-size: 25px;
+    margin-right: 15px;
+}
+
+.side-search-bar .widget-search-filter {
+    padding: 0 30px;
+    margin-bottom: 0px;
+    display: flow-root;
+}
+
+.side-search-bar .widget-search-filter .widget-content {
+    padding-top: 10px
+}
+
+.car-list-filter-select {
+    height: 50px;
+    padding: 0.375rem 1.2rem;
+    border-radius: 0;
+    border: 1px solid #eee;
+    width: 100%;
+}
+
+.car-list-filter-select:focus {
+    border: 1px solid #ff8500;
+}
+
+
+.range-price::-moz-range-thumb {
+    background: #ff8500;
+}
+
+.range-price::-moz-range-thumb:active {
+    border-color: #ff8500;
+}
+
+.input-wrap:first-child {
+    margin-right: 20px;
+}
+
+.form-submit {
+    margin-bottom: 1rem;
+}
+
+.car-list-btn {
+    background: #ff8500;
+    color: #fff;
+    padding: 10px 25px;
+    border-radius: 0;
+    margin-bottom: 15px;
+}
+
+.car-list-btn:hover {
+    background: #191919;
+    border-color: #191919;
+    color: #fff;
+}
+
+nav.custom-pagination {
+    display: flex;
+    justify-content: center;
+}
+nav.custom-pagination .pagination {
+    text-align: center;
+    padding: 30px 0;
+    font-size: 1em;
+    font-weight: bold;
+    margin: 0;
+}
+nav.custom-pagination .pagination li.page-item {
+    display: inline-block;
+    margin: 0 5px;
+}
+nav.custom-pagination .pagination li.page-item a {
+    border: 0;
+    padding: 0;
+    display: block;
+    position: relative;
+    width: auto;
+    height: 42px;
+    width: 42px;
+    line-height: 42px;
+    color: #8f8f8f;
+    font-weight: 500;
+}
+nav.custom-pagination .pagination > li.active > a,
+nav.custom-pagination .pagination > li > a:hover {
+    background-color: #ff8500;
+    color: #fff;
+}
+nav.custom-pagination .pagination li.page-item:first-child a,
+nav.custom-pagination .pagination li.page-item:last-child a {
+    width: auto;
+    padding: 0 22px;
+}

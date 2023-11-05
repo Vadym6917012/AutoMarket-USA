@@ -1,15 +1,21 @@
-.footer-brand {
-    width: 190px;
-    text-decoration: none;
+footer{
+    background-color: #1c1d1f;
+    color: #a5a5a5;
+}
+
+footer h6 {
+    color: #fff;
 }
 
 .copyright {
     text-align: center;
     text-decoration: none;
     padding: 20px 0;
+    border-top: 1px solid #a5a5a5;
+    background-color: #1c1d1f;
 }
 
 .copyright a {
-    color: black;
+    color: #a5a5a5;
     text-decoration: none;
 }

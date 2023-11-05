@@ -1,4 +1,5 @@
 ﻿using AutoMarket.Server.Core;
+using AutoMarket.Server.Core.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 

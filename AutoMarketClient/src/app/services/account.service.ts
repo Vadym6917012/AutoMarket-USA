@@ -8,6 +8,7 @@ import { ReplaySubject, map, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { ConfirmEmail } from '../models/account/confirmEmail';
 import { ResetPassword } from '../models/account/resetPassword';
+import { SharedService } from '../shared/shared.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,21 @@ export class AccountService {
   private userSource = new ReplaySubject<User | null>(1);
   user$ = this.userSource.asObservable();
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private sharedService: SharedService) { }
+
+  refreshToken = async () => {
+    this.http.post<User>(`${environment.apiUrl}/api/account/refresh-token`, {}, {withCredentials: true})
+    .subscribe({
+      next: (user: User) => {
+        if (user) {
+          this.setUser(user);
+        }
+      }, error: error => {
+        this.sharedService.showNotification(false, 'Error', error.error);
+        this.logout();
+      }
+    })
+  }
 
   refreshUser(jwt: string | null) {
     if (jwt === null) {
@@ -27,7 +42,7 @@ export class AccountService {
     let headers = new HttpHeaders();
     headers = headers.set('Authorization', 'Bearer ' + jwt);
 
-    return this.http.get<User>(`${environment.apiUrl}/api/account/refresh-user-token`, {headers}).pipe(
+    return this.http.get<User>(`${environment.apiUrl}/api/account/refresh-page`, {headers, withCredentials: true}).pipe(
       map((user: User) => {
         this.setUser(user);
       })

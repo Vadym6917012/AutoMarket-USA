@@ -1,73 +1,113 @@
 .searchwrap {
-    background-image: url('../../../assets/images/porsche-1851246_1920.jpg');
-    background-size: auto;
-    background-size: cover;
-    padding: 100px 0;
-  }
+	background-image: url('../../../assets/images/porsche-1851246_1920.jpg');
+	background-size: auto;
+	background-size: cover;
+	padding: 100px 0;
+	height: 100vh;
+	position: relative;
 
-  .searchwrap h3 {
+}
+
+.searchwrap::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* Колір фону і прозорість (затемнення) */
+	z-index: 0;
+}
+
+.searchwrap h3 {
 	text-align: center;
 	font-size: 48px;
 	color: #fff;
+	position: relative;
 }
+
 .searchwrap p {
 	text-align: center;
 	color: #fff;
 	font-size: 18px;
+	position: relative;
 }
-.searchbar {
-	margin-top: 40px;
-	background: rgba(255,255,255,0.3);
-	border: 1px solid rgba(255, 255, 255, 0.4);
-	padding: 20px;
-	border-radius: 5px;
+
+.car-search-form-sec {
+	margin-top: 80px;
 }
-.searchbar .row {
-	margin: 0;
+
+.car-search-form .tab-content {
+	padding: 42px 30px 20px;
+	background-color: #fff;
+	box-shadow: 0px 4px 12px -10px #000;
 }
-.searchbar div {
-	padding: 0 1px;
-}
-.searchbar .form-control {
+
+.car-search-form .tab-content form button {
 	height: 50px;
-	border-radius: 0;
-	padding: 13px 15px;
-	border: none;
-	font-size: 18px;
 }
-.searchbar .btn {
-	background: #5dc302;
+
+.home-select {
+
+	border-color: #eee;
+	cursor: pointer;
+	font-family: inherit;
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 40px;
+	color: #6c757d;
+	text-align: left !important;
+	white-space: nowrap;
 	border-radius: 0;
-	color: #fff;
-	border: none;
-	font-size: 16px;
-	text-transform: uppercase;
-	font-weight: 700;
-	padding: 14px 30px;
+}
+
+.home-select:active {
+	border-color: #ff8500;
+}
+
+.home-select:focus {
+	border-color: #ff8500;
+}
+
+.home-btn {
 	width: 100%;
+	background: #ff8500;
+	color: #fff;
+	border-radius: 0;
 }
-.top-title  {
+
+.home-btn:hover {
+	background: #1c1d1f;
+	border-color: #1c1d1f
+}
+
+
+.top-title {
 	text-align: center;
 	margin-bottom: 40px;
 }
-.top-title  .subtitle {
+
+.top-title .subtitle {
 	font-size: 24px;
 	font-weight: 600;
 	color: #888;
 }
+
 .top-title h3 {
 	font-size: 36px;
 	font-weight: 500;
 	color: #000;
 	position: relative;
-	margin-bottom:45px;
+	margin-bottom: 45px;
 }
+
 .top-title h3 span {
-	color: #5dc302;
+	color: #ff8c00;
 	font-weight: 200;
 }
-.top-title  h3:after {
-	background: #5dc302;
+
+.top-title h3:after {
+	background: #ff8c00;
 	width: 80px;
 	height: 2px;
 	position: absolute;
@@ -76,26 +116,30 @@
 	content: '';
 	margin-left: -40px;
 }
+
 .top-title p {
 	max-width: 700px;
 	margin: 0 auto;
 }
 
 .home-card {
+	width: 18rem;
 	position: relative;
 	border-radius: 8px;
+	overflow: hidden;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .card-image img {
-	max-height: 100%;
-	max-width: 100%;
+	width: 100%;
+	min-height: 180px;
 	border-radius: 8px 8px 0px 0;
+	transition: 0.5s linear;
 }
 
-.card-image img:hover {
-	-webkit-transform: scale(1);
-	transform: scale(1);
+.card-image:hover img {
+	transform: scale(1.1);
+
 }
 
 .card-heading {
@@ -117,7 +161,7 @@
 	justify-content: center;
 	padding: 10px 0;
 	width: 100%;
-	background-color: #1F487E;
+	background-color: #ff8c00;
 	color: #fff;
 	border-radius: 0 0 8px 8px;
 	text-decoration: none;
@@ -125,7 +169,49 @@
 
 .card-button:hover {
 	text-decoration: none;
-	background-color: #1D3461;
+	background-color: #1c1d1f;
 	color: #fff;
 }
 
+.section-header {
+    max-width: 550px;
+    margin: 0 auto;
+    padding-bottom: 50px;
+}
+
+.content-wrapper {
+	cursor: pointer;
+	margin: 0 auto;
+	transition: all 0.35s;
+	padding: 0 45px;
+}
+
+.icon-box {
+	font-size: 60px;
+	transition: all 0.6s cubic-bezier(0.680, 0, 0.265, 1.550);
+}
+
+.content-wrapper:hover .icon-box {
+    text-shadow: 2px 2px 15px rgba(0, 46, 91, 0.2);
+    transform: rotateY(360deg);
+}
+
+.how-it-works .content-wrapper:hover h5 a {
+    color: #ff8500;
+}
+
+.row>div {
+	padding: 0;
+	position: relative;
+}
+
+.counter-sec-content {
+	padding-left: 50px;
+	padding-bottom: 30px;
+}
+
+.counter-sec-content>h3>i {
+	font-size: 24px;
+	position: relative;
+	top: -3px;
+}

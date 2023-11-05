@@ -1,1 +1,81 @@
-<p>car-details works!</p>
+<div class="car-details-page content-area-6">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-12 col-xs-12">
+                <div class="car-details-section">
+                    <div class="car-details-content-header d-flex justify-content-xxl-between">
+                        <div class="pull-left">
+                            <h3>{{car?.makeName}} {{car?.modelName}}</h3>
+                        </div>
+                        <div class="pull-right">
+                            <h3>${{car?.price}}</h3>
+                        </div>
+                    </div>
+                    <div class="car-slider-box clearfix mb-30">
+                        <owl-carousel-o id="slider" [options]="customOptions">
+                            <ng-container>
+                                <ng-template carouselSlide *ngFor="let image of car?.imagesPath">
+                                    <img [src]="image" alt="">
+                                </ng-template>
+                            </ng-container>
+                        </owl-carousel-o>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12">
+                <div class="sidebar-right">
+                    <div class="title-icon">
+                        <h5 class="title"><i class="bi bi-wrench"></i> Деталі</h5>
+                    </div>
+                    <div class="sidebar-content">
+                        <ul>
+                            <li>
+                                <span>Покоління:</span>{{car?.generationName}}
+                            </li>
+                            <li>
+                                <span>Модифікація:</span>{{car?.modificationName}}
+                            </li>
+                            <li>
+                                <span>Vin:</span>{{car?.vin}}
+                            </li>
+                            <li>
+                                <span>Коробка передач:</span>{{car?.gearBoxTypeName}}
+                            </li>
+                            <li>
+                                <span>Кузов:</span>{{car?.bodyTypeName}}
+                            </li>
+                            <li>
+                                <span>Колір:</span>{{car?.fuelTypeName}}
+                            </li>
+                            <li>
+                                <span>Fuel Type:</span>{{car?.fuelTypeName}}
+                            </li>
+                            <li>
+                                <span>Тип приводу:</span>{{car?.fuelTypeName}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="sidebar-right">
+                    <div class="title-icon">
+                        <h5 class="title"><i class="bi bi-wrench"></i> Є запитання?</h5>
+                    </div>
+                    <div class="sidebar-content">
+                        <ul class="contact-info">
+                            <li>
+                                <i class="bi bi-geo-alt-fill"></i>Rivne, UA
+                            </li>
+                            <li>
+                                <i class="bi bi-envelope-fill"></i><a
+                                    href="mailto:vadym.radchuk@oa.edu.ua">vadym.radchuk@oa.edu.ua</a>
+                            </li>
+                            <li>
+                                <i class="bi bi-telephone-fill"></i><a href="tel:+380677722536">+380677722536</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

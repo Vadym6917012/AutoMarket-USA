@@ -54,7 +54,6 @@ export class AddEditMemberComponent implements OnInit {
 
   initializeForm(member: MemberAddEdit | undefined) {
     if (member) {
-      // form for editing an existing member
       this.memberForm = this.formBuilder.group({
         id: [member.id],
         firstName: [member.firstName, Validators.required],
@@ -107,7 +106,6 @@ export class AddEditMemberComponent implements OnInit {
   submit() {
     this.submitted = true;
     this.errorMessages = [];
-
 
     if (this.memberForm.valid) {
       this.adminService.addEditMember(this.memberForm.value).subscribe({

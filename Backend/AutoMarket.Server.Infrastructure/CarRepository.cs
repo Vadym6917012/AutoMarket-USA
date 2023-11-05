@@ -1,4 +1,6 @@
 ﻿using AutoMarket.Server.Core;
+using AutoMarket.Server.Core.Models;
+using AutoMarket.Server.Shared.DTOs.Car;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
@@ -41,7 +43,15 @@ namespace AutoMarket.Server.Infrastructure
 
         public async Task<Car> GetByIdAsync(int id)
         {
-            return await _ctx.Set<Car>().FindAsync(id);
+            return await _ctx.Set<Car>().Include(m => m.Model).ThenInclude(m => m.Make).ThenInclude(c => c.ProducingCountry)
+                .Include(m => m.Modification)
+                .Include(g => g.Generation)
+                .Include(b => b.BodyType)
+                .Include(g => g.GearBoxType)
+                .Include(d => d.DriveTrain)
+                .Include(t => t.TechnicalCondition)
+                .Include(f => f.FuelType)
+                .Include(i => i.Images).FirstAsync(c => c.Id == id);
         }
 
         public Car GetById(int id)
@@ -49,19 +59,82 @@ namespace AutoMarket.Server.Infrastructure
             return _ctx.Set<Car>().Find(id);
         }
 
+        public async Task<IEnumerable<Car>> HomeFilter(CarHomeFilter filter)
+        {
+            var query = _ctx.Set<Car>().AsQueryable();
+
+            if (filter.MakeId.HasValue)
+            {
+                query = query.Include(src => src.Model).ThenInclude(src => src.Make).Where(car => car.Model.Make.Id == filter.MakeId);
+            }
+
+            if (filter.ModelId.HasValue)
+            {
+                query = query.Where(car => car.ModelId == filter.ModelId);
+            }
+
+            if (filter.PriceFrom.HasValue)
+            {
+                query = query.Where(car => car.Price >= filter.PriceFrom);
+            }
+
+            if (filter.PriceTo.HasValue)
+            {
+                query = query.Where(car => car.Price <= filter.PriceTo);
+            }
+
+            query = query.Include(m => m.Model).ThenInclude(m => m.Make).ThenInclude(c => c.ProducingCountry)
+                .Include(m => m.Modification)
+                .Include(g => g.Generation)
+                .Include(b => b.BodyType)
+                .Include(g => g.GearBoxType)
+                .Include(d => d.DriveTrain)
+                .Include(t => t.TechnicalCondition)
+                .Include(f => f.FuelType)
+                .Include(i => i.Images);
+
+            var filteredCars = await query.ToListAsync();
+
+            return filteredCars;
+        }
+
+        public async Task<IEnumerable<Car>> GetByCount(int count)
+        {
+            return await _ctx.Cars
+               .OrderBy(car => car.Id)
+               .Take(count)
+               .Include(m => m.Model).ThenInclude(m => m.Make).ThenInclude(c => c.ProducingCountry)
+                .Include(m => m.Modification)
+                .Include(g => g.Generation)
+                .Include(b => b.BodyType)
+                .Include(g => g.GearBoxType)
+                .Include(d => d.DriveTrain)
+                .Include(t => t.TechnicalCondition)
+                .Include(f => f.FuelType)
+                .Include(i => i.Images)
+                .ToListAsync();
+        }
+
         public async Task<Car> GetFirstAsync(Expression<Func<Car, bool>> expression)
         {
             return await _ctx.Set<Car>().FirstOrDefaultAsync(expression);
         }
 
+        public async Task<IEnumerable<Car>> GetCarByUserId(string userId)
+        {
+            return await _ctx.Set<Car>().Where(u => u.UserId == userId).ToListAsync();
+        }
+
         public async Task<IEnumerable<Car>> GetAllAsync()
         {
             return await _ctx.Set<Car>()
-                .Include(m => m.Model)
+                .Include(m => m.Model).ThenInclude(m => m.Make).ThenInclude(c => c.ProducingCountry)
                 .Include(m => m.Modification)
                 .Include(g => g.Generation)
                 .Include(b => b.BodyType)
                 .Include(g => g.GearBoxType)
+                .Include(d => d.DriveTrain)
+                .Include(t => t.TechnicalCondition)
                 .Include(f => f.FuelType)
                 .Include(i => i.Images)
                 .ToListAsync();

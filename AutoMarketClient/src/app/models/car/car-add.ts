@@ -6,6 +6,8 @@ export interface CarAdd {
     vin: string;
     bodyTypeId: number;
     gearBoxTypeId: number;
+    driveTrainId: number;
+    technicalConditionId: number;
     fuelTypeId: number;
     year: number;
     price: number;

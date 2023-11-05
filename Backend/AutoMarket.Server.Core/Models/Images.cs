@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AutoMarket.Server.Core
+namespace AutoMarket.Server.Core.Models
 {
     public class Images
     {

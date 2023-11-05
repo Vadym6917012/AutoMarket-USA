@@ -6,18 +6,22 @@ import { CarListComponent } from './car-list/car-list.component';
 import { CarRoutingModule } from './car-routing.module';
 import { CarAddComponent } from './car-add/car-add.component';
 import { CarDetailsComponent } from './car-details/car-details.component';
+import { CarUpdateComponent } from './car-update/car-update.component';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 @NgModule({
   declarations: [
     CarListComponent,
     CarAddComponent,
-    CarDetailsComponent
+    CarDetailsComponent,
+    CarUpdateComponent
   ],
   imports: [
     CommonModule,
     CarRoutingModule,
     SharedModule,
-    FormsModule
+    FormsModule,
+    CarouselModule,
   ]
 })
 export class CarModule { }

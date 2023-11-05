@@ -23,7 +23,10 @@ export class AppComponent implements OnInit {
         next: _ => {},
         error: error => {
           this.accountService.logout();
-          this.sharedService.showNotification(false, 'Акаунт заблоковано', error.error);
+
+          if (error.status === 401) {
+            this.sharedService.showNotification(false, 'Акаунт заблоковано', error.error);
+          }
         }
       })
     } else {

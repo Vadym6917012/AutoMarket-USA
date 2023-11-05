@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
         next: (user: User | null ) => {
           if (user) {
             this.router.navigateByUrl('/');
+            console.log(user);
           }
         }
       });

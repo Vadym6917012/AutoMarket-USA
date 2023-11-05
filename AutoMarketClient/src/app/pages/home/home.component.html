@@ -2,70 +2,153 @@
   <div class="container">
     <h3>Пошук б/у автомобілів в США</h3>
     <p>Шукайте серед понад 9000 активних оголошень та розміщуйте безкоштовні необмежені оголошення!</p>
-    <div class="searchbar">
-      <div class="row">
-        <div class="col-md-6">
-          <input type="text" class="form-control" placeholder="Марка">
+    <div class="car-search-form-sec">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <div class="car-search-form">
+              <div class="tab-content">
+                <div class="tab-pane active">
+                  <form [formGroup]="homeFormFilter" (ngSubmit)="filter()">
+                    <div class="row">
+                      <div class="col-xl col-lg-4 col-sm-6 mb-3">
+                        <select formControlName="makeId" class="form-select home-select shadow-none" name="" id="">
+                          <option selected disabled value="">Вибрати марку</option>
+                          <option *ngFor="let make of makes" [value]="make.id">{{make.name}}</option>
+                        </select>
+                      </div>
+                      <div class="col-xl col-lg-4 col-sm-6 mb-3">
+                        <select formControlName="modelId" class="form-select home-select shadow-none" name="" id="">
+                          <option selected disabled value="">Вибрати модель</option>
+                          <option *ngFor="let model of models" [value]="model.id">{{model.name}}</option>
+                        </select>
+                      </div>
+                      <div class="col-xl col-lg-4 col-sm-6 mb-3">
+                        <input formControlName="priceFrom" placeholder="$" type="number" class="form-control home-select shadow-none">
+                      </div>
+                      <div class="col-xl col-lg-4 col-sm-6 mb-3">
+                        <input formControlName="priceTo"placeholder="$" type="number" class="form-control home-select shadow-none">
+                      </div>
+                      <div class="col-xl col-lg-4 col-sm-6 mb-3">
+                        <button class="btn home-btn" type="submit"><i class="bi bi-search"></i> Пошук</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="col-md-2">
-          <select class="form-control">
-            <option>Price</option>
-            <option>$500 - $999</option>
-            <option>$1000 - $1099</option>
-            <option>$2000 - $2499</option>
-            <option>$2500 - $2999</option>
-            <option>$3000 - $3499</option>
-            <option>$3500 - $3999</option>
-            <option>About $4000</option>
-          </select>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="fetured-cars section whitebg">
+  <div class="container">
+    <div class="top-title">
+      <h3>Пошук б/у автомобілів в США</h3>
+      <p>Перегляньте недавно створені оголошення</p>
+    </div>
+    <div class="carousel_cards">
+      <owl-carousel-o id="slider" [options]="customOptions">
+        <ng-container>
+          <ng-template carouselSlide *ngFor="let car of cars">
+            <div class="home-card">
+              <div class="card-image">
+                <img [src]="car.imagesPath[0]" alt="">
+              </div>
+              <div class="card-heading">
+                {{car.makeName}} {{car.modelName}} {{car.year}}
+              </div>
+              <div class="card-text">
+                {{car.description}}
+              </div>
+              <div class="card-text">
+                ${{car.price}}
+              </div>
+              <a routerLink="car/car-details/{{car.id}}" class="card-button">Детальніше</a>
+            </div>
+          </ng-template>
+        </ng-container>
+      </owl-carousel-o>
+    </div>
+  </div>
+</section>
+
+<section class="about-counter-sec section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-5">
+        <div class="about-img-sec p-relative">
+          <img src="../../../assets/images/aboutus-.jpg" class="img-fluid full-width" alt="about-img">
         </div>
-        <div class="col-md-2">
-          <select class="form-control">
-            <option>City</option>
-            <option>New York</option>
-            <option>San Joes</option>
-            <option>Atlanta</option>
-            <option>Kennesaw</option>
-            <option>Merry Land</option>
-            <option>Star City</option>
-          </select>
-        </div>
-        <div class="col-md-2">
-          <input type="submit" class="btn" value="Пошук">
+      </div>
+      <div class="col-lg-7 align-self-center">
+        <div class="about-content-wrapper">
+          <div class="section-header no-margin">
+            <div class="text-wrapper text-left">
+              <h6 class="text-orange fw-400 mb-2">Про AUTOMARKET</h6>
+              <h3 class="fw-500 no-margin">МИ НАЙКРАЩИЙ СЕРВІС ДЛЯ ПРОДАЖУ ТА КУПІВЛІ АВТО З США</h3>
+            </div>
+          </div>
+          <p class="text-dark-grey"> "AutoMarket USA" - це онлайн-сервіс, який пропонує користувачам широкий вибір автомобілів на вторинному ринку США. Ми розуміємо, наскільки важливо знайти ідеальне авто, що відповідає вашим потребам і бажанням. Наша місія - зробити процес вибору автомобіля простим, зручним і захоплюючим. </p>
+          <ul>
+            <li class="text-dark-grey"><i class="bi bi-check2-circle"></i> Швидко</li>
+            <li class="text-dark-grey"><i class="bi bi-check2-circle"></i> Якісно</li>
+            <li class="text-dark-grey"><i class="bi bi-check2-circle"></i> Гарнатія</li>
+          </ul>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="fetured-cars section">
+<section class="whitebg how-it-works section">
   <div class="container">
-    <div class="top-title">
-      <h3>Пошук б/у автомобілів в США</h3>
-      <p>Шукайте серед понад 9000 активних оголошень та розміщуйте безкоштовні необмежені оголошення!</p>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="section-header">
+          <div class="text-wrapper  top-title text-center">
+            <h3 class="fw-500 no-margin">Як Це Працює</h3>
+            <p class="text-dark-grey">Купуй автомобіль з США бистро, якісно та з гарантією</p>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="carousel_cards">
-      <owl-carousel-o id="slider" [options]="customOptions">
-        <ng-container>
-          <ng-template carouselSlide>
-            <div class="home-card">
-              <div class="card-image">
-                <img src="../../../assets/images/porsche-1851246_1920.jpg" alt="">
-              </div>
-              <div class="card-heading">
-                Audi Q8 2006
-              </div>
-              <div class="card-text">
-                Audi Q8 is a full-size luxury crossover SUV coupé made by Audi that was launched in 2018.
-              </div>
-              <div class="card-text">
-                $67.400
-              </div>
-              <a routerLink="/detaiils/" class="card-button">Детальніше</a>
-            </div>
-          </ng-template>
-        </ng-container>
-      </owl-carousel-o>
+    <div class="row">
+      <div class="col-lg-4 col-md-6">
+        <div class="content-wrapper align-items-center text-center">
+          <div class="icon-box mb-2">
+            <i class="bi bi-person text-orange"></i>
+          </div>
+          <div class="content-box">
+            <h5 class="mb-2 text-light-black"><a href="">Create a Free Account</a></h5>
+            <p class="text-dark-grey">Створіть акаунт та отримайте доступ до продажів авто</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="content-wrapper align-items-center text-center">
+          <div class="icon-box mb-2">
+            <i class="bi bi-card-list text-orange"></i>
+          </div>
+          <div class="content-box">
+            <h5 class="mb-2 text-light-black"><a href="">Post your Free Car</a></h5>
+            <p class="text-dark-grey">Створіть безкоштовне оголошення з автомобілем і оновлюйте його кожен день, щоб бистро продати машину</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="content-wrapper align-items-center text-center">
+          <div class="icon-box mb-2">
+            <i class="bi bi-wallet2 text-orange"></i>
+          </div>
+          <div class="content-box">
+            <h5 class="mb-2 text-light-black"><a href="">Sold or Buy</a></h5>
+            <p class="text-dark-grey">Продавай або купкуй!</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
