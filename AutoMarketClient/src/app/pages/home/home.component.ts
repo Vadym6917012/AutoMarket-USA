@@ -6,7 +6,7 @@ import { CarService } from 'src/app/services/car.service';
 import { ModelService } from 'src/app/services/model.service';
 import { Model } from 'src/app/models/model/model';
 import { Make } from 'src/app/models/make/make';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -62,7 +62,7 @@ export class HomeComponent implements OnInit {
       this.modelService.getModelsByMake(makeId).subscribe(data => {
         this.models = data;
     })
-  })
+  });
 
     this.get5Cars();
     this.getMakes();

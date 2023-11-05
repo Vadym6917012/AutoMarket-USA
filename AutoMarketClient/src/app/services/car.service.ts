@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment.development';
 import { Car } from '../models/car/car';
 import { CarAdd } from '../models/car/car-add';
 import { CarHomeFilter } from '../models/car/car-home-filter';
+import { CarFilter } from '../models/car/car-filter';
 
 @Injectable({
   providedIn: 'root'
@@ -62,5 +63,44 @@ export class CarService {
     .set('priceTo', filter.priceTo.toString());
 
     return this.http.get<Car[]>(`${environment.apiUrl}/api/car/car-home-filter`, {params});
+  }
+
+  /*makeId: number;
+    modelId: number;
+    generationId: number;
+    modificationId: number;
+    bodyTypeId: number;
+    gearBoxTypeId: number;
+    driveTrainId: number;
+    technicalConditionId: number;
+    fuelTypeId: number;
+    yearFrom: number;
+    yearTo: number;
+    mileageFrom: number;
+    mileageTo: number;
+    priceFrom: number;
+    priceTo: number;*/
+
+  carFilter(filter: CarFilter | any) :Observable<Car[]> {
+
+    const params = new HttpParams()
+    
+    .set('makeId', filter.makeId.toString())
+    .set('modelId', filter.modelId.toString())
+    .set('generationId', filter.generationId.toString())
+    .set('modificationId', filter.modificationId.toString())
+    .set('bodyTypeId', filter.bodyTypeId.toString())
+    .set('gearBoxTypeId', filter.gearBoxTypeId.toString())
+    .set('driveTrainId', filter.driveTrainId.toString())
+    .set('technicalConditionId', filter.technicalConditionId.toString())
+    .set('fuelTypeId', filter.fuelTypeId.toString())
+    .set('yearFrom', filter.yearFrom.toString())
+    .set('yearTo', filter.yearTo.toString())
+    .set('mileageFrom', filter.mileageFrom.toString())
+    .set('mileageTo', filter.mileageTo.toString())
+    .set('priceFrom', filter.priceFrom.toString())
+    .set('priceTo', filter.priceTo.toString());
+
+    return this.http.get<Car[]>(`${environment.apiUrl}/api/car/car-filter`, {params});
   }
 }

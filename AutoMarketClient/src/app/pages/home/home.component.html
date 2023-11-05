@@ -58,13 +58,15 @@
                 <img [src]="car.imagesPath[0]" alt="">
               </div>
               <div class="card-heading">
-                {{car.makeName}} {{car.modelName}} {{car.year}}
+                <h5><a class="text-light-black" routerLink="car/car-details/{{car.id}}">{{car.makeName}} {{car.modelName}}</a></h5>
               </div>
-              <div class="card-text">
-                {{car.description}}
+              <div class="card-text d-flex justify-content-between">
+                <span class="text-dark-white"><i class="bi bi-cash text-orange me-2"></i>${{car.price}}</span>
+                <span class="text-dark-white"><i class="bi bi-car-front text-orange me-2"></i>{{car.year}}</span>
               </div>
-              <div class="card-text">
-                ${{car.price}}
+              <div class="card-text d-flex justify-content-between">
+                <span class="text-dark-white"><i class="bi bi-speedometer2 text-orange me-2"></i>{{car.mileage}} км</span>
+                <span class="text-dark-white"><i class="bi bi-fuel-pump text-orange me-2"></i>{{car.fuelTypeName}}</span>
               </div>
               <a routerLink="car/car-details/{{car.id}}" class="card-button">Детальніше</a>
             </div>

@@ -17,7 +17,8 @@
         public decimal Price { get; set; }
         public int Mileage { get; set; }
         public string? Description { get; set; }
-        public string? UserId { get; set; }
+        public string? UserEmail { get; set; }
+        public string? UserPhoneNumber { get; set; }
         public List<string>? ImagesPath { get; set; }
     }
 }

@@ -14,6 +14,7 @@ export interface Car {
     price: number;
     mileage: number;
     description: string;
-    userId: string;
+    userEmail: string;
+    userPhoneNumber: string;
     imagesPath: string[];
 }

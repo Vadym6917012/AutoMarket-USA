@@ -54,7 +54,7 @@ export class CarAddComponent implements OnInit {
   constructor(private carService: CarService,
     private countryServise: ProducingCountryService,
     private makeService: MakeService,
-    private generationSerice: GenerationService,
+    private generationService: GenerationService,
     private modelService: ModelService,
     private modificationService: ModificationService,
     private bodyTypeService: BodyTypeService,
@@ -115,7 +115,7 @@ export class CarAddComponent implements OnInit {
         this.filteredModifications = [];
       }
 
-      this.generationSerice.getGenerationByModel(modelId).subscribe(data => {
+      this.generationService.getGenerationByModel(modelId).subscribe(data => {
         this.filteredGenerations = data;
       });
       this.modificationService.getModificationsByModel(modelId).subscribe(data => {
