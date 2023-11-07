@@ -3,19 +3,20 @@
 	background-size: auto;
 	background-size: cover;
 	padding: 100px 0;
-	height: 100vh;
+	height: auto;
 	position: relative;
 
 }
 
 .searchwrap::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.4); /* Колір фону і прозорість (затемнення) */
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.4);
+	/* Колір фону і прозорість (затемнення) */
 	z-index: 0;
 }
 
@@ -34,13 +35,16 @@
 }
 
 .car-search-form-sec {
-	margin-top: 80px;
+	margin-top: 90px;
+}
+
+.car-search-form {
+	box-shadow: 0px 4px 12px -10px #000;
+	background-color: #fff;
 }
 
 .car-search-form .tab-content {
 	padding: 42px 30px 20px;
-	background-color: #fff;
-	box-shadow: 0px 4px 12px -10px #000;
 }
 
 .car-search-form .tab-content form button {
@@ -178,9 +182,8 @@
 }
 
 .section-header {
-    max-width: 550px;
-    margin: 0 auto;
-    padding-bottom: 50px;
+	max-width: 550px;
+	margin: 0 auto;
 }
 
 .content-wrapper {
@@ -196,12 +199,12 @@
 }
 
 .content-wrapper:hover .icon-box {
-    text-shadow: 2px 2px 15px rgba(0, 46, 91, 0.2);
-    transform: rotateY(360deg);
+	text-shadow: 2px 2px 15px rgba(0, 46, 91, 0.2);
+	transform: rotateY(360deg);
 }
 
 .how-it-works .content-wrapper:hover h5 a {
-    color: #ff8500;
+	color: #ff8500;
 }
 
 .row>div {
@@ -218,4 +221,72 @@
 	font-size: 24px;
 	position: relative;
 	top: -3px;
+}
+
+.about-counter-sec {
+	padding-bottom: 0;
+}
+
+.about-info {
+	max-width: 560px;
+	padding: 70px 20px 30px 50px;
+}
+
+.about-info .title>span {
+	font-size: 20px;
+	font-weight: 400;
+	text-transform: uppercase;
+	line-height: 20px;
+	letter-spacing: 3px;
+}
+
+.about-info .title h3 {
+	font-size: 25px;
+	text-transform: uppercase;
+	margin-top: 5px;
+}
+
+.about-info p {
+	font-size: 14px;
+	line-height: 24px;
+}
+
+.about-info ul {
+	margin-top: 20px;
+	list-style: none;
+	padding: 0;
+}
+
+.about-info ul li {
+	margin-top: 15px;
+	font-weight: 600;
+	position: relative;
+}
+
+.about-info ul li>i {
+	margin-right: 5px;
+}
+
+.make-list {
+	list-style: none;
+	cursor: pointer;
+	padding: 0;
+}
+
+.make-list li {
+	text-align: center;
+	overflow: hidden;
+	margin-bottom: 25px;
+}
+
+.make-list li a span {
+	max-width: 60px;
+	display: block;
+	margin: 0 auto;
+	margin-bottom: 10px;
+}
+
+.make-list li a span img {
+	height: 60px;
+	width: 60px;
 }

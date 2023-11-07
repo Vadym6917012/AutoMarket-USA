@@ -1,11 +1,11 @@
 <section class="searchwrap section">
   <div class="container">
-    <h3>Пошук б/у автомобілів в США</h3>
+    <h3>Пошук б/у <span class="text-orange">автомобілів</span> в США</h3>
     <p>Шукайте серед понад 9000 активних оголошень та розміщуйте безкоштовні необмежені оголошення!</p>
     <div class="car-search-form-sec">
       <div class="container">
         <div class="row">
-          <div class="col-12">
+          <div class="col-12 .col-sm-6">
             <div class="car-search-form">
               <div class="tab-content">
                 <div class="tab-pane active">
@@ -24,10 +24,12 @@
                         </select>
                       </div>
                       <div class="col-xl col-lg-4 col-sm-6 mb-3">
-                        <input formControlName="priceFrom" placeholder="$" type="number" class="form-control home-select shadow-none">
+                        <input formControlName="priceFrom" placeholder="$" type="number"
+                          class="form-control home-select shadow-none">
                       </div>
                       <div class="col-xl col-lg-4 col-sm-6 mb-3">
-                        <input formControlName="priceTo"placeholder="$" type="number" class="form-control home-select shadow-none">
+                        <input formControlName="priceTo" placeholder="$" type="number"
+                          class="form-control home-select shadow-none">
                       </div>
                       <div class="col-xl col-lg-4 col-sm-6 mb-3">
                         <button class="btn home-btn" type="submit"><i class="bi bi-search"></i> Пошук</button>
@@ -43,10 +45,11 @@
     </div>
   </div>
 </section>
+
 <section class="fetured-cars section whitebg">
   <div class="container">
     <div class="top-title">
-      <h3>Пошук б/у автомобілів в США</h3>
+      <h3>Недавно створені оголошення</h3>
       <p>Перегляньте недавно створені оголошення</p>
     </div>
     <div class="carousel_cards">
@@ -58,15 +61,18 @@
                 <img [src]="car.imagesPath[0]" alt="">
               </div>
               <div class="card-heading">
-                <h5><a class="text-light-black" routerLink="car/car-details/{{car.id}}">{{car.makeName}} {{car.modelName}}</a></h5>
+                <h5><a class="text-light-black" routerLink="car/car-details/{{car.id}}">{{car.makeName}}
+                    {{car.modelName}}</a></h5>
               </div>
               <div class="card-text d-flex justify-content-between">
                 <span class="text-dark-white"><i class="bi bi-cash text-orange me-2"></i>${{car.price}}</span>
                 <span class="text-dark-white"><i class="bi bi-car-front text-orange me-2"></i>{{car.year}}</span>
               </div>
               <div class="card-text d-flex justify-content-between">
-                <span class="text-dark-white"><i class="bi bi-speedometer2 text-orange me-2"></i>{{car.mileage}} км</span>
-                <span class="text-dark-white"><i class="bi bi-fuel-pump text-orange me-2"></i>{{car.fuelTypeName}}</span>
+                <span class="text-dark-white"><i class="bi bi-speedometer2 text-orange me-2"></i>{{car.mileage}}
+                  км</span>
+                <span class="text-dark-white"><i
+                    class="bi bi-fuel-pump text-orange me-2"></i>{{car.fuelTypeName}}</span>
               </div>
               <a routerLink="car/car-details/{{car.id}}" class="card-button">Детальніше</a>
             </div>
@@ -77,41 +83,66 @@
   </div>
 </section>
 
-<section class="about-counter-sec section">
+<section class="browse-by-makes section">
   <div class="container">
-    <div class="row">
-      <div class="col-lg-5">
-        <div class="about-img-sec p-relative">
-          <img src="../../../assets/images/aboutus-.jpg" class="img-fluid full-width" alt="about-img">
-        </div>
+    <div class="top-title">
+      <h3>Пошук автомобілів по <span class="text-orange">маркам</span></h3>
+    </div>
+    <div class="make-wrap">
+      <ul class="row make-list">
+        <ng-container *ngFor="let make of makes">
+          <li class="col-md-2 col-sm-3 col-xs-6">
+            <a class="text-light-black" (click)="filterMake(make.id)">
+              <span><img src="{{make.imagePath}}" alt=""></span>
+              {{make.name}}
+            </a>
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="about-counter-sec section whitebg">
+  <div class="container">
+    <div class="top-title">
+      <h3>Про нас</h3>
+    </div>
+  </div>
+  <div class="row d-flex">
+    <div class="col-sm-6 col-md-6 col-lg-6">
+      <div class="about-img">
+        <img src="../../../assets/images/about-bg.jpg" alt="">
       </div>
-      <div class="col-lg-7 align-self-center">
-        <div class="about-content-wrapper">
-          <div class="section-header no-margin">
-            <div class="text-wrapper text-left">
-              <h6 class="text-orange fw-400 mb-2">Про AUTOMARKET</h6>
-              <h3 class="fw-500 no-margin">МИ НАЙКРАЩИЙ СЕРВІС ДЛЯ ПРОДАЖУ ТА КУПІВЛІ АВТО З США</h3>
-            </div>
-          </div>
-          <p class="text-dark-grey"> "AutoMarket USA" - це онлайн-сервіс, який пропонує користувачам широкий вибір автомобілів на вторинному ринку США. Ми розуміємо, наскільки важливо знайти ідеальне авто, що відповідає вашим потребам і бажанням. Наша місія - зробити процес вибору автомобіля простим, зручним і захоплюючим. </p>
-          <ul>
-            <li class="text-dark-grey"><i class="bi bi-check2-circle"></i> Швидко</li>
-            <li class="text-dark-grey"><i class="bi bi-check2-circle"></i> Якісно</li>
-            <li class="text-dark-grey"><i class="bi bi-check2-circle"></i> Гарнатія</li>
-          </ul>
+    </div>
+    <div class="col-sm-6 col-md-6 col-lg-6">
+      <div class="about-info">
+        <div class="title">
+          <span class="text-dark-grey">Провідний у світі онлайн сервіс для продажу автомобілів з США</span>
+          <h3>Ласкаво просимо до <span class="text-orange">AutoMarket</span></h3>
         </div>
+        <p class="text-dark-grey"><span class="text-orange">"AutoMarket USA"</span> - це онлайн-сервіс, який пропонує
+          користувачам широкий вибір
+          автомобілів на вторинному ринку США. Ми розуміємо, наскільки важливо знайти ідеальне
+          авто, що відповідає вашим потребам і бажанням. Наша місія - зробити процес вибору
+          автомобіля простим, зручним і захоплюючим.</p>
+        <ul>
+          <li><i class="bi bi-check2-circle text-orange"></i>Швидко</li>
+          <li><i class="bi bi-check2-circle text-orange"></i>Гарантія</li>
+          <li><i class="bi bi-check2-circle text-orange"></i>Безпечно</li>
+        </ul>
       </div>
     </div>
   </div>
 </section>
 
-<section class="whitebg how-it-works section">
+<section class="how-it-works section">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
         <div class="section-header">
-          <div class="text-wrapper  top-title text-center">
-            <h3 class="fw-500 no-margin">Як Це Працює</h3>
+          <div class="text-wrapper top-title text-center">
+            <h3>Як це працює?</h3>
             <p class="text-dark-grey">Купуй автомобіль з США бистро, якісно та з гарантією</p>
           </div>
         </div>
@@ -136,7 +167,8 @@
           </div>
           <div class="content-box">
             <h5 class="mb-2 text-light-black"><a href="">Post your Free Car</a></h5>
-            <p class="text-dark-grey">Створіть безкоштовне оголошення з автомобілем і оновлюйте його кожен день, щоб бистро продати машину</p>
+            <p class="text-dark-grey">Створіть безкоштовне оголошення з автомобілем і оновлюйте його кожен день, щоб
+              бистро продати машину</p>
           </div>
         </div>
       </div>

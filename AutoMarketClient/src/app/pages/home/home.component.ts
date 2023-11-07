@@ -100,8 +100,13 @@ export class HomeComponent implements OnInit {
       const filterValue = this.homeFormFilter.value;
       this.carService.homeFilter(filterValue).subscribe((data) => {
         const cars = data;
-        console.log(cars);
+        console.log(this.homeFormFilter.value);
         this.router.navigate(['car/car-list'], { state: { cars } });
       });
+    }
+
+    filterMake(makeId: number) {
+      this.homeFormFilter.get('makeId')?.setValue(makeId);
+      this.filter();
     }
   }

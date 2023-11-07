@@ -23,6 +23,20 @@ namespace AutoMarket.Server.Infrastructure
             await _ctx.SaveChangesAsync();
         }
 
+        public async Task<bool> CheckYear(Car entity)
+        {
+            var isVadlidGeneration = await _ctx.Set<Generation>().FirstOrDefaultAsync(g =>
+            entity.Year >= g.YearFrom && entity.Year <= g.YearTo);
+
+            if (isVadlidGeneration == null)
+            {
+                return false;
+            } else
+            {
+                return true;
+            }
+        }
+
         public async Task UpdateAsync(Car entity)
         {
             _ctx.Set<Car>().Update(entity);

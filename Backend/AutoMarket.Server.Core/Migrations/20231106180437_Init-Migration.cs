@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AutoMarket.Server.Core.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class InitMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -283,6 +283,7 @@ namespace AutoMarket.Server.Core.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProducingCountryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -523,7 +524,15 @@ namespace AutoMarket.Server.Core.Migrations
                 values: new object[,]
                 {
                     { 1, "Німеччина" },
-                    { 2, "Японія" }
+                    { 2, "Японія" },
+                    { 3, "Франція" },
+                    { 4, "США" },
+                    { 5, "Корея" },
+                    { 6, "Чехія" },
+                    { 7, "Італія" },
+                    { 8, "Швеція" },
+                    { 9, "Англія" },
+                    { 10, "Іспанія" }
                 });
 
             migrationBuilder.InsertData(
@@ -539,11 +548,75 @@ namespace AutoMarket.Server.Core.Migrations
 
             migrationBuilder.InsertData(
                 table: "Makes",
-                columns: new[] { "Id", "Name", "ProducingCountryId" },
+                columns: new[] { "Id", "ImagePath", "Name", "ProducingCountryId" },
                 values: new object[,]
                 {
-                    { 1, "BMW", 1 },
-                    { 2, "Toyota", 2 }
+                    { 1, "https://localhost:7119/MakeIcons\\bmw.svg", "BMW", 1 },
+                    { 2, "https://localhost:7119/MakeIcons\\toyota.svg", "Toyota", 2 },
+                    { 3, "https://localhost:7119/MakeIcons\\audi.svg", "Audi", 1 },
+                    { 4, "https://localhost:7119/MakeIcons\\maybach.svg", "Maybach", 1 },
+                    { 5, "https://localhost:7119/MakeIcons\\mercedes benz.svg", "Mercedes-Benz", 1 },
+                    { 6, "https://localhost:7119/MakeIcons\\opel.svg", "Opel", 1 },
+                    { 7, "https://localhost:7119/MakeIcons\\porsche.svg", "Porsche", 1 },
+                    { 8, "https://localhost:7119/MakeIcons\\smart.svg", "Smart", 1 },
+                    { 9, "https://localhost:7119/MakeIcons\\volkswagen.svg", "Volkswagen", 1 },
+                    { 10, "https://localhost:7119/MakeIcons\\bmw.svg", "BMW-Alpina", 1 },
+                    { 11, "https://localhost:7119/MakeIcons\\daihatsu.svg", "Daihatsu", 2 },
+                    { 12, "https://localhost:7119/MakeIcons\\honda.svg", "Honda", 2 },
+                    { 13, "https://localhost:7119/MakeIcons\\isuzu.svg", "Isuzu", 2 },
+                    { 14, "https://localhost:7119/MakeIcons\\lexus.svg", "Lexus", 2 },
+                    { 15, "https://localhost:7119/MakeIcons\\mazda.svg", "Mazda", 2 },
+                    { 16, "https://localhost:7119/MakeIcons\\mitsubishi.svg", "Mitsubishi", 2 },
+                    { 17, "https://localhost:7119/MakeIcons\\nissan.svg", "Nissan", 2 },
+                    { 18, "https://localhost:7119/MakeIcons\\subaru.svg", "Subaru", 2 },
+                    { 19, "https://localhost:7119/MakeIcons\\suzuki.svg", "Suzuki", 2 },
+                    { 20, "https://localhost:7119/MakeIcons\\acura.svg", "Acura", 2 },
+                    { 21, "https://localhost:7119/MakeIcons\\infiniti.svg", "Infiniti", 2 },
+                    { 22, "https://localhost:7119/MakeIcons\\scion.svg", "Scion", 2 },
+                    { 23, "https://localhost:7119/MakeIcons\\aixam.svg", "Aixam", 3 },
+                    { 24, "https://localhost:7119/MakeIcons\\citroen.svg", "Citroen", 3 },
+                    { 25, "https://localhost:7119/MakeIcons\\peugeot.svg", "Peugeot", 3 },
+                    { 26, "https://localhost:7119/MakeIcons\\renault.svg", "Renault", 3 },
+                    { 27, "https://localhost:7119/MakeIcons\\alpine.svg", "Alpine", 3 },
+                    { 28, "https://localhost:7119/MakeIcons\\bugatti.svg", "Bugatti", 3 },
+                    { 29, "https://localhost:7119/MakeIcons\\cadillac.svg", "Cadillac", 4 },
+                    { 30, "https://localhost:7119/MakeIcons\\chevrolet.svg", "Chevrolet", 4 },
+                    { 31, "https://localhost:7119/MakeIcons\\chrysler.svg", "Chrysler", 4 },
+                    { 32, "https://localhost:7119/MakeIcons\\ford.svg", "Ford", 4 },
+                    { 33, "https://localhost:7119/MakeIcons\\jeep.svg", "Jeep", 4 },
+                    { 34, "https://localhost:7119/MakeIcons\\buick.svg", "Buick", 4 },
+                    { 35, "https://localhost:7119/MakeIcons\\dodge.svg", "Dodge", 4 },
+                    { 36, "https://localhost:7119/MakeIcons\\eagle.svg", "Eagle", 4 },
+                    { 37, "https://localhost:7119/MakeIcons\\gmc.svg", "GMC", 4 },
+                    { 38, "https://localhost:7119/MakeIcons\\hummer.svg", "Hummer", 4 },
+                    { 39, "https://localhost:7119/MakeIcons\\lincoln.svg", "Lincoln", 4 },
+                    { 40, "https://localhost:7119/MakeIcons\\mercury.svg", "Mercury", 4 },
+                    { 41, "https://localhost:7119/MakeIcons\\oldsmobile.svg", "Oldsmobile", 4 },
+                    { 42, "https://localhost:7119/MakeIcons\\pontiac.svg", "Pontiac", 4 },
+                    { 43, "https://localhost:7119/MakeIcons\\plymouth.svg", "Plymouth", 4 },
+                    { 44, "https://localhost:7119/MakeIcons\\saturn.svg", "Saturn", 4 },
+                    { 45, "https://localhost:7119/MakeIcons\\tesla.svg", "Tesla", 4 },
+                    { 46, "https://localhost:7119/MakeIcons\\fisker.svg", "Fisker", 4 },
+                    { 47, "https://localhost:7119/MakeIcons\\ram.svg", "Ram", 4 },
+                    { 48, "https://localhost:7119/MakeIcons\\daewoo.svg", "Daewoo", 5 },
+                    { 49, "https://localhost:7119/MakeIcons\\hyundai.svg", "Hyundai", 5 },
+                    { 50, "https://localhost:7119/MakeIcons\\kia.svg", "Kia", 5 },
+                    { 51, "https://localhost:7119/MakeIcons\\genesis.svg", "Genesis", 5 },
+                    { 52, "https://localhost:7119/MakeIcons\\skoda.svg", "Skoda", 6 },
+                    { 53, "https://localhost:7119/MakeIcons\\alfa romeo.svg", "Alfa Romeo", 7 },
+                    { 54, "https://localhost:7119/MakeIcons\\ferrari.svg", "Ferrari", 7 },
+                    { 55, "https://localhost:7119/MakeIcons\\fiat.svg", "Fiat", 7 },
+                    { 56, "https://localhost:7119/MakeIcons\\lamborghini.svg", "Lamborghini", 7 },
+                    { 57, "https://localhost:7119/MakeIcons\\maserati.svg", "Maserati", 7 },
+                    { 58, "https://localhost:7119/MakeIcons\\saab.svg", "Saab", 8 },
+                    { 59, "https://localhost:7119/MakeIcons\\volvo.svg", "Volvo", 8 },
+                    { 60, "https://localhost:7119/MakeIcons\\aston martin.svg", "Aston Martin", 9 },
+                    { 61, "https://localhost:7119/MakeIcons\\bentley.svg", "Bentley", 9 },
+                    { 62, "https://localhost:7119/MakeIcons\\land rover.svg", "Land Rover", 9 },
+                    { 63, "https://localhost:7119/MakeIcons\\rolls royce.svg", "Rolls Royce", 9 },
+                    { 64, "https://localhost:7119/MakeIcons\\mini.svg", "Mini", 9 },
+                    { 65, "https://localhost:7119/MakeIcons\\mclaren.svg", "McLaren", 9 },
+                    { 66, "https://localhost:7119/MakeIcons\\seat.svg", "Seat", 10 }
                 });
 
             migrationBuilder.InsertData(
