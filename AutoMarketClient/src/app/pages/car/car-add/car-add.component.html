@@ -33,7 +33,7 @@
                     <div class="form-floating mb-3">
                         <select formControlName="generationId" class="form-select">
                             <option selected disabled value="">Покоління</option>
-                            <option *ngFor="let generation of filteredGenerations" [value]="generation.id">{{generation.name}}</option>
+                            <option *ngFor="let generation of filteredGenerations" [value]="generation.id">{{generation.name}} [{{generation.yearFrom}} - {{generation.yearTo}}]</option>
                         </select>
                         <!-- <input formControlName="generationId" type="number" placeholder="Покоління" 
                             [class.is-invalid]="submitted && addCarForm.get('generationId')?.errors">
@@ -129,6 +129,9 @@
                         <span class="text-danger" *ngIf="submitted && addCarForm.get('year')?.hasError('required')">
                             Рік обов'язковий
                         </span>
+                        <span class="text-danger" *ngIf="submitted && addCarForm.get('year')?.hasError('yearNotInValidRange')">
+                            {{ addCarForm.get('year')?.getError('yearNotInValidRange')}}
+                          </span>
                     </div>
                     <div class="form-floating mb-3">
                         <input formControlName="price" type="number" placeholder="Ціна" class="form-control"

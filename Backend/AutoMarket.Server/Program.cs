@@ -167,6 +167,13 @@ app.UseStaticFiles( new StaticFileOptions
     RequestPath = "/User Photos"
 });
 
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(app.Environment.WebRootPath, "MakeIcons")),
+    RequestPath = "/MakeIcons"
+});
+
 app.MapIdentityApi<User>();
 app.UseHttpsRedirection();
 

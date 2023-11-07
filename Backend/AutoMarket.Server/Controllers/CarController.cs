@@ -102,6 +102,14 @@ namespace AutoMarket.Server.Controllers
 
             var car = _mapper.Map<Car>(carDTO);
 
+            var checkYear = _repository.CheckYear(car);
+
+            if (checkYear == null)
+            {
+                ModelState.AddModelError("errors", "Рік повинен співпадати з роком створення покоління");
+                return BadRequest(ModelState);
+            }
+
             await _repository.AddAsync(car);
 
             if (images != null && images.Count > 0)

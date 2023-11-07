@@ -9,7 +9,7 @@
                 <span class="navbar-toggler-icon"></span>
               </button>
           
-              <div class=" collapse navbar-collapse" id="navbarNavDropdown">
+              <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto ">
                   <li class="nav-item">
                     <a class="nav-link mx-2" routerLink="/" routerLinkActive="active"
@@ -29,7 +29,7 @@
                     </ul>
                   </li>
                 </ul>
-                <ul class="navbar-nav ms-auto d-none d-lg-inline-flex" *ngIf="(accountService.user$ | async) === null">
+                <ul class="navbar-nav ms-auto d-lg-inline-flex" *ngIf="(accountService.user$ | async) === null">
                     <li class="nav-item mx-2">
                         <a class="nav-link btn navbar-btn" routerLink="/account/register">
                             Реєстрація
@@ -41,7 +41,7 @@
                         </a>
                     </li>
                 </ul>
-                <ul class="navbar-nav ms-auto d-none d-lg-inline-flex" *ngIf="(accountService.user$ | async) as user">
+                <ul class="navbar-nav ms-auto d-lg-inline-flex" *ngIf="(accountService.user$ | async) as user">
                     <li class="nav-item mx-2 dropdown" >
                         <a class="nav-link btn dropdown-toggle"  id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown">Привіт, {{user.firstName}}</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">

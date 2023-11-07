@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace AutoMarket.Server.Shared.DTOs.Car
         public int DriveTrainId { get; set; }
         public int TechnicalConditionId { get; set; }
         public int FuelTypeId { get; set; }
+        [RegularExpression("^[A-HJ-NPR-Z0-9]{17}$")]
         public int Year { get; set; }
         public decimal Price { get; set; }
         public int Mileage { get; set; }

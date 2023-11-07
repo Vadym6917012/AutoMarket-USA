@@ -9,6 +9,9 @@ namespace AutoMarket.Server.Core.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string? Name { get; set; }
+
+        //ImageToDisplay https://localhost:7119/Make icons\{make.jpg}
+        public string? ImagePath { get; set; }
         public int ProducingCountryId { get; set; }
 
         public ProducingCountry? ProducingCountry { get; set; }

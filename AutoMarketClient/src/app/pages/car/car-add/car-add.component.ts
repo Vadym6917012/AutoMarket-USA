@@ -1,6 +1,6 @@
 import { ModelService } from './../../../services/model.service';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BodyType } from 'src/app/models/body-type/body-type';
 import { DriveTrain } from 'src/app/models/drive-train/drive-train';
@@ -69,6 +69,7 @@ export class CarAddComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeForm();
+    this.getMakes();
     this.getCountries();
     this.getBodyTypes();
     this.getGearBoxes();
@@ -85,9 +86,7 @@ export class CarAddComponent implements OnInit {
       }
 
       if (countryId === 0) {
-        this.makeService.getMakes().subscribe(data => {
-          this.filteredMakes = data;
-        });
+        this.getMakes();
       } else {
         this.makeService.getMakeByCountry(countryId).subscribe(data => {
           this.filteredMakes = data;
@@ -147,13 +146,34 @@ export class CarAddComponent implements OnInit {
       driveTrainId: ['', [Validators.required]],
       technicalConditionId: ['', [Validators.required]],
       fuelTypeId: ['', [Validators.required]],
-      year: ['', [Validators.required]],
+      year: ['', [Validators.required, this.yearWithinGenerationRangeValidator()]],
       price: ['', [Validators.required]],
       mileage: ['', [Validators.required]],
       description: ['', [Validators.required]],
       userId: [''],
     });
   }
+
+  yearWithinGenerationRangeValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const year = control.value;
+
+      const generationId = this.addCarForm.get('generationId')?.value;
+
+      const selectedGeneration = this.filteredGenerations.find(generation => generation.id == generationId);
+
+      if (selectedGeneration) {
+        const generationYearFrom = selectedGeneration.yearFrom;
+        const generationYearTo = selectedGeneration.yearTo;
+
+        if (year < generationYearFrom || year > generationYearTo) {
+          return { yearNotInValidRange: 'Рік не входить у дійсний діапазон для вибраного покоління.' };
+        }
+      }
+      return null;
+    };
+  }
+
 
   addCar() {
     this.submitted = true;
@@ -184,6 +204,12 @@ export class CarAddComponent implements OnInit {
   getCountries() {
     this.countryServise.getProducingCountries().subscribe(data => {
       this.countries = data;
+    })
+  }
+
+  getMakes() {
+    this.makeService.getMakes().subscribe(data => {
+      this.filteredMakes = data;
     })
   }
 

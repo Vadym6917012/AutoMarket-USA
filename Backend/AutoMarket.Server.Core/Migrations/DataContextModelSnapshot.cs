@@ -342,6 +342,9 @@ namespace AutoMarket.Server.Core.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("ImagePath")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -358,14 +361,464 @@ namespace AutoMarket.Server.Core.Migrations
                         new
                         {
                             Id = 1,
+                            ImagePath = "https://localhost:7119/MakeIcons\\bmw.svg",
                             Name = "BMW",
                             ProducingCountryId = 1
                         },
                         new
                         {
                             Id = 2,
+                            ImagePath = "https://localhost:7119/MakeIcons\\toyota.svg",
                             Name = "Toyota",
                             ProducingCountryId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ImagePath = "https://localhost:7119/MakeIcons\\audi.svg",
+                            Name = "Audi",
+                            ProducingCountryId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ImagePath = "https://localhost:7119/MakeIcons\\maybach.svg",
+                            Name = "Maybach",
+                            ProducingCountryId = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ImagePath = "https://localhost:7119/MakeIcons\\mercedes benz.svg",
+                            Name = "Mercedes-Benz",
+                            ProducingCountryId = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ImagePath = "https://localhost:7119/MakeIcons\\opel.svg",
+                            Name = "Opel",
+                            ProducingCountryId = 1
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ImagePath = "https://localhost:7119/MakeIcons\\porsche.svg",
+                            Name = "Porsche",
+                            ProducingCountryId = 1
+                        },
+                        new
+                        {
+                            Id = 8,
+                            ImagePath = "https://localhost:7119/MakeIcons\\smart.svg",
+                            Name = "Smart",
+                            ProducingCountryId = 1
+                        },
+                        new
+                        {
+                            Id = 9,
+                            ImagePath = "https://localhost:7119/MakeIcons\\volkswagen.svg",
+                            Name = "Volkswagen",
+                            ProducingCountryId = 1
+                        },
+                        new
+                        {
+                            Id = 10,
+                            ImagePath = "https://localhost:7119/MakeIcons\\bmw.svg",
+                            Name = "BMW-Alpina",
+                            ProducingCountryId = 1
+                        },
+                        new
+                        {
+                            Id = 11,
+                            ImagePath = "https://localhost:7119/MakeIcons\\daihatsu.svg",
+                            Name = "Daihatsu",
+                            ProducingCountryId = 2
+                        },
+                        new
+                        {
+                            Id = 12,
+                            ImagePath = "https://localhost:7119/MakeIcons\\honda.svg",
+                            Name = "Honda",
+                            ProducingCountryId = 2
+                        },
+                        new
+                        {
+                            Id = 13,
+                            ImagePath = "https://localhost:7119/MakeIcons\\isuzu.svg",
+                            Name = "Isuzu",
+                            ProducingCountryId = 2
+                        },
+                        new
+                        {
+                            Id = 14,
+                            ImagePath = "https://localhost:7119/MakeIcons\\lexus.svg",
+                            Name = "Lexus",
+                            ProducingCountryId = 2
+                        },
+                        new
+                        {
+                            Id = 15,
+                            ImagePath = "https://localhost:7119/MakeIcons\\mazda.svg",
+                            Name = "Mazda",
+                            ProducingCountryId = 2
+                        },
+                        new
+                        {
+                            Id = 16,
+                            ImagePath = "https://localhost:7119/MakeIcons\\mitsubishi.svg",
+                            Name = "Mitsubishi",
+                            ProducingCountryId = 2
+                        },
+                        new
+                        {
+                            Id = 17,
+                            ImagePath = "https://localhost:7119/MakeIcons\\nissan.svg",
+                            Name = "Nissan",
+                            ProducingCountryId = 2
+                        },
+                        new
+                        {
+                            Id = 18,
+                            ImagePath = "https://localhost:7119/MakeIcons\\subaru.svg",
+                            Name = "Subaru",
+                            ProducingCountryId = 2
+                        },
+                        new
+                        {
+                            Id = 19,
+                            ImagePath = "https://localhost:7119/MakeIcons\\suzuki.svg",
+                            Name = "Suzuki",
+                            ProducingCountryId = 2
+                        },
+                        new
+                        {
+                            Id = 20,
+                            ImagePath = "https://localhost:7119/MakeIcons\\acura.svg",
+                            Name = "Acura",
+                            ProducingCountryId = 2
+                        },
+                        new
+                        {
+                            Id = 21,
+                            ImagePath = "https://localhost:7119/MakeIcons\\infiniti.svg",
+                            Name = "Infiniti",
+                            ProducingCountryId = 2
+                        },
+                        new
+                        {
+                            Id = 22,
+                            ImagePath = "https://localhost:7119/MakeIcons\\scion.svg",
+                            Name = "Scion",
+                            ProducingCountryId = 2
+                        },
+                        new
+                        {
+                            Id = 23,
+                            ImagePath = "https://localhost:7119/MakeIcons\\aixam.svg",
+                            Name = "Aixam",
+                            ProducingCountryId = 3
+                        },
+                        new
+                        {
+                            Id = 24,
+                            ImagePath = "https://localhost:7119/MakeIcons\\citroen.svg",
+                            Name = "Citroen",
+                            ProducingCountryId = 3
+                        },
+                        new
+                        {
+                            Id = 25,
+                            ImagePath = "https://localhost:7119/MakeIcons\\peugeot.svg",
+                            Name = "Peugeot",
+                            ProducingCountryId = 3
+                        },
+                        new
+                        {
+                            Id = 26,
+                            ImagePath = "https://localhost:7119/MakeIcons\\renault.svg",
+                            Name = "Renault",
+                            ProducingCountryId = 3
+                        },
+                        new
+                        {
+                            Id = 27,
+                            ImagePath = "https://localhost:7119/MakeIcons\\alpine.svg",
+                            Name = "Alpine",
+                            ProducingCountryId = 3
+                        },
+                        new
+                        {
+                            Id = 28,
+                            ImagePath = "https://localhost:7119/MakeIcons\\bugatti.svg",
+                            Name = "Bugatti",
+                            ProducingCountryId = 3
+                        },
+                        new
+                        {
+                            Id = 29,
+                            ImagePath = "https://localhost:7119/MakeIcons\\cadillac.svg",
+                            Name = "Cadillac",
+                            ProducingCountryId = 4
+                        },
+                        new
+                        {
+                            Id = 30,
+                            ImagePath = "https://localhost:7119/MakeIcons\\chevrolet.svg",
+                            Name = "Chevrolet",
+                            ProducingCountryId = 4
+                        },
+                        new
+                        {
+                            Id = 31,
+                            ImagePath = "https://localhost:7119/MakeIcons\\chrysler.svg",
+                            Name = "Chrysler",
+                            ProducingCountryId = 4
+                        },
+                        new
+                        {
+                            Id = 32,
+                            ImagePath = "https://localhost:7119/MakeIcons\\ford.svg",
+                            Name = "Ford",
+                            ProducingCountryId = 4
+                        },
+                        new
+                        {
+                            Id = 33,
+                            ImagePath = "https://localhost:7119/MakeIcons\\jeep.svg",
+                            Name = "Jeep",
+                            ProducingCountryId = 4
+                        },
+                        new
+                        {
+                            Id = 34,
+                            ImagePath = "https://localhost:7119/MakeIcons\\buick.svg",
+                            Name = "Buick",
+                            ProducingCountryId = 4
+                        },
+                        new
+                        {
+                            Id = 35,
+                            ImagePath = "https://localhost:7119/MakeIcons\\dodge.svg",
+                            Name = "Dodge",
+                            ProducingCountryId = 4
+                        },
+                        new
+                        {
+                            Id = 36,
+                            ImagePath = "https://localhost:7119/MakeIcons\\eagle.svg",
+                            Name = "Eagle",
+                            ProducingCountryId = 4
+                        },
+                        new
+                        {
+                            Id = 37,
+                            ImagePath = "https://localhost:7119/MakeIcons\\gmc.svg",
+                            Name = "GMC",
+                            ProducingCountryId = 4
+                        },
+                        new
+                        {
+                            Id = 38,
+                            ImagePath = "https://localhost:7119/MakeIcons\\hummer.svg",
+                            Name = "Hummer",
+                            ProducingCountryId = 4
+                        },
+                        new
+                        {
+                            Id = 39,
+                            ImagePath = "https://localhost:7119/MakeIcons\\lincoln.svg",
+                            Name = "Lincoln",
+                            ProducingCountryId = 4
+                        },
+                        new
+                        {
+                            Id = 40,
+                            ImagePath = "https://localhost:7119/MakeIcons\\mercury.svg",
+                            Name = "Mercury",
+                            ProducingCountryId = 4
+                        },
+                        new
+                        {
+                            Id = 41,
+                            ImagePath = "https://localhost:7119/MakeIcons\\oldsmobile.svg",
+                            Name = "Oldsmobile",
+                            ProducingCountryId = 4
+                        },
+                        new
+                        {
+                            Id = 42,
+                            ImagePath = "https://localhost:7119/MakeIcons\\pontiac.svg",
+                            Name = "Pontiac",
+                            ProducingCountryId = 4
+                        },
+                        new
+                        {
+                            Id = 43,
+                            ImagePath = "https://localhost:7119/MakeIcons\\plymouth.svg",
+                            Name = "Plymouth",
+                            ProducingCountryId = 4
+                        },
+                        new
+                        {
+                            Id = 44,
+                            ImagePath = "https://localhost:7119/MakeIcons\\saturn.svg",
+                            Name = "Saturn",
+                            ProducingCountryId = 4
+                        },
+                        new
+                        {
+                            Id = 45,
+                            ImagePath = "https://localhost:7119/MakeIcons\\tesla.svg",
+                            Name = "Tesla",
+                            ProducingCountryId = 4
+                        },
+                        new
+                        {
+                            Id = 46,
+                            ImagePath = "https://localhost:7119/MakeIcons\\fisker.svg",
+                            Name = "Fisker",
+                            ProducingCountryId = 4
+                        },
+                        new
+                        {
+                            Id = 47,
+                            ImagePath = "https://localhost:7119/MakeIcons\\ram.svg",
+                            Name = "Ram",
+                            ProducingCountryId = 4
+                        },
+                        new
+                        {
+                            Id = 48,
+                            ImagePath = "https://localhost:7119/MakeIcons\\daewoo.svg",
+                            Name = "Daewoo",
+                            ProducingCountryId = 5
+                        },
+                        new
+                        {
+                            Id = 49,
+                            ImagePath = "https://localhost:7119/MakeIcons\\hyundai.svg",
+                            Name = "Hyundai",
+                            ProducingCountryId = 5
+                        },
+                        new
+                        {
+                            Id = 50,
+                            ImagePath = "https://localhost:7119/MakeIcons\\kia.svg",
+                            Name = "Kia",
+                            ProducingCountryId = 5
+                        },
+                        new
+                        {
+                            Id = 51,
+                            ImagePath = "https://localhost:7119/MakeIcons\\genesis.svg",
+                            Name = "Genesis",
+                            ProducingCountryId = 5
+                        },
+                        new
+                        {
+                            Id = 52,
+                            ImagePath = "https://localhost:7119/MakeIcons\\skoda.svg",
+                            Name = "Skoda",
+                            ProducingCountryId = 6
+                        },
+                        new
+                        {
+                            Id = 53,
+                            ImagePath = "https://localhost:7119/MakeIcons\\alfa romeo.svg",
+                            Name = "Alfa Romeo",
+                            ProducingCountryId = 7
+                        },
+                        new
+                        {
+                            Id = 54,
+                            ImagePath = "https://localhost:7119/MakeIcons\\ferrari.svg",
+                            Name = "Ferrari",
+                            ProducingCountryId = 7
+                        },
+                        new
+                        {
+                            Id = 55,
+                            ImagePath = "https://localhost:7119/MakeIcons\\fiat.svg",
+                            Name = "Fiat",
+                            ProducingCountryId = 7
+                        },
+                        new
+                        {
+                            Id = 56,
+                            ImagePath = "https://localhost:7119/MakeIcons\\lamborghini.svg",
+                            Name = "Lamborghini",
+                            ProducingCountryId = 7
+                        },
+                        new
+                        {
+                            Id = 57,
+                            ImagePath = "https://localhost:7119/MakeIcons\\maserati.svg",
+                            Name = "Maserati",
+                            ProducingCountryId = 7
+                        },
+                        new
+                        {
+                            Id = 58,
+                            ImagePath = "https://localhost:7119/MakeIcons\\saab.svg",
+                            Name = "Saab",
+                            ProducingCountryId = 8
+                        },
+                        new
+                        {
+                            Id = 59,
+                            ImagePath = "https://localhost:7119/MakeIcons\\volvo.svg",
+                            Name = "Volvo",
+                            ProducingCountryId = 8
+                        },
+                        new
+                        {
+                            Id = 60,
+                            ImagePath = "https://localhost:7119/MakeIcons\\aston martin.svg",
+                            Name = "Aston Martin",
+                            ProducingCountryId = 9
+                        },
+                        new
+                        {
+                            Id = 61,
+                            ImagePath = "https://localhost:7119/MakeIcons\\bentley.svg",
+                            Name = "Bentley",
+                            ProducingCountryId = 9
+                        },
+                        new
+                        {
+                            Id = 62,
+                            ImagePath = "https://localhost:7119/MakeIcons\\land rover.svg",
+                            Name = "Land Rover",
+                            ProducingCountryId = 9
+                        },
+                        new
+                        {
+                            Id = 63,
+                            ImagePath = "https://localhost:7119/MakeIcons\\rolls royce.svg",
+                            Name = "Rolls Royce",
+                            ProducingCountryId = 9
+                        },
+                        new
+                        {
+                            Id = 64,
+                            ImagePath = "https://localhost:7119/MakeIcons\\mini.svg",
+                            Name = "Mini",
+                            ProducingCountryId = 9
+                        },
+                        new
+                        {
+                            Id = 65,
+                            ImagePath = "https://localhost:7119/MakeIcons\\mclaren.svg",
+                            Name = "McLaren",
+                            ProducingCountryId = 9
+                        },
+                        new
+                        {
+                            Id = 66,
+                            ImagePath = "https://localhost:7119/MakeIcons\\seat.svg",
+                            Name = "Seat",
+                            ProducingCountryId = 10
                         });
                 });
 
@@ -491,6 +944,46 @@ namespace AutoMarket.Server.Core.Migrations
                         {
                             Id = 2,
                             Name = "Японія"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Франція"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "США"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Корея"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Чехія"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Італія"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Швеція"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "Англія"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Name = "Іспанія"
                         });
                 });
 
