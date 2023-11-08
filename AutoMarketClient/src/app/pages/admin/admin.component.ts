@@ -36,7 +36,7 @@ export class AdminComponent implements OnInit {
     if(this.memberToDelete) {
       this.adminService.deleteMember(this.memberToDelete.id).subscribe({
         next: _ => {
-          this.sharedService.showNotification(true, 'Deleted', `Member of ${this.memberToDelete?.userName} has been deleted!`);
+          this.sharedService.showNotification(true, 'Видалено', `${this.memberToDelete?.userName} видалено успішно!`);
           this.members = this.members.filter(x => x.id !== this.memberToDelete?.id);
           this.memberToDelete = undefined;
           this.modalRef?.hide();

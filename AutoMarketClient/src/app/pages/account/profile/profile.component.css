@@ -1,0 +1,49 @@
+.user-cars-section {
+    height: auto;
+}
+
+.profile-top-image {
+    position: relative;
+    background-position: center;
+    background-size: cover;
+}
+
+.profile-top-image img {
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: brightness(40%);
+}
+
+.sub-header-wrapper {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transform: translate(0%, 0%);
+}
+
+.sub-header-text-wrapper {
+    max-width: 700px;
+    margin: 0 auto;
+    word-break: break-word;
+}
+
+.sub-header-text-wrapper h1 {
+    font-size: 50px;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+
+.profile-content {
+    height: auto;
+}
+
+.user-cars {
+    box-shadow: 3px 3px 11px rgba(0, 0, 0, 0.06);
+    border: 1px solid #eee;
+    background-color: #fff;
+}
