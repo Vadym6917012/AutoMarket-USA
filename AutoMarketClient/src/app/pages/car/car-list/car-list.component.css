@@ -1,7 +1,6 @@
 .sub-header {
     height: 650px;
     width: 100%;
-    background-color: rgba(0, 0, 0, .3);
 }
 
 .sub-header img {
@@ -14,9 +13,11 @@
 
 .sub-header-wrapper {
     position: absolute;
-    bottom: 15%;
-    left: 0%;
+    display: flex;
+    justify-content: center;
+    left: 0;
     right: 0;
+    bottom: 0;
     transform: translate(0%, 0%);
 }
 
@@ -28,10 +29,7 @@
 
 .sub-header .sub-header-text-wrapper h1 {
     font-size: 50px;
-    margin-top: 20px;
     font-weight: 500;
-    margin-bottom: 10px;
-    padding-bottom: 15px;
     color: #ffffff;
 }
 

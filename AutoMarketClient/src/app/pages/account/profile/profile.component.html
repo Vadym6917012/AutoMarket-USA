@@ -1,0 +1,66 @@
+<div class="profile-top-image">
+  <img src="../../../../assets/images/subbanner.jpg" alt="">
+  <div class="sub-header-wrapper">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-12">
+          <div class="sub-header-text-wrapper text-center">
+            <h1><span class="text-orange">Мій</span> профіль</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="user-cars-section section">
+  <div class="profile-content">
+    <div class="container">
+      <div class="profile-settings">
+        <h3>Ваші оголошень</h3>
+      </div>
+      <div class="user-cars">
+        <table class="user-cars-table table">
+          <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Марка</th>
+              <th scope="col">Модель</th>
+              <th scope="col">VIN</th>
+              <th scope="col">Редагувати | Видалити</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="cars.length === 0">
+              <td colspan="7" class="text-center">Ще немає оголошень</td>
+            </tr>
+
+            <tr *ngFor="let car of cars">
+              <td scope="row">{{car.id}}</td>
+              <td scope="row">{{car.makeName}}</td>
+              <td scope="row">{{car.modelName}}</td>
+              <td scope="row">{{car.vin}}</td>
+              <td scope="row" class="text-center">
+                <button class="btn btn-primary btn-sm me-2" routerLink="/car/car-update/{{car.id}}">
+                  Редагувати
+                </button>
+                <button class="btn btn-danger btn-sm" (click)="deleteCar(car.id, template)">
+                  Видалити
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <ng-template #template>
+          <div class="modal-body text-center">
+              <p>Ви точно хочете видалити це оголошення?</p>
+              <button type="button" class="btn btn-default" (click)="confirm()">Так</button>
+              <button type="button" class="btn btn-primary" (click)="decline()">Ні</button>
+          </div>
+      </ng-template>
+
+      </div>
+    </div>
+  </div>
+</section>

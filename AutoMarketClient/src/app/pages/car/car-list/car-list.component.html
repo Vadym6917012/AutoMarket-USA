@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-xl-12">
           <div class="sub-header-text-wrapper text-center">
-            <h1><span class="orange-span">Пошук</span> автомобіля</h1>
+            <h1><span class="text-orange">Пошук</span> автомобіля</h1>
           </div>
         </div>
       </div>
@@ -52,6 +52,11 @@
       <div id="listing_list" class="tab-pane active">
         <div class="row">
           <div class="col-lg-8">
+
+            <ng-container *ngIf="carInfo.length === 0">
+              <p>Ще немає оголошень</p>
+            </ng-container>
+
             <div class="car-model-layout-list" *ngFor="let car of carInfo">
               <div class="car-thumbnail-area">
                 <div class="item-thumb">

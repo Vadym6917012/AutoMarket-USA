@@ -46,7 +46,7 @@
                         <a class="nav-link btn dropdown-toggle"  id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown">Привіт, {{user.firstName}}</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <li><a class="dropdown-item" routerLink="/admin" *appUserHasRole="['Admin']">Адмін панель</a></li>
-                            <li><a class="dropdown-item" href="#">Налаштування профілю</a></li>
+                            <li><a class="dropdown-item" routerLink="/account/profile/{{user.id}}">Мій профіль</a></li>
                             <li><a class="dropdown-item" routerLink="/car/car-add">Подати оголошення</a></li>
                           </ul>
                     </li>
