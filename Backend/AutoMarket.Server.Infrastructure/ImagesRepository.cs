@@ -25,17 +25,15 @@ namespace AutoMarket.Server.Infrastructure
 
         public string AddImagesToDirectory(IFormFile images)
         {
-            if (images == null && images.Length == 0)
+            if (images == null || images.Length == 0)
             {
                 var uniqueFileName = "NoImage.png";
                 var uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "User Photos");
-
                 var filePathCombained = Path.Combine(uploadsFolder, uniqueFileName);
 
                 return filePathCombained;
             }
-
-            if (images != null && images.Length > 0)
+            else if (images != null && images.Length > 0)
             {
                 var uniqueFileName = Guid.NewGuid().ToString() + "_" + images.FileName;
                 var uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "User Photos");

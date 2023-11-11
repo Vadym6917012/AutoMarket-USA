@@ -129,6 +129,17 @@ namespace AutoMarket.Server.Controllers
                         }
                     }
                 }
+            } else
+            {
+                var defaultImagePath = _imagesRepository.AddImagesToDirectory(null);
+                var defaultImagePathToDisplay = defaultImagePath.Substring(defaultImagePath.LastIndexOf("\\User Photos\\") + 1);
+                defaultImagePathToDisplay.Replace(@"\\", "/");
+
+                if (!string.IsNullOrEmpty(defaultImagePath))
+                {
+                    var defaultImage = new Images { ImagePathToDisplay = "https://localhost:7119/" + defaultImagePathToDisplay, ImagePath = defaultImagePath, CarId = car.Id, Car = car };
+                    await _imagesRepository.AddAsync(defaultImage);
+                }
             }
 
             return Ok(new JsonResult(new { title = "Оголошення додано успішно", message = "Ваше оголошення додано успішно", id = car.Id }));
