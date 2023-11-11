@@ -25,6 +25,16 @@ namespace AutoMarket.Server.Infrastructure
 
         public string AddImagesToDirectory(IFormFile images)
         {
+            if (images == null && images.Length == 0)
+            {
+                var uniqueFileName = "NoImage.png";
+                var uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "User Photos");
+
+                var filePathCombained = Path.Combine(uploadsFolder, uniqueFileName);
+
+                return filePathCombained;
+            }
+
             if (images != null && images.Length > 0)
             {
                 var uniqueFileName = Guid.NewGuid().ToString() + "_" + images.FileName;
@@ -68,11 +78,14 @@ namespace AutoMarket.Server.Infrastructure
                 {
                     var existImages = GetById(image.Id);
 
-                    var imagePath = existImages.ImagePath;
-
                     if (existImages != null)
                     {
-                        File.Delete(imagePath);
+                        var imagePath = existImages.ImagePath;
+
+                        if (!string.Equals(Path.GetFileName(imagePath), "NoImage.png", StringComparison.OrdinalIgnoreCase))
+                        {
+                            File.Delete(imagePath);
+                        }
                     }
                 }
             }
