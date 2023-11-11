@@ -234,7 +234,17 @@ namespace AutoMarket.Server.Infrastructure
 
         public async Task<IEnumerable<Car>> GetCarByUserId(string userId)
         {
-            return await _ctx.Set<Car>().Where(u => u.UserId == userId).ToListAsync();
+            return await _ctx.Set<Car>().Where(u => u.UserId == userId).Include(m => m.Model).ThenInclude(m => m.Make).ThenInclude(c => c.ProducingCountry)
+                .Include(m => m.Modification)
+                .Include(g => g.Generation)
+                .Include(b => b.BodyType)
+                .Include(g => g.GearBoxType)
+                .Include(d => d.DriveTrain)
+                .Include(t => t.TechnicalCondition)
+                .Include(f => f.FuelType)
+                .Include(i => i.Images)
+                .Include(u => u.User)
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<Car>> GetAllAsync()

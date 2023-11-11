@@ -191,6 +191,7 @@ export class CarAddComponent implements OnInit {
           console.log(response);
         },
         error: error => {
+          console.log('Error object:', error);
           if (error.error.error) {
             this.errorMessages = error.error.error;
           } else {
