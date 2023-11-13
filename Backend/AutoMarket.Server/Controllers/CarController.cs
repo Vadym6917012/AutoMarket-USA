@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
-using AutoMarket.Server.Core;
 using AutoMarket.Server.Core.Models;
 using AutoMarket.Server.Infrastructure;
 using AutoMarket.Server.Shared.DTOs;
 using AutoMarket.Server.Shared.DTOs.Car;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace AutoMarket.Server.Controllers
 {
@@ -129,7 +127,8 @@ namespace AutoMarket.Server.Controllers
                         }
                     }
                 }
-            } else
+            }
+            else
             {
                 var defaultImagePath = _imagesRepository.AddImagesToDirectory(null);
                 var defaultImagePathToDisplay = defaultImagePath.Substring(defaultImagePath.LastIndexOf("\\User Photos\\") + 1);

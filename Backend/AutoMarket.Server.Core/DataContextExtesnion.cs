@@ -1,5 +1,4 @@
 ﻿using AutoMarket.Server.Core.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace AutoMarket.Server.Core
@@ -145,7 +144,7 @@ namespace AutoMarket.Server.Core
             #endregion
 
             #region Make Entities
-            
+
             builder.Entity<Make>().HasData(new Make
             {
                 Id = 1,
@@ -206,7 +205,8 @@ namespace AutoMarket.Server.Core
                 Name = "BMW-Alpina",
                 ImagePath = "https://localhost:7119/MakeIcons\\bmw.svg",
                 ProducingCountryId = 1
-            }, new Make { 
+            }, new Make
+            {
                 Id = 11,
                 Name = "Daihatsu",
                 ImagePath = "https://localhost:7119/MakeIcons\\daihatsu.svg",

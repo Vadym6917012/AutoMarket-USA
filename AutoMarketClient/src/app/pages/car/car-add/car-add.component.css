@@ -3,3 +3,28 @@
     display: block;
     color: #9b9b9b;
 }
+
+.form-carAdd {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 25px 30px;
+}
+
+.form-floating textarea {
+    height: 200px;
+}
+
+.form-control:active, .form-control:focus, .form-select:active, .form-select:focus {
+    border-color: #ff8500;
+}
+
+.btn-add-car {
+    background: #1c1d1f;
+    color: #fff;
+    height: 50px;
+    user-select: none;
+}
+
+.btn-add-car:hover {
+    background: #ff8500;
+}

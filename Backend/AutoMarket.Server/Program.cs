@@ -155,15 +155,16 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-} else
+}
+else
 {
     app.UseHsts();
 }
 
-app.UseStaticFiles( new StaticFileOptions
+app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(
-        Path.Combine(app.Environment.WebRootPath,"User Photos")),
+        Path.Combine(app.Environment.WebRootPath, "User Photos")),
     RequestPath = "/User Photos"
 });
 

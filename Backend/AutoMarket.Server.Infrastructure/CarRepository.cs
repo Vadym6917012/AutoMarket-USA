@@ -1,7 +1,6 @@
 ﻿using AutoMarket.Server.Core;
 using AutoMarket.Server.Core.Models;
 using AutoMarket.Server.Shared.DTOs.Car;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -31,7 +30,8 @@ namespace AutoMarket.Server.Infrastructure
             if (isVadlidGeneration == null)
             {
                 return false;
-            } else
+            }
+            else
             {
                 return true;
             }
@@ -265,7 +265,7 @@ namespace AutoMarket.Server.Infrastructure
 
         public async Task SaveChangesAsync()
         {
-           await _ctx.SaveChangesAsync();
+            await _ctx.SaveChangesAsync();
         }
     }
 }

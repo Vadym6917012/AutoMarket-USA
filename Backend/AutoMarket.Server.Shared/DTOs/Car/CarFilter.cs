@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AutoMarket.Server.Shared.DTOs.Car
+﻿namespace AutoMarket.Server.Shared.DTOs.Car
 {
     public class CarFilter
     {
@@ -20,7 +14,7 @@ namespace AutoMarket.Server.Shared.DTOs.Car
         public int? YearFrom { get; set; }
         public int? YearTo { get; set; }
         public int? MileageFrom { get; set; }
-        public int?  MileageTo { get; set; }
+        public int? MileageTo { get; set; }
         public decimal? PriceFrom { get; set; }
         public decimal? PriceTo { get; set; }
     }
