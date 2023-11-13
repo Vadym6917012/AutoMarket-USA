@@ -94,8 +94,8 @@ namespace AutoMarket.Server.Controllers
         [HttpGet("get-modification-by-model/{modelId:int}")]
         public IActionResult GetModificationsByModel(int modelId)
         {
-                var modification = _repository.GetModificationByModel(modelId);
-                return Ok(modification);
+            var modification = _repository.GetModificationByModel(modelId);
+            return Ok(modification);
         }
     }
 }

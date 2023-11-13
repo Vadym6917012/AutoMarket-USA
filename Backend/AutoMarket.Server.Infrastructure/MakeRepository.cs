@@ -59,7 +59,8 @@ namespace AutoMarket.Server.Infrastructure
             if (makes.Count == 0)
             {
                 return _ctx.Set<Make>().ToList();
-            } else
+            }
+            else
             {
                 return makes;
             }

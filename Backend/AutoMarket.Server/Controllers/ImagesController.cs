@@ -47,9 +47,10 @@ namespace AutoMarket.Server.Controllers
             if (fileStream != null)
             {
                 return File(fileStream, "image/jpeg");
-            } else
-            { 
-                return NotFound(); 
+            }
+            else
+            {
+                return NotFound();
             }
         }
     }

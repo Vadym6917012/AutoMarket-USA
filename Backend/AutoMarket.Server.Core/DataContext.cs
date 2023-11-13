@@ -47,6 +47,6 @@ namespace AutoMarket.Server.Core
         public DbSet<Generation> Generations { get; set; }
         public DbSet<ModelGeneration> ModelGeneration { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
-        public DbSet<TechnicalCondition> TechnicalConditions { get; set;}
+        public DbSet<TechnicalCondition> TechnicalConditions { get; set; }
     }
 }

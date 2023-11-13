@@ -3,7 +3,6 @@ using AutoMarket.Server.Core.Models;
 using AutoMarket.Server.Infrastructure;
 using AutoMarket.Server.Shared.DTOs.Generation;
 using Microsoft.AspNetCore.Mvc;
-using System.Web;
 
 namespace AutoMarket.Server.Controllers
 {
