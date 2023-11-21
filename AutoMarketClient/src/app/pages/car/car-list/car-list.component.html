@@ -34,7 +34,7 @@
               <div class="filter-by-grid-list"> <span>View As</span>
                 <div class="filter-tab-area">
                   <ul class="nav nav-tabs" role="tablist">
-                    <li> <a  (click)="toggleView('grid')" data-toggle="tab" aria-selected="false"><i [class.active]="selectedView === 'grid'"
+                    <li> <a (click)="toggleView('grid')" data-toggle="tab" aria-selected="false"><i [class.active]="selectedView === 'grid'"
                            class="bi bi-border-all"></i></a>
                     </li>
                     <li> <a  (click)="toggleView('list')" data-toggle="tab" aria-selected="true"><i [class.active]="selectedView === 'list'"
@@ -49,7 +49,7 @@
       </div>
     </div>
     <div class="tab-content">
-      <div id="listing_list" class="tab-pane active">
+      <div *ngIf="isListView === true" id="listing_list" class="tab-pane active">
         <div class="row">
           <div class="col-lg-8">
 
@@ -196,6 +196,32 @@
               </div>
             </div>
           </aside>
+        </div>
+      </div>
+      <div *ngIf="isListView === false" id="listing-grid" class="tab-pane active">
+        <div class="row">
+          <div class="col-md-9 col-sm-7">
+            <div class="col-md-4 col-sm-6" *ngFor="let car of carInfo">
+              <div class="car-card text-center">
+                  <div class="car-title">
+                    <h4 class="text-light-black">{{car.makeName}}</h4>
+                    <h5 class="text-light-black">{{car.modelName}} {{car.generationName}}</h5>
+                  </div>
+                  <img src="{{car.imagesPath[0]}}" class="img-fluid full-width" alt="Car Model Image">
+                  <div class="car-details-grid">
+                    <div class="card-text d-flex justify-content-between">
+                      <span class="text-dark-white"><i class="bi bi-cash text-orange me-2"></i>${{car.price}}</span>
+                      <span class="text-dark-white"><i class="bi bi-car-front text-orange me-2"></i>{{car.year}}</span>
+                    </div>
+                    <div class="card-text d-flex justify-content-between">
+                      <span class="text-dark-white"><i class="bi bi-speedometer2 text-orange me-2"></i>{{car.mileage}} км</span>
+                      <span class="text-dark-white"><i class="bi bi-fuel-pump text-orange me-2"></i>{{car.fuelTypeName}}</span>
+                    </div>
+                  </div>
+                  <a routerLink="/car/car-details/{{car.id}}" class="btn car-grid-btn">Детальніше</a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="col-12">
