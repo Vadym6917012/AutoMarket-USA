@@ -47,7 +47,14 @@ namespace AutoMarket.Server.Infrastructure
 
         public async Task<IEnumerable<Make>> GetAllAsync()
         {
-            return await _ctx.Set<Make>().ToListAsync();
+            return await _ctx.Set<Make>().Include(m => m.Models).ToListAsync();
+        }
+
+        public Make GetMakeByModel(int modelId)
+        {
+            var make = _ctx.Set<Make>().Include(m => m.Models).Where(m => m.Models.Any(i => i.Id == modelId)).FirstOrDefault();
+
+            return make;
         }
 
         public IEnumerable<Make> GetMakeByCountry(int id)

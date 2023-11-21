@@ -21,6 +21,10 @@ export class CarService {
   getCar(carId: number) {
     return this.http.get<Car>(`${environment.apiUrl}/api/car/get-car/${carId}`);
   }
+  
+  getCarForUpdate(carId: number) {
+    return this.http.get<CarAdd>(`${environment.apiUrl}/api/car/get-car-for-update/${carId}`);
+  }
 
   addCar (model: CarAdd | any, images: File[]) {
     const formData = new FormData();

@@ -40,6 +40,15 @@ namespace AutoMarket.Server.Controllers
             return carDTO;
         }
 
+        [HttpGet("get-car-for-update/{id}")]
+        public async Task<CarCreateDTO> GetByIdForUpdate(int id)
+        {
+            var car = await _repository.GetByIdAsync(id);
+            var carDTO = _mapper.Map<CarCreateDTO>(car);
+
+            return carDTO;
+        }
+
         [HttpGet("get-car-by-userid/{id}")]
         public async Task<IEnumerable<CarDTO>> GetCarByUserId(string id)
         {

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AutoMarket.Server.Core.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231106180437_Init-Migration")]
+    [Migration("20231114153252_Init-Migration")]
     partial class InitMigration
     {
         /// <inheritdoc />
@@ -310,6 +310,90 @@ namespace AutoMarket.Server.Core.Migrations
                             Name = "E39 [restyling]",
                             YearFrom = 2000,
                             YearTo = 2004
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "G15 (FL)",
+                            YearFrom = 2022,
+                            YearTo = 2023
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "G15",
+                            YearFrom = 2018,
+                            YearTo = 2023
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "E31",
+                            YearFrom = 1987,
+                            YearTo = 1999
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "G05 (FL)",
+                            YearFrom = 2023,
+                            YearTo = 2023
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "G05",
+                            YearFrom = 2018,
+                            YearTo = 2023
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "F15",
+                            YearFrom = 2013,
+                            YearTo = 2018
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "E70 (FL)",
+                            YearFrom = 2010,
+                            YearTo = 2013
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Name = "E70",
+                            YearFrom = 2006,
+                            YearTo = 2010
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Name = "E53 (FL)",
+                            YearFrom = 2003,
+                            YearTo = 2006
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Name = "E53",
+                            YearFrom = 2000,
+                            YearTo = 2003
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Name = "E36/7 (FL)",
+                            YearFrom = 1999,
+                            YearTo = 2002
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Name = "E36/7",
+                            YearFrom = 1995,
+                            YearTo = 1999
                         });
                 });
 
@@ -850,13 +934,319 @@ namespace AutoMarket.Server.Core.Migrations
                         {
                             Id = 1,
                             MakeId = 1,
-                            Name = "5 series"
+                            Name = "5 Series"
                         },
                         new
                         {
                             Id = 2,
                             MakeId = 2,
                             Name = "4Runner"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            MakeId = 1,
+                            Name = "8 Series"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            MakeId = 1,
+                            Name = "X5"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            MakeId = 1,
+                            Name = "Z1"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            MakeId = 1,
+                            Name = "Z3"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            MakeId = 1,
+                            Name = "Z4"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            MakeId = 1,
+                            Name = "X3"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            MakeId = 1,
+                            Name = "M Series"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            MakeId = 1,
+                            Name = "X6"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            MakeId = 1,
+                            Name = "1 Series"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            MakeId = 1,
+                            Name = "X5 M"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            MakeId = 1,
+                            Name = "M5"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            MakeId = 1,
+                            Name = "X6 M"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            MakeId = 1,
+                            Name = "M6"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            MakeId = 1,
+                            Name = "X1"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            MakeId = 1,
+                            Name = "7 Series"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            MakeId = 1,
+                            Name = "X Series"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            MakeId = 1,
+                            Name = "6 Series Gran Coupe"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            MakeId = 1,
+                            Name = "X2"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            MakeId = 1,
+                            Name = "Z Series"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            MakeId = 1,
+                            Name = "4 Series"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            MakeId = 1,
+                            Name = "2 Series"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            MakeId = 1,
+                            Name = "3 Series GT"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            MakeId = 1,
+                            Name = "X4"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            MakeId = 1,
+                            Name = "4 Series Gran Coupe"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            MakeId = 1,
+                            Name = "i8"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            MakeId = 1,
+                            Name = "2 Series Active Tourer"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            MakeId = 1,
+                            Name = "5 Series GT"
+                        },
+                        new
+                        {
+                            Id = 30,
+                            MakeId = 1,
+                            Name = "I3"
+                        },
+                        new
+                        {
+                            Id = 31,
+                            MakeId = 1,
+                            Name = "M2"
+                        },
+                        new
+                        {
+                            Id = 32,
+                            MakeId = 1,
+                            Name = "M4"
+                        },
+                        new
+                        {
+                            Id = 33,
+                            MakeId = 1,
+                            Name = "X7"
+                        },
+                        new
+                        {
+                            Id = 34,
+                            MakeId = 1,
+                            Name = "6 Series GT"
+                        },
+                        new
+                        {
+                            Id = 35,
+                            MakeId = 1,
+                            Name = "X3 M"
+                        },
+                        new
+                        {
+                            Id = 36,
+                            MakeId = 1,
+                            Name = "X4 M"
+                        },
+                        new
+                        {
+                            Id = 37,
+                            MakeId = 1,
+                            Name = "M8"
+                        },
+                        new
+                        {
+                            Id = 38,
+                            MakeId = 1,
+                            Name = "8 Series Gran Coupe"
+                        },
+                        new
+                        {
+                            Id = 39,
+                            MakeId = 1,
+                            Name = "2 Series Gran Coupe"
+                        },
+                        new
+                        {
+                            Id = 40,
+                            MakeId = 1,
+                            Name = "M8 Gran Coupe"
+                        },
+                        new
+                        {
+                            Id = 41,
+                            MakeId = 1,
+                            Name = "2 Series Gran Tourer"
+                        },
+                        new
+                        {
+                            Id = 42,
+                            MakeId = 1,
+                            Name = "iX3"
+                        },
+                        new
+                        {
+                            Id = 43,
+                            MakeId = 1,
+                            Name = "iX"
+                        },
+                        new
+                        {
+                            Id = 44,
+                            MakeId = 1,
+                            Name = "i3S"
+                        },
+                        new
+                        {
+                            Id = 45,
+                            MakeId = 1,
+                            Name = "i4"
+                        },
+                        new
+                        {
+                            Id = 46,
+                            MakeId = 1,
+                            Name = "i7"
+                        },
+                        new
+                        {
+                            Id = 47,
+                            MakeId = 1,
+                            Name = "1800"
+                        },
+                        new
+                        {
+                            Id = 48,
+                            MakeId = 1,
+                            Name = "3 Series Compact"
+                        },
+                        new
+                        {
+                            Id = 49,
+                            MakeId = 1,
+                            Name = "E9"
+                        },
+                        new
+                        {
+                            Id = 50,
+                            MakeId = 1,
+                            Name = "E3"
+                        },
+                        new
+                        {
+                            Id = 51,
+                            MakeId = 1,
+                            Name = "iX1"
+                        },
+                        new
+                        {
+                            Id = 52,
+                            MakeId = 1,
+                            Name = "XM"
+                        },
+                        new
+                        {
+                            Id = 53,
+                            MakeId = 1,
+                            Name = "i5"
                         });
                 });
 
@@ -884,6 +1274,66 @@ namespace AutoMarket.Server.Core.Migrations
                         {
                             ModelId = 1,
                             GenerationId = 2
+                        },
+                        new
+                        {
+                            ModelId = 3,
+                            GenerationId = 3
+                        },
+                        new
+                        {
+                            ModelId = 3,
+                            GenerationId = 4
+                        },
+                        new
+                        {
+                            ModelId = 3,
+                            GenerationId = 5
+                        },
+                        new
+                        {
+                            ModelId = 4,
+                            GenerationId = 6
+                        },
+                        new
+                        {
+                            ModelId = 4,
+                            GenerationId = 7
+                        },
+                        new
+                        {
+                            ModelId = 4,
+                            GenerationId = 8
+                        },
+                        new
+                        {
+                            ModelId = 4,
+                            GenerationId = 9
+                        },
+                        new
+                        {
+                            ModelId = 4,
+                            GenerationId = 10
+                        },
+                        new
+                        {
+                            ModelId = 4,
+                            GenerationId = 11
+                        },
+                        new
+                        {
+                            ModelId = 4,
+                            GenerationId = 12
+                        },
+                        new
+                        {
+                            ModelId = 6,
+                            GenerationId = 13
+                        },
+                        new
+                        {
+                            ModelId = 6,
+                            GenerationId = 14
                         });
                 });
 
@@ -919,6 +1369,66 @@ namespace AutoMarket.Server.Core.Migrations
                             Id = 2,
                             ModelId = 1,
                             Name = "520i MT (150 hp)"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ModelId = 6,
+                            Name = "2.8 MT(192 hp)"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ModelId = 6,
+                            Name = "2.8 AT (192 hp)"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ModelId = 6,
+                            Name = "3.0i MT (231 hp)"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ModelId = 6,
+                            Name = "3.0i AT (231 hp)"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ModelId = 1,
+                            Name = "3.2i MT (321 hp)"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            ModelId = 6,
+                            Name = "1.9 MT(140 hp)"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            ModelId = 6,
+                            Name = "1.9 AT (140 hp)"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            ModelId = 6,
+                            Name = "2.0 MT (150 hp)"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            ModelId = 6,
+                            Name = "2.2i MT (170 hp)"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            ModelId = 6,
+                            Name = "2.2i AT (170 hp)"
                         });
                 });
 

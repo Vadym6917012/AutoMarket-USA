@@ -43,7 +43,9 @@ namespace AutoMarket.Server.Infrastructure
             CreateMap<GearBoxType, GearBoxTypeDTO>().ReverseMap();
             CreateMap<Generation, GenerationDTO>().ReverseMap();
             CreateMap<Images, ImagesDTO>().ReverseMap();
-            CreateMap<Make, MakeDTO>().ReverseMap();
+            CreateMap<Make, MakeDTO>()
+                .ForMember(dest => dest.ModelsId, opt => opt.MapFrom(src => src.Models.Select(mi => mi.Id)))
+                .ReverseMap();
             CreateMap<Model, ModelDTO>()
                 .ForMember(dest => dest.Generations, opt => opt.MapFrom(src => src.ModelGenerations.Select(pc => pc.Generation.Name)))
                 .ReverseMap();

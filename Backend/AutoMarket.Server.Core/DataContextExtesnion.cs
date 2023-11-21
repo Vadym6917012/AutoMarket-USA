@@ -550,13 +550,268 @@ namespace AutoMarket.Server.Core
             builder.Entity<Model>().HasData(new Model
             {
                 Id = 1,
-                Name = "5 series",
+                Name = "5 Series",
                 MakeId = 1,
             }, new Model
             {
                 Id = 2,
                 Name = "4Runner",
                 MakeId = 2,
+            }, new Model
+            {
+                Id = 3,
+                Name = "8 Series",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 4,
+                Name = "X5",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 5,
+                Name = "Z1",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 6,
+                Name = "Z3",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 7,
+                Name = "Z4",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 8,
+                Name = "X3",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 9,
+                Name = "M Series",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 10,
+                Name = "X6",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 11,
+                Name = "1 Series",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 12,
+                Name = "X5 M",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 13,
+                Name = "M5",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 14,
+                Name = "X6 M",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 15,
+                Name = "M6",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 16,
+                Name = "X1",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 17,
+                Name = "7 Series",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 18,
+                Name = "X Series",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 19,
+                Name = "6 Series Gran Coupe",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 20,
+                Name = "X2",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 21,
+                Name = "Z Series",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 22,
+                Name = "4 Series",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 23,
+                Name = "2 Series",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 24,
+                Name = "3 Series GT",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 25,
+                Name = "X4",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 26,
+                Name = "4 Series Gran Coupe",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 27,
+                Name = "i8",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 28,
+                Name = "2 Series Active Tourer",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 29,
+                Name = "5 Series GT",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 30,
+                Name = "I3",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 31,
+                Name = "M2",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 32,
+                Name = "M4",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 33,
+                Name = "X7",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 34,
+                Name = "6 Series GT",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 35,
+                Name = "X3 M",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 36,
+                Name = "X4 M",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 37,
+                Name = "M8",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 38,
+                Name = "8 Series Gran Coupe",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 39,
+                Name = "2 Series Gran Coupe",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 40,
+                Name = "M8 Gran Coupe",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 41,
+                Name = "2 Series Gran Tourer",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 42,
+                Name = "iX3",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 43,
+                Name = "iX",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 44,
+                Name = "i3S",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 45,
+                Name = "i4",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 46,
+                Name = "i7",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 47,
+                Name = "1800",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 48,
+                Name = "3 Series Compact",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 49,
+                Name = "E9",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 50,
+                Name = "E3",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 51,
+                Name = "iX1",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 52,
+                Name = "XM",
+                MakeId = 1,
+            }, new Model
+            {
+                Id = 53,
+                Name = "i5",
+                MakeId = 1,
             });
 
             #endregion
@@ -575,12 +830,84 @@ namespace AutoMarket.Server.Core
                 Name = "E39 [restyling]",
                 YearFrom = 2000,
                 YearTo = 2004,
+            }, new Generation
+            {
+                Id = 3,
+                Name = "G15 (FL)",
+                YearFrom = 2022,
+                YearTo = 2023,
+            }, new Generation
+            {
+                Id = 4,
+                Name = "G15",
+                YearFrom = 2018,
+                YearTo = 2023,
+            }, new Generation
+            {
+                Id = 5,
+                Name = "E31",
+                YearFrom = 1987,
+                YearTo = 1999,
+            }, new Generation
+            {
+                Id = 6,
+                Name = "G05 (FL)",
+                YearFrom = 2023,
+                YearTo = 2023,
+            }, new Generation
+            {
+                Id = 7,
+                Name = "G05",
+                YearFrom = 2018,
+                YearTo = 2023,
+            }, new Generation
+            {
+                Id = 8,
+                Name = "F15",
+                YearFrom = 2013,
+                YearTo = 2018,
+            }, new Generation
+            {
+                Id = 9,
+                Name = "E70 (FL)",
+                YearFrom = 2010,
+                YearTo = 2013,
+            }, new Generation
+            {
+                Id = 10,
+                Name = "E70",
+                YearFrom = 2006,
+                YearTo = 2010,
+            }, new Generation
+            {
+                Id = 11,
+                Name = "E53 (FL)",
+                YearFrom = 2003,
+                YearTo = 2006,
+            }, new Generation
+            {
+                Id = 12,
+                Name = "E53",
+                YearFrom = 2000,
+                YearTo = 2003,
+            }, new Generation
+            {
+                Id = 13,
+                Name = "E36/7 (FL)",
+                YearFrom = 1999,
+                YearTo = 2002,
+            }, new Generation
+            {
+                Id = 14,
+                Name = "E36/7",
+                YearFrom = 1995,
+                YearTo = 1999,
             });
 
             #endregion
 
             #region ModelGeneration Entities
-
+            
             builder.Entity<ModelGeneration>().HasData(new ModelGeneration
             {
                 ModelId = 1,
@@ -589,6 +916,54 @@ namespace AutoMarket.Server.Core
             {
                 ModelId = 1,
                 GenerationId = 2,
+            }, new ModelGeneration
+            {
+                ModelId = 3,
+                GenerationId = 3,
+            }, new ModelGeneration
+            {
+                ModelId = 3,
+                GenerationId = 4,
+            }, new ModelGeneration
+            {
+                ModelId = 3,
+                GenerationId = 5,
+            }, new ModelGeneration
+            {
+                ModelId = 4,
+                GenerationId = 6,
+            }, new ModelGeneration
+            {
+                ModelId = 4,
+                GenerationId = 7,
+            }, new ModelGeneration
+            {
+                ModelId = 4,
+                GenerationId = 8,
+            }, new ModelGeneration
+            {
+                ModelId = 4,
+                GenerationId = 9,
+            }, new ModelGeneration
+            {
+                ModelId = 4,
+                GenerationId = 10,
+            }, new ModelGeneration
+            {
+                ModelId = 4,
+                GenerationId = 11,
+            }, new ModelGeneration
+            {
+                ModelId = 4,
+                GenerationId = 12,
+            }, new ModelGeneration
+            {
+                ModelId = 6,
+                GenerationId = 13,
+            }, new ModelGeneration
+            {
+                ModelId = 6,
+                GenerationId = 14,
             });
 
             #endregion
@@ -605,8 +980,58 @@ namespace AutoMarket.Server.Core
                 Id = 2,
                 Name = "520i MT (150 hp)",
                 ModelId = 1,
+            }, new Modification
+            {
+                Id = 3,
+                Name = "2.8 MT(192 hp)",
+                ModelId = 6,
+            }, new Modification
+            {
+                Id = 4,
+                Name = "2.8 AT (192 hp)",
+                ModelId = 6,
+            }, new Modification
+            {
+                Id = 5,
+                Name = "3.0i MT (231 hp)",
+                ModelId = 6,
+            }, new Modification
+            {
+                Id = 6,
+                Name = "3.0i AT (231 hp)",
+                ModelId = 6,
+            }, new Modification
+            {
+                Id = 7,
+                Name = "3.2i MT (321 hp)",
+                ModelId = 1,
+            }, new Modification
+            {
+                Id = 8,
+                Name = "1.9 MT(140 hp)",
+                ModelId = 6,
+            }, new Modification
+            {
+                Id = 9,
+                Name = "1.9 AT (140 hp)",
+                ModelId = 6,
+            }, new Modification
+            {
+                Id = 10,
+                Name = "2.0 MT (150 hp)",
+                ModelId = 6,
+            }, new Modification
+            {
+                Id = 11,
+                Name = "2.2i MT (170 hp)",
+                ModelId = 6,
+            }, new Modification
+            {
+                Id = 12,
+                Name = "2.2i AT (170 hp)",
+                ModelId = 6,
             });
-
+            
             #endregion
 
             #region DriveTrain Entity
