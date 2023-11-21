@@ -3,4 +3,5 @@ export interface Make {
     name: string;
     imagePath: string;
     producingCountryId: number;
+    modelsId: number[];
 }

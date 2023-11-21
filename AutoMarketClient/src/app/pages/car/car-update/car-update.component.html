@@ -1,0 +1,181 @@
+<div class="wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <main class="form-car-update">
+                    <form [formGroup]="updateCarForm" (ngSubmit)="updateCar()" autocomplete="off">
+                        <div class="text-center mb-4 col-md-12">
+                            <h3 class="mb-3 font-weight-normal">Оновити оголошення</h3>
+                        </div>
+                        <div class="row">
+                            <div class="form-floating mb-3 col-md-6">
+                                <select formControlName="modelId" name="model" class="form-select shadow-none">
+                                    <option selected disabled value="">Модель</option>
+                                    <option *ngFor="let model of filteredModels" [value]="model.id">{{model.name}}
+                                    </option>
+                                </select>
+                                <span class="text-danger"
+                                    *ngIf="submitted && updateCarForm.get('model')?.hasError('required')">
+                                    Модель обов'язкова
+                                </span>
+                            </div>
+
+                            <div class="form-floating mb-3 col-md-6">
+                                <select formControlName="generationId" class="form-select shadow-none">
+                                    <option selected disabled value="">Покоління</option>
+                                    <option *ngFor="let generation of filteredGenerations" [value]="generation.id">
+                                        {{generation.name}} [{{generation.yearFrom}} - {{generation.yearTo}}]</option>
+                                </select>
+                                <span class="text-danger"
+                                    *ngIf="submitted && updateCarForm.get('generationId')?.hasError('required')">
+                                    Покоління обов`язкове
+                                </span>
+                            </div>
+
+                            <div class="form-floating mb-3 col-md-6">
+                                <select formControlName="modificationId" class="form-select shadow-none">
+                                    <option selected disabled value="">Модифікація</option>
+                                    <option *ngFor="let modification of filteredModifications"
+                                        [value]="modification.id">{{modification.name}}</option>
+                                </select>
+                            </div>
+
+                            <div class="form-floating mb-3 col-md-12">
+                                <input formControlName="vin" type="text" placeholder="VIN"
+                                    class="form-control shadow-none"
+                                    [class.is-invalid]="submitted && updateCarForm.get('vin')?.errors">
+                                <label for="vin">VIN</label>
+                                <span class="text-danger"
+                                    *ngIf="submitted && updateCarForm.get('vin')?.hasError('required')">
+                                    VIN обов`язкове
+                                </span>
+                            </div>
+
+                            <div class="form-floating mb-3 col-md-4">
+                                <select formControlName="bodyTypeId" class="form-select shadow-none">
+                                    <option selected disabled value="">Тип кузова</option>
+                                    <option *ngFor="let bodyType of bodytypes" [value]="bodyType.id">{{bodyType.name}}
+                                    </option>
+                                </select>
+                                <span class="text-danger"
+                                    *ngIf="submitted && updateCarForm.get('bodyTypeId')?.hasError('required')">
+                                    Тип кузоав обов'язковий
+                                </span>
+                            </div>
+
+                            <div class="form-floating mb-3 col-md-4">
+                                <select formControlName="gearBoxTypeId" class="form-select shadow-none">
+                                    <option selected disabled value="">Тип коробки передач</option>
+                                    <option *ngFor="let gearbox of gearboxes" [value]="gearbox.id">{{gearbox.name}}
+                                    </option>
+                                </select>
+                                <span class="text-danger"
+                                    *ngIf="submitted && updateCarForm.get('gearBoxTypeId')?.hasError('required')">
+                                    Тип коробки передач обов`язковий
+                                </span>
+                            </div>
+
+                            <div class="form-floating mb-3 col-md-4">
+                                <select formControlName="driveTrainId" class="form-select shadow-none">
+                                    <option selected disabled value="">Тип приводу</option>
+                                    <option *ngFor="let drivetrain of drivetrains" [value]="drivetrain.id">
+                                        {{drivetrain.name}}</option>
+                                </select>
+                                <span class="text-danger"
+                                    *ngIf="submitted && updateCarForm.get('driveTrainId')?.hasError('required')">
+                                    Тип приводу обов'язкове
+                                </span>
+                            </div>
+
+                            <div class="form-floating mb-3 col-md-4">
+                                <select formControlName="technicalConditionId" class="form-select shadow-none">
+                                    <option selected disabled value="">Технічний стан</option>
+                                    <option *ngFor="let technicalCondition of technicalconditions"
+                                        [value]="technicalCondition.id">{{technicalCondition.name}}</option>
+                                </select>
+                                <span class="text-danger"
+                                    *ngIf="submitted && updateCarForm.get('technicalConditionId')?.hasError('required')">
+                                    Технічний стан обов'язкове
+                                </span>
+                            </div>
+
+                            <div class="form-floating mb-3 col-md-4">
+                                <select formControlName="fuelTypeId" class="form-select shadow-none">
+                                    <option selected disabled value="">Тип палива</option>
+                                    <option *ngFor="let fueltype of fueltypes" [value]="fueltype.id">{{fueltype.name}}
+                                    </option>
+                                </select>
+                                <span class="text-danger"
+                                    *ngIf="submitted && updateCarForm.get('fuelTypeId')?.hasError('required')">
+                                    Тип палива обов`язковий
+                                </span>
+                            </div>
+
+                            <div class="form-floating mb-3 col-md-4">
+                                <input formControlName="year" type="number" placeholder="Рік"
+                                    class="form-control shadow-none"
+                                    [class.is-invalid]="submitted && updateCarForm.get('year')?.errors">
+                                <label for="year">Рік</label>
+                                <span class="text-danger"
+                                    *ngIf="submitted && updateCarForm.get('year')?.hasError('required')">
+                                    Рік обов'язковий
+                                </span>
+                                <span class="text-danger"
+                                    *ngIf="submitted && updateCarForm.get('year')?.hasError('yearNotInValidRange')">
+                                    {{ updateCarForm.get('year')?.getError('yearNotInValidRange')}}
+                                </span>
+                            </div>
+
+                            <div class="form-floating mb-3 col-md-6">
+                                <input formControlName="price" type="number" placeholder="Ціна"
+                                    class="form-control shadow-none"
+                                    [class.is-invalid]="submitted && updateCarForm.get('price')?.errors">
+                                <label for="price">Ціна</label>
+                                <span class="text-danger"
+                                    *ngIf="submitted && updateCarForm.get('price')?.hasError('required')">
+                                    Ціна обов`язкова
+                                </span>
+                            </div>
+
+                            <div class="form-floating mb-3 col-md-6">
+                                <input formControlName="mileage" type="number" placeholder="Пробіг"
+                                    class="form-control shadow-none"
+                                    [class.is-invalid]="submitted && updateCarForm.get('mileage')?.errors">
+                                <label for="mileage">Пробіг</label>
+                                <span class="text-danger"
+                                    *ngIf="submitted && updateCarForm.get('mileage')?.hasError('required')">
+                                    Пробіг обов`язковий
+                                </span>
+                            </div>
+
+                            <div class="form-floating mb-3 col-md-12">
+                                <textarea formControlName="description" type="text" placeholder="Опис"
+                                    class="form-control shadow-none"
+                                    [class.is-invalid]="submitted && updateCarForm.get('description')?.errors"></textarea>
+                                <label for="description">Опис</label>
+                                <span class="text-danger"
+                                    *ngIf="submitted && updateCarForm.get('description')?.hasError('required')">
+                                    Опис обов'язковий
+                                </span>
+                            </div>
+
+                            <div class="form-floating mb-3 col-md-12">
+                                <input type="file" id="images" name="images" (change)="onImagesSelected($event)"
+                                    class="form-control shadow-none" multiple>
+                                <label for="images">Фотографії</label>
+                            </div>
+
+                            <div class="form-floating" *ngIf="errorMessages.length > 0">
+                                <app-validation-messages [errorMessages]="errorMessages"></app-validation-messages>
+                            </div>
+
+                            <div class="d-grid col-md-12">
+                                <button class="btn btn-update-car" type="submit">Оновити оголошення</button>
+                            </div>
+                        </div>
+                    </form>
+                </main>
+            </div>
+        </div>
+    </div>
+</div>

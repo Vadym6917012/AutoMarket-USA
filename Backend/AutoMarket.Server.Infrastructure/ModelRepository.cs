@@ -1,5 +1,6 @@
 ﻿using AutoMarket.Server.Core;
 using AutoMarket.Server.Core.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -19,6 +20,36 @@ namespace AutoMarket.Server.Infrastructure
         }
 
         public async Task AddWithGeneration(Model entity, string generationName, int yearFrom, int yearTo)
+        {
+            var existEntity = GetById(entity.Id);
+
+            if (existEntity == null)
+            {
+                await _ctx.Set<Model>().AddAsync(entity);
+            } else
+            {
+                return;
+            }
+
+            var existingGeneration = _ctx.Set<Generation>().FirstOrDefault(g => g.Name == generationName);
+
+            if (existingGeneration == null)
+            {
+                var newGeneration = new Generation { Name = generationName, YearFrom = yearFrom, YearTo = yearTo };
+                _ctx.Set<Generation>().Add(newGeneration);
+                _ctx.Entry(newGeneration).State = EntityState.Detached;
+                _ctx.SaveChanges();
+                _ctx.Set<ModelGeneration>().Add(new ModelGeneration { ModelId = entity.Id, Model = entity, GenerationId = newGeneration.Id, Generation = newGeneration });
+                _ctx.SaveChanges();
+            }
+            else
+            {
+                _ctx.Set<ModelGeneration>().Add(new ModelGeneration { ModelId = entity.Id, Model = entity, GenerationId = existingGeneration.Id, Generation = existingGeneration });
+                _ctx.SaveChanges();
+            }
+        }
+
+        public async Task AddGenerationToModel(Model entity, string generationName, int yearFrom, int yearTo)
         {
             await _ctx.Set<Model>().AddAsync(entity);
 

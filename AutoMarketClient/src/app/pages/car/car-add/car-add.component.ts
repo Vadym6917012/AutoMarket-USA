@@ -78,7 +78,6 @@ export class CarAddComponent implements OnInit {
     this.getTechnicalCondition();
 
     this.addCarForm.get('countryId')?.valueChanges.subscribe((countryId) => {
-
       if (countryId) {
         this.filteredModels = [];
         this.filteredGenerations = [];
@@ -139,8 +138,8 @@ export class CarAddComponent implements OnInit {
       makeId: [''],
       modelId: ['', [Validators.required]],
       generationId: ['', [Validators.required]],
-      modificationId: ['', [Validators.required]],
-      vin: ['', [Validators.required]],
+      modificationId: [''],
+      vin: ['', [Validators.required, Validators.pattern('^[A-HJ-NPR-Z0-9]{17}$')]],
       bodyTypeId: ['', [Validators.required]],
       gearBoxTypeId: ['', [Validators.required]],
       driveTrainId: ['', [Validators.required]],
@@ -152,6 +151,9 @@ export class CarAddComponent implements OnInit {
       description: ['', [Validators.required]],
       userId: [''],
     });
+
+    this.addCarForm.get('modificationId')?.clearValidators();
+    this.addCarForm.get('modificationId')?.updateValueAndValidity();
   }
 
   yearWithinGenerationRangeValidator(): ValidatorFn {

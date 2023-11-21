@@ -16,46 +16,55 @@
                             </p>
                         </div>
                         <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-                            <h6 class="text-uppercase fw-bold">Products</h6>
+                            <h6 class="text-uppercase fw-bold">Мапа сайту</h6>
                             <hr class="mb-4 mt-0 d-inline-block mx-auto"
                                 style="width: 60px; background-color: #ff8500; height: 2px" />
                             <p>
-                                <a href="#!">MDBootstrap</a>
+                                <a routerLink="/">Головна</a>
                             </p>
                             <p>
-                                <a href="#!">MDWordPress</a>
+                                <a routerLink="/car/car-list">Пошук авто</a>
                             </p>
                             <p>
-                                <a href="#!">BrandFlow</a>
+                                <a href="#!">Зв'яззатися з нами</a>
                             </p>
                             <p>
-                                <a href="#!">Bootstrap Angular</a>
+                                <a href="#!">Про нас</a>
                             </p>
                         </div>
                         <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-                            <h6 class="text-uppercase fw-bold">Useful links</h6>
+                            <h6 class="text-uppercase fw-bold">Корисне</h6>
                             <hr class="mb-4 mt-0 d-inline-block mx-auto"
                                 style="width: 60px; background-color: #ff8500; height: 2px" />
+                            <ng-container *ngIf="(accountService.user$ | async) === null">
+                                <p>
+                                    <a routerLink="/account/register">Створити акаунт</a>
+                                </p>
+                                <p>
+                                    <a routerLink="/account/login">Увійти в особистий кабінет</a>
+                                </p>
+                            </ng-container>
+                            <ng-container *ngIf="(accountService.user$ | async) as user">
+                                <p>
+                                    <a routerLink="/account/profile/{{user.id}}">Особистий кабінет</a>
+                                </p>
+                                <p>
+                                    <a routerLink="/car/car-add">Подати оголошення</a>
+                                </p>
+                            </ng-container>
                             <p>
-                                <a href="#!">Your Account</a>
-                            </p>
-                            <p>
-                                <a href="#!">Become an Affiliate</a>
-                            </p>
-                            <p>
-                                <a href="#!">Shipping Rates</a>
-                            </p>
-                            <p>
-                                <a href="#!">Help</a>
+                                <a href="#!">Допомога</a>
                             </p>
                         </div>
                         <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-                            <h6 class="text-uppercase fw-bold">Contact</h6>
+                            <h6 class="text-uppercase fw-bold">Контакти</h6>
                             <hr class="mb-4 mt-0 d-inline-block mx-auto"
                                 style="width: 60px; background-color: #ff8500; height: 2px" />
-                            <p><i class="bi bi-house-door-fill"></i> Rivne, UA</p>
-                            <p><i class="bi bi-envelope-check"></i> vadym.radchuk@oa.edu.ua</p>
-                            <p><i class="bi bi-telephone-fill"></i> +380 677 22 536</p>
+                            <p><i class="bi bi-house-door-fill"></i><a href=""> Rivne, UA</a></p>
+                            <p><i class="bi bi-envelope-check"></i><a href="mailto:vadym.radchuk@oa.edu.ua">
+                                    vadym.radchuk@oa.edu.ua</a></p>
+                            <p><i class="bi bi-telephone-fill"></i><a href="tel:+380677722536"> +38-067-772-25-36</a>
+                            </p>
                         </div>
                     </div>
                 </div>

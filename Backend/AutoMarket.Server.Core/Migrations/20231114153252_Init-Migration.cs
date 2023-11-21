@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -514,7 +515,19 @@ namespace AutoMarket.Server.Core.Migrations
                 values: new object[,]
                 {
                     { 1, "E39", 1995, 2000 },
-                    { 2, "E39 [restyling]", 2000, 2004 }
+                    { 2, "E39 [restyling]", 2000, 2004 },
+                    { 3, "G15 (FL)", 2022, 2023 },
+                    { 4, "G15", 2018, 2023 },
+                    { 5, "E31", 1987, 1999 },
+                    { 6, "G05 (FL)", 2023, 2023 },
+                    { 7, "G05", 2018, 2023 },
+                    { 8, "F15", 2013, 2018 },
+                    { 9, "E70 (FL)", 2010, 2013 },
+                    { 10, "E70", 2006, 2010 },
+                    { 11, "E53 (FL)", 2003, 2006 },
+                    { 12, "E53", 2000, 2003 },
+                    { 13, "E36/7 (FL)", 1999, 2002 },
+                    { 14, "E36/7", 1995, 1999 }
                 });
 
             migrationBuilder.InsertData(
@@ -623,8 +636,59 @@ namespace AutoMarket.Server.Core.Migrations
                 columns: new[] { "Id", "MakeId", "Name" },
                 values: new object[,]
                 {
-                    { 1, 1, "5 series" },
-                    { 2, 2, "4Runner" }
+                    { 1, 1, "5 Series" },
+                    { 2, 2, "4Runner" },
+                    { 3, 1, "8 Series" },
+                    { 4, 1, "X5" },
+                    { 5, 1, "Z1" },
+                    { 6, 1, "Z3" },
+                    { 7, 1, "Z4" },
+                    { 8, 1, "X3" },
+                    { 9, 1, "M Series" },
+                    { 10, 1, "X6" },
+                    { 11, 1, "1 Series" },
+                    { 12, 1, "X5 M" },
+                    { 13, 1, "M5" },
+                    { 14, 1, "X6 M" },
+                    { 15, 1, "M6" },
+                    { 16, 1, "X1" },
+                    { 17, 1, "7 Series" },
+                    { 18, 1, "X Series" },
+                    { 19, 1, "6 Series Gran Coupe" },
+                    { 20, 1, "X2" },
+                    { 21, 1, "Z Series" },
+                    { 22, 1, "4 Series" },
+                    { 23, 1, "2 Series" },
+                    { 24, 1, "3 Series GT" },
+                    { 25, 1, "X4" },
+                    { 26, 1, "4 Series Gran Coupe" },
+                    { 27, 1, "i8" },
+                    { 28, 1, "2 Series Active Tourer" },
+                    { 29, 1, "5 Series GT" },
+                    { 30, 1, "I3" },
+                    { 31, 1, "M2" },
+                    { 32, 1, "M4" },
+                    { 33, 1, "X7" },
+                    { 34, 1, "6 Series GT" },
+                    { 35, 1, "X3 M" },
+                    { 36, 1, "X4 M" },
+                    { 37, 1, "M8" },
+                    { 38, 1, "8 Series Gran Coupe" },
+                    { 39, 1, "2 Series Gran Coupe" },
+                    { 40, 1, "M8 Gran Coupe" },
+                    { 41, 1, "2 Series Gran Tourer" },
+                    { 42, 1, "iX3" },
+                    { 43, 1, "iX" },
+                    { 44, 1, "i3S" },
+                    { 45, 1, "i4" },
+                    { 46, 1, "i7" },
+                    { 47, 1, "1800" },
+                    { 48, 1, "3 Series Compact" },
+                    { 49, 1, "E9" },
+                    { 50, 1, "E3" },
+                    { 51, 1, "iX1" },
+                    { 52, 1, "XM" },
+                    { 53, 1, "i5" }
                 });
 
             migrationBuilder.InsertData(
@@ -633,7 +697,19 @@ namespace AutoMarket.Server.Core.Migrations
                 values: new object[,]
                 {
                     { 1, 1 },
-                    { 2, 1 }
+                    { 2, 1 },
+                    { 3, 3 },
+                    { 4, 3 },
+                    { 5, 3 },
+                    { 6, 4 },
+                    { 7, 4 },
+                    { 8, 4 },
+                    { 9, 4 },
+                    { 10, 4 },
+                    { 11, 4 },
+                    { 12, 4 },
+                    { 13, 6 },
+                    { 14, 6 }
                 });
 
             migrationBuilder.InsertData(
@@ -642,7 +718,17 @@ namespace AutoMarket.Server.Core.Migrations
                 values: new object[,]
                 {
                     { 1, 1, "520i AT (150 hp)" },
-                    { 2, 1, "520i MT (150 hp)" }
+                    { 2, 1, "520i MT (150 hp)" },
+                    { 3, 6, "2.8 MT(192 hp)" },
+                    { 4, 6, "2.8 AT (192 hp)" },
+                    { 5, 6, "3.0i MT (231 hp)" },
+                    { 6, 6, "3.0i AT (231 hp)" },
+                    { 7, 1, "3.2i MT (321 hp)" },
+                    { 8, 6, "1.9 MT(140 hp)" },
+                    { 9, 6, "1.9 AT (140 hp)" },
+                    { 10, 6, "2.0 MT (150 hp)" },
+                    { 11, 6, "2.2i MT (170 hp)" },
+                    { 12, 6, "2.2i AT (170 hp)" }
                 });
 
             migrationBuilder.CreateIndex(

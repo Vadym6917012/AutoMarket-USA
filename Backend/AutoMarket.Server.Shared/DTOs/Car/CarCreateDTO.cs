@@ -7,7 +7,7 @@ namespace AutoMarket.Server.Shared.DTOs.Car
         public int Id { get; set; }
         public int ModelId { get; set; }
         public int GenerationId { get; set; }
-        public int ModificationId { get; set; }
+        public int? ModificationId { get; set; }
         [RegularExpression("^[A-HJ-NPR-Z0-9]{17}$")]
         public string? VIN { get; set; }
         public int BodyTypeId { get; set; }
@@ -16,6 +16,7 @@ namespace AutoMarket.Server.Shared.DTOs.Car
         public int TechnicalConditionId { get; set; }
         public int FuelTypeId { get; set; }
         public int Year { get; set; }
+        [RegularExpression("^\\d{4}$")]
         public decimal Price { get; set; }
         public int Mileage { get; set; }
         public string? Description { get; set; }

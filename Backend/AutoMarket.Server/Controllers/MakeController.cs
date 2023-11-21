@@ -98,5 +98,21 @@ namespace AutoMarket.Server.Controllers
             var make = _repository.GetMakeByCountry(producingCountryId);
             return Ok(make);
         }
+
+        [HttpGet]
+        [Route("get-make-by-model/{modelId:int}")]
+        public async Task<ActionResult> GetMakeByModel(int modelId)
+        {
+            var make = _repository.GetMakeByModel(modelId);
+
+            if (make == null)
+            {
+                return BadRequest("Не вдалося знайти марку за даною моделлю");
+            }
+
+            var makeDTO = _mapper.Map<MakeDTO>(make);
+
+            return Ok(makeDTO);
+        }
     }
 }
