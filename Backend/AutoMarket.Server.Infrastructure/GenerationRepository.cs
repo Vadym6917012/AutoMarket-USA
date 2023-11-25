@@ -1,5 +1,6 @@
 ﻿using AutoMarket.Server.Core;
 using AutoMarket.Server.Core.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -17,6 +18,32 @@ namespace AutoMarket.Server.Infrastructure
             await _ctx.Set<Generation>().AddAsync(entity);
             await _ctx.SaveChangesAsync();
         }
+
+        public async Task AddToModelAsync(int modelId, Generation entity)
+        {
+            var existModel = await _ctx.Set<Model>().FirstOrDefaultAsync(x => x.Id == modelId);
+
+            if (existModel != null)
+            {
+                var existGeneration = await _ctx.Set<Generation>().FirstOrDefaultAsync(g => g.Name == entity.Name && g.YearFrom == entity.YearFrom && g.YearTo == entity.YearTo);
+                
+                if (existGeneration == null)
+                {
+                    await _ctx.Set<Generation>().AddAsync(entity);
+
+                    await _ctx.SaveChangesAsync();
+
+                    _ctx.Set<ModelGeneration>().Add(new ModelGeneration { ModelId = modelId, GenerationId = entity.Id });
+                }
+                else
+                {
+                    _ctx.Set<ModelGeneration>().Add(new ModelGeneration { ModelId = modelId, GenerationId = entity.Id });
+                }
+            }
+
+            await _ctx.SaveChangesAsync();
+        }
+
         public async Task UpdateAsync(Generation entity)
         {
             _ctx.Set<Generation>().Update(entity);
@@ -54,7 +81,7 @@ namespace AutoMarket.Server.Infrastructure
 
         public async Task<IEnumerable<Generation>> GetAllAsync()
         {
-            return await _ctx.Set<Generation>().ToListAsync();
+            return await _ctx.Set<Generation>().Include(mg => mg.ModelGenerations).ThenInclude(m => m.Model).ToListAsync();
         }
     }
 }

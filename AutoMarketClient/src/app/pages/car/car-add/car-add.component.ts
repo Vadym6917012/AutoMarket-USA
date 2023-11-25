@@ -138,16 +138,16 @@ export class CarAddComponent implements OnInit {
       makeId: [''],
       modelId: ['', [Validators.required]],
       generationId: ['', [Validators.required]],
-      modificationId: [''],
+      modificationId: ['', [Validators.required]],
       vin: ['', [Validators.required, Validators.pattern('^[A-HJ-NPR-Z0-9]{17}$')]],
       bodyTypeId: ['', [Validators.required]],
       gearBoxTypeId: ['', [Validators.required]],
       driveTrainId: ['', [Validators.required]],
       technicalConditionId: ['', [Validators.required]],
       fuelTypeId: ['', [Validators.required]],
-      year: ['', [Validators.required, this.yearWithinGenerationRangeValidator()]],
-      price: ['', [Validators.required]],
-      mileage: ['', [Validators.required]],
+      year: ['', [Validators.required, Validators.min(1000), Validators.pattern(/^\d+$/), this.yearWithinGenerationRangeValidator()]],
+      price: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+      mileage: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
       description: ['', [Validators.required]],
       userId: [''],
     });
@@ -168,7 +168,9 @@ export class CarAddComponent implements OnInit {
         const generationYearFrom = selectedGeneration.yearFrom;
         const generationYearTo = selectedGeneration.yearTo;
 
-        if (year < generationYearFrom || year > generationYearTo) {
+        const currentYear = new Date().getFullYear();
+
+        if (year < generationYearFrom || year > Math.min(generationYearTo, currentYear)) {
           return { yearNotInValidRange: 'Рік не входить у дійсний діапазон для вибраного покоління.' };
         }
       }

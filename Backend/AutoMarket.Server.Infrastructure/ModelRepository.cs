@@ -53,7 +53,7 @@ namespace AutoMarket.Server.Infrastructure
         {
             await _ctx.Set<Model>().AddAsync(entity);
 
-            var existingGeneration = _ctx.Set<Generation>().FirstOrDefault(g => g.Name == generationName);
+            var existingGeneration = _ctx.Set<Generation>().FirstOrDefault(g => g.Name == generationName && g.YearFrom == yearFrom && g.YearTo == yearTo);
 
             if (existingGeneration == null)
             {
