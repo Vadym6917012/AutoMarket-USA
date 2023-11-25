@@ -15,7 +15,23 @@ export class GenerationService {
     return this.http.get<Generation[]>(`${environment.apiUrl}/api/generation`);
   }
 
+  getGeneration(id: number) :Observable<Generation>{
+    return this.http.get<Generation>(`${environment.apiUrl}/api/generation/${id}`);
+  }
+
   getGenerationByModel(modelId: number): Observable<Generation[]>{
     return this.http.get<Generation[]>(`${environment.apiUrl}/api/generation/get-generation-by-model/${modelId}`);
+  }
+  
+  addGenerationToModel(modelId: number, generation: Generation) :Observable<Generation>{
+    const numericModelId = typeof modelId === 'string' ? parseInt(modelId, 10) : modelId;
+    
+    generation.id = 0;
+
+    return this.http.post<Generation>(`${environment.apiUrl}/api/generation/add-generation-to-model?modelId=${modelId}`, generation);
+  }
+
+  deleteGeneration(id: number) :Observable<Generation> {
+    return this.http.delete<Generation>(`${environment.apiUrl}/api/generation/${id}`);
   }
 }

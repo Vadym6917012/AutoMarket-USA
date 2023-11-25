@@ -57,8 +57,21 @@ namespace AutoMarket.Server.Controllers
             var generation = _mapper.Map<Generation>(generationDTO);
             await _repository.AddAsync(generation);
 
-            // Return the created product
             return CreatedAtAction("GetById", new { id = generation.Id }, _mapper.Map<GenerationDTO>(generation));
+        }
+
+        [HttpPost("add-generation-to-model")]
+        public async Task<IActionResult> AddGenerationToModel([FromQuery] int modelId, [FromBody] GenerationDTO generationDTO)
+        {
+            if (generationDTO == null)
+            {
+                return BadRequest("Invalid generation data");
+            }
+
+            var generation = _mapper.Map<Generation>(generationDTO);
+            await _repository.AddToModelAsync(modelId, generation);
+
+            return Ok(new JsonResult(new { title = "Покоління додано успішно", message = "Покоління додано успішно", id = generation.Id }));
         }
 
         [HttpPut]

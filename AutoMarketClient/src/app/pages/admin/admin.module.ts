@@ -4,13 +4,15 @@ import { AdminComponent } from './admin.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AddEditMemberComponent } from './add-edit-member/add-edit-member.component';
 import { SharedModule } from "../../shared/shared.module";
+import { AddEditGenerationComponent } from './add-edit-generation/add-edit-generation.component';
 
 
 
 @NgModule({
     declarations: [
         AdminComponent,
-        AddEditMemberComponent
+        AddEditMemberComponent,
+        AddEditGenerationComponent
     ],
     imports: [
         CommonModule,
