@@ -21,12 +21,11 @@ export class AuthorizationGuard {
         if (user) {
           return true;
         } else {
-          this.sharedService.showNotification(false, 'Restricted Area', 'Leave immediately!');
+          this.sharedService.showNotification(false, 'Заборонена зона', 'Покиньте негайно!');
           this.router.navigate(['account/login'], {queryParams: {returnUrl: state.url}});
           return false;
         }
       })
     );
   }
-  
 }

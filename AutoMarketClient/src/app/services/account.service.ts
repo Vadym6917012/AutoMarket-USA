@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { ConfirmEmail } from '../models/account/confirmEmail';
 import { ResetPassword } from '../models/account/resetPassword';
 import { SharedService } from '../shared/shared.service';
+import { MemberAddEdit } from '../models/admin/memberAddEdit';
 
 @Injectable({
   providedIn: 'root'
@@ -79,6 +80,14 @@ export class AccountService {
 
   forgotUsernameOrPassword(email: string) {
     return this.http.post(`${environment.apiUrl}/api/account/forgot-username-or-password/${email}`, {});
+  }
+
+  getMember(id: string) {
+    return this.http.get<MemberAddEdit>(`${environment.apiUrl}/api/account/get-member/${id}`);
+  }
+
+  addEditMember(model: MemberAddEdit) {
+    return this.http.post(`${environment.apiUrl}/api/account/add-edit-member`, model);
   }
 
   resetPassword(model: ResetPassword) {

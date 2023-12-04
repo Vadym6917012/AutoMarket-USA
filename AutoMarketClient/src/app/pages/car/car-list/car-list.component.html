@@ -204,7 +204,7 @@
             <div class="row">
               <div class="col-md-4 col-sm-6 mb-2" *ngFor="let car of carInfo">
                 <div class="car-grid-card text-center">
-                    <div class="car-title">
+                    <div class="car-title pt-1">
                       <h4 class="text-light-black">{{car.makeName}}</h4>
                       <h5 class="text-light-black">{{car.modelName}} {{car.generationName}}</h5>
                     </div>
@@ -212,11 +212,11 @@
                     <div class="car-details-grid">
                       <div class="card-text d-flex justify-content-between">
                         <span class="text-dark-white"><i class="bi bi-cash text-orange me-2"></i>${{car.price}}</span>
-                        <span class="text-dark-white"><i class="bi bi-car-front text-orange me-2"></i>{{car.year}}</span>
+                        <span class="text-dark-white"><i class="bi bi-car-front text-orange me-2"></i>{{car.year}} рік</span>
                       </div>
                       <div class="card-text d-flex justify-content-between">
                         <span class="text-dark-white"><i class="bi bi-speedometer2 text-orange me-2"></i>{{car.mileage}} км</span>
-                        <span class="text-dark-white"><i class="bi bi-fuel-pump text-orange me-2"></i>{{car.fuelTypeName}}</span>
+                        <span class="text-dark-white"><i class="bi bi-fuel-pump text-orange me-2"></i>{{car.driveTrainName}}</span>
                       </div>
                     </div>
                     <a routerLink="/car/car-details/{{car.id}}" class="btn car-grid-btn">Детальніше</a>

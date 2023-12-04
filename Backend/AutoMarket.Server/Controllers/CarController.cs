@@ -109,7 +109,7 @@ namespace AutoMarket.Server.Controllers
 
             var car = _mapper.Map<Car>(carDTO);
 
-            var checkYear = _repository.CheckYear(car);
+            var checkYear = await _repository.CheckYear(car);
 
             if (checkYear == null)
             {
