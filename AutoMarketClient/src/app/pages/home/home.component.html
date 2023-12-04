@@ -5,7 +5,7 @@
     <div class="car-search-form-sec">
       <div class="container">
         <div class="row">
-          <div class="col-12 .col-sm-6">
+          <div class="col-12">
             <div class="car-search-form">
               <div class="tab-content">
                 <div class="tab-pane active">
@@ -58,7 +58,7 @@
       <owl-carousel-o id="slider" [options]="customOptions">
         <ng-container>
           <ng-template carouselSlide *ngFor="let car of cars">
-            <div class="home-card">
+            <div class="home-card card">
               <div class="card-image">
                 <img [src]="car.imagesPath[0]" alt="">
               </div>
@@ -68,13 +68,13 @@
               </div>
               <div class="card-text d-flex justify-content-between">
                 <span class="text-dark-white"><i class="bi bi-cash text-orange me-2"></i>${{car.price}}</span>
-                <span class="text-dark-white"><i class="bi bi-car-front text-orange me-2"></i>{{car.year}}</span>
+                <span class="text-dark-white"><i class="bi bi-car-front text-orange me-2"></i>{{car.year}} рік</span>
               </div>
               <div class="card-text d-flex justify-content-between">
                 <span class="text-dark-white"><i class="bi bi-speedometer2 text-orange me-2"></i>{{car.mileage}}
                   км</span>
                 <span class="text-dark-white"><i
-                    class="bi bi-fuel-pump text-orange me-2"></i>{{car.fuelTypeName}}</span>
+                    class="bi bi-fuel-pump text-orange me-2"></i>{{car.driveTrainName}}</span>
               </div>
               <a routerLink="car/car-details/{{car.id}}" class="card-button">Детальніше</a>
             </div>

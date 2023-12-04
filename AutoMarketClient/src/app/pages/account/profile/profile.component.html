@@ -13,6 +13,82 @@
   </div>
 </div>
 
+<section class="my-account">
+  <main class="form-account-update">
+    <div class="d-flex justify-content-center" *ngIf="formInitialized">
+      <form [formGroup]="memberForm" (ngSubmit)="submit()">
+        <div class="form-floating mb-3">
+          <input formControlName="firstName" type="text" placeholder="First Name" class="form-control"
+            [class.is-invalid]="submitted && memberForm.get('firstName')?.errors">
+          <label for="firstName">First name</label>
+          <span class="text-danger" *ngIf="submitted && memberForm.get('firstName')?.hasError('required')">
+            First name is required
+          </span>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input formControlName="lastName" type="text" placeholder="Last Name" class="form-control"
+            [class.is-invalid]="submitted && memberForm.get('lastName')?.errors">
+          <label for="lastName">Last name</label>
+          <span class="text-danger" *ngIf="submitted && memberForm.get('lastName')?.hasError('required')">
+            Last name is required
+          </span>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input formControlName="userName" type="text" placeholder="Username" class="form-control"
+            [class.is-invalid]="submitted && memberForm.get('userName')?.errors">
+          <label for="userName">Username</label>
+          <span class="text-danger" *ngIf="submitted && memberForm.get('userName')?.hasError('required')">
+            Username is required
+          </span>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input formControlName="phoneNumber" type="text" placeholder="Phone number" class="form-control"
+            [class.is-invalid]="submitted && memberForm.get('phoneNumber')?.errors">
+          <label for="phoneNumber">Phone number</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input formControlName="password" type="text" placeholder="Password" class="form-control"
+            [class.is-invalid]="submitted && memberForm.get('password')?.errors" (change)="passwordOnChange()">
+          <label for="password">Password</label>
+          <span class="text-danger" *ngIf="submitted && memberForm.get('password')?.hasError('required')">
+            Password is required
+          </span>
+          <span class="text-danger" *ngIf="submitted && 
+    memberForm.get('password')?.hasError('minlength') || memberForm.get('password')?.hasError('maxlength')">
+            Password must be at least 6, and maximum 15 characters
+          </span>
+        </div>
+
+        <div class="form-floatin" *ngIf="errorMessages.length > 0">
+          <app-validation-messages [errorMessages]="errorMessages"></app-validation-messages>
+        </div>
+
+        <div class="row my-4">
+          <div class="col-6">
+            <div class="d-grid">
+              <button class="btn btn-block btn-info" type="submit">
+                Оновити
+              </button>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="d-grid">
+              <button class="btn btn-block btn-danger" type="button" routerLink="/admin">
+                Back to list
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </main>
+</section>
+
 <section class="user-cars-section section">
   <div class="profile-content">
     <div class="container">
@@ -40,7 +116,7 @@
               <td scope="row">{{car.makeName}}</td>
               <td scope="row">{{car.modelName}}</td>
               <td scope="row">{{car.vin}}</td>
-              <td scope="row" class="text-center">
+              <td scope="row">
                 <button class="btn btn-primary btn-sm me-2" routerLink="/car/car-update/{{car.id}}">
                   Редагувати
                 </button>

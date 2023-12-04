@@ -125,7 +125,7 @@
 }
 
 .home-card {
-	width: 18rem;
+	width: auto;
 	position: relative;
 	border-radius: 8px;
 	overflow: hidden;
@@ -287,4 +287,11 @@
 .make-list li a span img {
 	height: 60px;
 	width: 60px;
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+
+	.home-card {
+		width: 100%;
+	}
 }

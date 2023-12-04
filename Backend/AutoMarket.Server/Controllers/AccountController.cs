@@ -2,6 +2,7 @@
 using AutoMarket.Server.Core.Models;
 using AutoMarket.Server.Infrastructure;
 using AutoMarket.Server.Shared.DTOs.Account;
+using AutoMarket.Server.Shared.DTOs.Admin;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -170,6 +171,57 @@ namespace AutoMarket.Server.Controllers
                 return BadRequest("Неправильний токен, спробуйте пізніше");
             }
         }
+
+        [HttpGet("get-member/{id}")]
+        public async Task<ActionResult<MemberAddEditDto>> GetMember(string id)
+        {
+            var user = await _userManager.Users
+                .Where(x => x.UserName != SD.AdminUserName && x.Id == id)
+                .FirstOrDefaultAsync();
+
+            var member = new MemberAddEditDto
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Roles = string.Join(",", await _userManager.GetRolesAsync(user))
+            };
+
+            return Ok(member);
+        }
+
+        [HttpPost("add-edit-member")]
+        public async Task<IActionResult> AddEditMember(MemberAddEditDto model)
+        {
+            User user;
+
+            if (!string.IsNullOrEmpty(model.Password))
+            {
+                if (model.Password.Length < 6)
+                {
+                    ModelState.AddModelError("errors", "Password must be at least 6 characters");
+                    return BadRequest(ModelState);
+                }
+            }
+
+            user = await _userManager.FindByIdAsync(model.Id);
+            if (user == null) return NotFound();
+
+            user.FirstName = model.FirstName.ToLower();
+            user.LastName = model.LastName.ToLower();
+            user.UserName = model.UserName.ToLower();
+
+            if (!string.IsNullOrEmpty(model.Password))
+            {
+                await _userManager.RemovePasswordAsync(user);
+                await _userManager.AddPasswordAsync(user, model.Password);
+            }
+
+            return Ok(new JsonResult(new { title = "Користувач відредагований", message = $"{model.UserName} оновлений" }));
+
+        }
+
 
         [HttpPost("resend-email-confirmation-link/{email}")]
         public async Task<IActionResult> ResendEmailConfirmationLink(string email)
