@@ -129,7 +129,7 @@
 	position: relative;
 	border-radius: 8px;
 	overflow: hidden;
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	box-shadow: 3px 3px 11px rgba(0, 0, 0, 0.07);
 }
 
 .card-image {
@@ -143,6 +143,7 @@
 	height: 180px;
 	border-radius: 8px 8px 0px 0;
 	transition: 0.5s linear;
+	object-fit: cover;
 }
 
 .card-image:hover img {
@@ -225,6 +226,12 @@
 	padding-bottom: 0;
 }
 
+.about-img {
+	background: url(../../../assets/images/about-bg.jpg) no-repeat left;
+	background-size: cover;
+	height: 580px;
+}
+
 .about-info {
 	max-width: 560px;
 	padding: 70px 20px 30px 50px;
@@ -290,8 +297,16 @@
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
-
 	.home-card {
 		width: 100%;
+	}
+	.make-list li {
+		width: 100%;
+	}
+}
+
+@media only screen and (max-width: 540px) {
+	.make-list li {
+		width: 50%;
 	}
 }

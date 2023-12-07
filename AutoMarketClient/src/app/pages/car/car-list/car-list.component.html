@@ -49,7 +49,7 @@
       </div>
     </div>
     <div class="tab-content">
-      <div *ngIf="isListView === true" id="listing_list" class="tab-pane active">
+      <div  class="tab-pane active">
         <div class="row">
           <div class="col-lg-8">
 
@@ -57,44 +57,72 @@
               <p>Ще немає оголошень</p>
             </ng-container>
 
-            <div class="car-model-layout-list" *ngFor="let car of carInfo">
-              <div class="car-thumbnail-area">
-                <div class="item-thumb">
-                  <img src="{{car.imagesPath[0]}}" class="img-fluid full-width" alt="image">
+            <ng-container *ngIf="isListView === true" id="listing_list">
+              <div class="car-model-layout-list" *ngFor="let car of carInfo">
+                <div class="car-thumbnail-area">
+                  <div class="item-thumb">
+                    <img src="{{car.imagesPath[0]}}" class="img-fluid full-width" alt="image">
+                  </div>
+                  <div class="car-overlay-info">
+                    <div class="car-type luxury">Luxury</div>
+                  </div>
                 </div>
-                <div class="car-overlay-info">
-                  <div class="car-type luxury">Luxury</div>
+                <div class="car-description-area">
+                  <div class="car-description-content whitebg">
+                    <h5 class="title"><a routerLink="/car/car-details/{{car.id}}" class="text-light-black">{{car.makeName}} {{car.modelName}}
+                        {{car.generationName}}</a></h5>
+                    <div class="car-rating">
+                      <div class="rating-value">
+                        <p><i class="bi bi-fuel-pump-fill"></i> {{car.fuelTypeName}}</p>
+                      </div>
+                      <div class="rating-icon">
+                        <p>${{car.price}}</p>
+                      </div>
+                    </div>
+                    <div class="car-meta">
+                      <div class="car-modification">
+                        {{car.modificationName}}
+                      </div>
+                      <div class="car-number">
+                        VIN: {{car.vin}}
+                      </div>
+                    </div>
+                    <div class="car-summary">
+                      <p>{{car.description | slice:0:124}}</p>
+                    </div>
+                  </div>
+                  <div class="car-description-footer">
+                    <a routerLink="/car/car-details/{{car.id}}" class="view btn-car"><b>Детальніше</b></a>
+                  </div>
                 </div>
               </div>
-              <div class="car-description-area">
-                <div class="car-description-content">
-                  <h5 class="title"><a routerLink="/car/car-details/{{car.id}}" class="text-light-black">{{car.makeName}} {{car.modelName}}
-                      {{car.generationName}}</a></h5>
-                  <div class="car-rating">
-                    <div class="rating-value">
-                      <p><i class="bi bi-fuel-pump-fill"></i> {{car.fuelTypeName}}</p>
-                    </div>
-                    <div class="rating-icon">
-                      <p>${{car.price}}</p>
+            </ng-container>
+
+            <ng-container>
+              <div *ngIf="isListView === false" id="listing-grid" class="tab-pane active">
+                    <div class="row">
+                      <div class="col-md-4 col-sm-6 mb-3" *ngFor="let car of carInfo">
+                          <div class="car-grid-card whitebg">
+                            <a routerLink="/car/car-details/{{car.id}}">
+                              <img src="{{car.imagesPath[0]}}" class="full-width car-img-grid" style="width: 270px; height: 175px;" alt="Car Image">
+                            </a>
+                            <div class="car-grid-details">
+                              <div class="car-grid-price">
+                                <h5><span class="text-orange">${{car.price}}</span></h5>
+                              </div>
+                              <div class="car-grid-title">
+                                <h5><a routerLink="/car/car-details/{{car.id}}" class="text-light-black">{{car.makeName}} {{car.modelName}} {{car.year}}</a></h5>
+                              </div>
+                              <div class="car-grid-summary d-flex flex-column mt-1">
+                                <span class="text-dark-grey">VIN: {{car.vin}}</span>
+                                <span class="text-dark-grey">Пробіг: {{car.mileage}} км.</span>
+                              </div>
+                            </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div class="car-meta">
-                    <div class="car-modification">
-                      {{car.modificationName}}
-                    </div>
-                    <div class="car-number">
-                      VIN: {{car.vin}}
-                    </div>
-                  </div>
-                  <div class="car-summary">
-                    <p>{{car.description | slice:0:124}}</p>
-                  </div>
-                </div>
-                <div class="car-description-footer">
-                  <a routerLink="/car/car-details/{{car.id}}" class="view btn-car">Детальніше</a>
-                </div>
-              </div>
-            </div>
+            </ng-container>
           </div>
           <aside class="col-lg-4">
             <div class="side-search-bar">
@@ -196,34 +224,6 @@
               </div>
             </div>
           </aside>
-        </div>
-      </div>
-      <div *ngIf="isListView === false" id="listing-grid" class="tab-pane active">
-        <div class="row">
-          <div class="col-md-9 col-sm-7">
-            <div class="row">
-              <div class="col-md-4 col-sm-6 mb-2" *ngFor="let car of carInfo">
-                <div class="car-grid-card text-center">
-                    <div class="car-title pt-1">
-                      <h4 class="text-light-black">{{car.makeName}}</h4>
-                      <h5 class="text-light-black">{{car.modelName}} {{car.generationName}}</h5>
-                    </div>
-                    <img src="{{car.imagesPath[0]}}" class="full-width car-img-grid" alt="Car Model Image">
-                    <div class="car-details-grid">
-                      <div class="card-text d-flex justify-content-between">
-                        <span class="text-dark-white"><i class="bi bi-cash text-orange me-2"></i>${{car.price}}</span>
-                        <span class="text-dark-white"><i class="bi bi-car-front text-orange me-2"></i>{{car.year}} рік</span>
-                      </div>
-                      <div class="card-text d-flex justify-content-between">
-                        <span class="text-dark-white"><i class="bi bi-speedometer2 text-orange me-2"></i>{{car.mileage}} км</span>
-                        <span class="text-dark-white"><i class="bi bi-fuel-pump text-orange me-2"></i>{{car.driveTrainName}}</span>
-                      </div>
-                    </div>
-                    <a routerLink="/car/car-details/{{car.id}}" class="btn car-grid-btn">Детальніше</a>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
       <div class="col-12">
