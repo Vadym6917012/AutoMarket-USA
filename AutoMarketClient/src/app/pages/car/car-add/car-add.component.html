@@ -150,6 +150,7 @@
                             <div class="form-floating mb-3 col-md-12">
                                 <input type="file" id="images" name="images" (change)="onImagesSelected($event)" class="form-control shadow-none" multiple>
                                 <label for="images">Фотографії</label>
+                                <span class="text-dark-grey">Будь ласка, завантажуйте фотографії лише в горизонтальному форматі.</span>
                             </div>
             
                             <div class="form-floating" *ngIf="errorMessages.length > 0">

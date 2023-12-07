@@ -5,7 +5,7 @@
 }
 
 header {
-    background: none;
+    background: #fff;
     color: #141414;
 }
 
@@ -45,12 +45,6 @@ header {
     transition: 0.3s ease-in-out;
 }
 
-.navbar-collapse.in {
-    overflow: inherit;
-    height: auto;
-    padding: 0 15px;
-}
-
 .dropdown:hover>.dropdown-menu {
     display: block;
     transition: visibility 0.33s, opacity .33s, transform .33s;
@@ -83,4 +77,15 @@ header {
     color: #ff8500;
     padding-left: 10px;
     transition: 0.5s;
+}
+@media only screen and (max-width: 992px) {
+    .navbar-nav>li {
+        margin-bottom: 5px;
+    }
+    .navbar-collapse {
+        margin-top: 5px;
+    }
+    .dropdown-menu {
+        padding: 5px;
+    }
 }
