@@ -76,7 +76,7 @@ namespace AutoMarket.Server.Controllers
             {
                 if (string.IsNullOrEmpty(model.Password) || model.Password.Length < 6)
                 {
-                    ModelState.AddModelError("errors", "Password must be at least 6 characters");
+                    ModelState.AddModelError("errors", "Пароль повинен складатися зі шести або більше символів.");
                     return BadRequest(ModelState);
                 }
 
@@ -97,7 +97,7 @@ namespace AutoMarket.Server.Controllers
                 {
                     if (model.Password.Length < 6)
                     {
-                        ModelState.AddModelError("errors", "Password must be at least 6 characters");
+                        ModelState.AddModelError("errors", "Пароль повинен складатися зі шести або більше символів.");
                         return BadRequest(ModelState);
                     }
                 }

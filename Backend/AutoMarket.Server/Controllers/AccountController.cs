@@ -49,11 +49,11 @@ namespace AutoMarket.Server.Controllers
             if (IsValidRefreshTokenAsync(userId, token).GetAwaiter().GetResult())
             {
                 var user = await _userManager.FindByIdAsync(userId);
-                if (user == null) return Unauthorized("Invalid or expired token, please try to login");
+                if (user == null) return Unauthorized("Недійсний або застарілий токен. Будь ласка, спробуйте увійти знову.");
                 return await CreateApplicationUserDTO(user);
             }
 
-            return Unauthorized("Invalid or expired token, please try to login");
+            return Unauthorized("Недійсний або застарілий токен. Будь ласка, спробуйте увійти знову.");
         }
 
         [Authorize]
@@ -123,6 +123,8 @@ namespace AutoMarket.Server.Controllers
                 return BadRequest(result.Errors);
             }
 
+            await _userManager.AddToRoleAsync(userToAdd, SD.MemberRole);
+
             try
             {
                 if (await SendConfirmEmailAsync(userToAdd))
@@ -130,12 +132,12 @@ namespace AutoMarket.Server.Controllers
                     return Ok(new JsonResult(new { title = "Акаунт створено успішно", message = "Ваш акаунт створено успішно, підтвердіть, будь ласка, вашу email пошту" }));
                 }
 
-                return BadRequest("Failed to send email. Please contact admin");
+                return BadRequest("Не вдалося відправити електронного листа. Зверніться до адміністратора для отримання додаткової допомоги.");
             }
             catch (Exception)
             {
 
-                return BadRequest("Failed to send email. Please contact admin");
+                return BadRequest("Не вдалося відправити електронного листа. Зверніться до адміністратора для отримання додаткової допомоги.");
             }
         }
 
@@ -161,7 +163,7 @@ namespace AutoMarket.Server.Controllers
                 var result = await _userManager.ConfirmEmailAsync(user, decodedToken);
                 if (result.Succeeded)
                 {
-                    return Ok(new JsonResult(new { title = "Email confirmed", message = "Ваш email підтверджений, увійдіть в особистий кабінет" }));
+                    return Ok(new JsonResult(new { title = "Email підтверджений", message = "Ваш email підтверджений, увійдіть в особистий кабінет" }));
                 }
 
                 return BadRequest("Неправильний токен, спробуйте пізніше");
@@ -200,7 +202,7 @@ namespace AutoMarket.Server.Controllers
             {
                 if (model.Password.Length < 6)
                 {
-                    ModelState.AddModelError("errors", "Password must be at least 6 characters");
+                    ModelState.AddModelError("errors", "Пароль повинен містити щонайменше 6 символів.");
                     return BadRequest(ModelState);
                 }
             }
@@ -245,13 +247,13 @@ namespace AutoMarket.Server.Controllers
             {
                 if (await SendConfirmEmailAsync(user))
                 {
-                    return Ok(new JsonResult(new { title = "Confirmation link send", message = "Підтвердіть вашу email адресу" }));
+                    return Ok(new JsonResult(new { title = "Відправлено посилання для підтвердження.", message = "Підтвердіть вашу email адресу" }));
                 }
-                return BadRequest("Failed to send email");
+                return BadRequest("Не вдалося відправити електронного листа.");
             }
             catch (Exception)
             {
-                return BadRequest("Failed to send email");
+                return BadRequest("Не вдалося відправити електронного листа.");
             }
         }
 
@@ -279,14 +281,14 @@ namespace AutoMarket.Server.Controllers
             {
                 if (await SendForgotUsernameOrPassword(user))
                 {
-                    return Ok(new JsonResult(new { title = "Forgot username or password email sent", message = "Please check your email" }));
+                    return Ok(new JsonResult(new { title = "Відправлено листа щодо забутого імені користувача або паролю.", message = "Перевірте ваш email" }));
                 }
 
-                return BadRequest("Failed to send email. Please contact admin");
+                return BadRequest("Не вдалося відправити електронного листа. Зверніться до адміністратора для отримання додаткової допомоги.");
             }
             catch (Exception)
             {
-                return BadRequest("Failed to send email. Please contact admin");
+                return BadRequest("Не вдалося відправити електронного листа. Зверніться до адміністратора для отримання додаткової допомоги.");
             }
         }
 
@@ -349,13 +351,15 @@ namespace AutoMarket.Server.Controllers
             token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
             var url = $"{_config["JWT:ClientUrl"]}/{_config["Email:ConfirmEmailPath"]}?token={token}&email={user.Email}";
 
-            var body = $"<p>Hello: {user.FirstName} {user.LastName}</p>" +
-                "<p>Please confirm your email address by clicking on the following link.</p> +" +
-                $"<p><a href=\"{url}\">Click here</a></p>" +
-                "<p>Thank you,</p>," +
-                $"<br>{_config["Email:ApplicationName"]}";
+            var body = $"<p>Вітаємо! : {user.FirstName} {user.LastName}</p>" +
+                "<p>Дякуємо за реєстрацію на нашому веб-сайті. Щоб завершити процес реєстрації та активувати ваш обліковий запис, будь ласка, підтвердьте свою електронну пошту, перейшовши за посиланням нижче:</p>" +
+                $"<p><a href=\"{url}\">Натисни тут</a></p>" +
+                "<p>Якщо ви не реєструвалися на нашому веб-сайті, проігноруйте цей лист.</p>" +
+                "<p>Дякуємо за вибір нашого сервісу!</p>" +
+                "<br><p>З найкращими побажаннями,</p>" +
+                $"{_config["Email:ApplicationName"]}";
 
-            var emailSend = new EmailSendDTO(to: user.Email, "Confirm your email", body);
+            var emailSend = new EmailSendDTO(to: user.Email, "Підтвердження електронної пошти", body);
 
             return await _emailService.SendEmailAsync(emailSend);
         }
@@ -366,14 +370,16 @@ namespace AutoMarket.Server.Controllers
             token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
             var url = $"{_config["JWT:ClientUrl"]}/{_config["Email:ResetPasswordPath"]}?token={token}&email={user.Email}";
 
-            var body = $"<p>Hello: {user.FirstName} {user.LastName}</p>" +
-                $"<p>Username: {user.UserName}</p> +" +
-                "<p>In order to reset your password, please click on the following link.</p>" +
-                $"<p><a href=\"{url}\">Click here</a></p>" +
-                "<p>Thank you,</p>," +
-                $"<br>{_config["Email:ApplicationName"]}";
+            var body = $"<p>Привіт: {user.FirstName} {user.LastName}</p>" +
+                $"<p>Email адреса: {user.UserName}</p>" +
+                "<p>Ви отримали цей лист, оскільки ви (або хтось інший) виразили бажання відновити пароль для вашого облікового запису.</p>" +
+                "<p>Для відновлення паролю перейдіть за посиланням нижче:</p>" +
+                $"<p><a href=\"{url}\">Натисни тут</a></p>" +
+                "<p>Якщо ви не намагалися відновити пароль, проігноруйте цей лист.</p>" +
+                "<br><p>З найкращими побажаннями,</p>" +
+                $"{_config["Email:ApplicationName"]}";
 
-            var emailSend = new EmailSendDTO(to: user.Email, "Forgot username or password", body);
+            var emailSend = new EmailSendDTO(to: user.Email, "Відновлення паролю", body);
 
             return await _emailService.SendEmailAsync(emailSend);
         }

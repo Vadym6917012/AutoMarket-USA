@@ -296,6 +296,11 @@
 	width: 60px;
 }
 
+.make-list li a span img:hover {
+	filter: invert(67%) sepia(100%) saturate(3410%) hue-rotate(359deg) brightness(103%) contrast(108%);
+	transition: 0.5s;
+}
+
 @media (min-width: 320px) and (max-width: 480px) {
 	.home-card {
 		width: 100%;
@@ -310,3 +315,5 @@
 		width: 50%;
 	}
 }
+
+

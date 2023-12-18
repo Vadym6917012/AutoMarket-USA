@@ -31,14 +31,12 @@
               </div>
             </div>
             <div class="col-lg-3 col-md-6">
-              <div class="filter-by-grid-list"> <span>View As</span>
+              <div class="filter-by-grid-list"> <span>Переглянути як: </span>
                 <div class="filter-tab-area">
                   <ul class="nav nav-tabs" role="tablist">
-                    <li> <a (click)="toggleView('grid')" data-toggle="tab" aria-selected="false"><i [class.active]="selectedView === 'grid'"
-                           class="bi bi-border-all"></i></a>
+                    <li> <a (click)="toggleView('grid')" data-toggle="tab" aria-selected="false"><i [ngClass]="{'active': !isListView}" class="bi bi-border-all"></i></a>
                     </li>
-                    <li> <a  (click)="toggleView('list')" data-toggle="tab" aria-selected="true"><i [class.active]="selectedView === 'list'"
-                           class="bi bi-border-width"></i></a>
+                    <li> <a  (click)="toggleView('list')" data-toggle="tab" aria-selected="true"><i [ngClass]="{'active': isListView}" class="bi bi-border-width"></i></a>
                     </li>
                   </ul>
                 </div>
@@ -188,32 +186,32 @@
                     </div>
                     <div class="form-group d-flex mb-3">
                       <div class="input-wrap mr-3">
-                        <label for="price-input">Рік від:</label>
-                        <input type="text" placeholder="Рік від" id="price-input" class="form-control shadow-none car-list-filter-select">
+                        <label for="yearFrom">Рік від:</label>
+                        <input formControlName="yearFrom" type="text" placeholder="Рік від" id="yearFrom" class="form-control shadow-none car-list-filter-select">
                       </div>
                       <div class="input-wrap">
-                        <label for="price-input">Рік до:</label>
-                        <input type="text" placeholder="Рік до" class="form-control shadow-none car-list-filter-select">
+                        <label for="yearTo">Рік до:</label>
+                        <input formControlName="yearTo" type="text" placeholder="Рік до" class="form-control shadow-none car-list-filter-select">
                       </div>
                     </div>
                     <div class="form-group d-flex mb-3">
                       <div class="input-wrap mr-3">
-                        <label for="price-input">Пробіг від:</label>
-                        <input type="text" placeholder="Пробіг від" id="price-input" class="form-control shadow-none car-list-filter-select">
+                        <label for="mileageFrom">Пробіг від:</label>
+                        <input formControlName="mileageFrom" type="text" placeholder="Пробіг від" id="mileageFrom" class="form-control shadow-none car-list-filter-select">
                       </div>
                       <div class="input-wrap">
-                        <label for="price-input">Пробіг до:</label>
-                        <input type="text" placeholder="Пробіг до" class="form-control shadow-none car-list-filter-select">
+                        <label for="mileageTo">Пробіг до:</label>
+                        <input formControlName="mileageTo" type="text" placeholder="Пробіг до" class="form-control shadow-none car-list-filter-select">
                       </div>
                     </div>
                     <div class="form-group d-flex mb-3">
                       <div class="input-wrap mr-3">
-                        <label for="price-input">Ціна від:</label>
-                        <input type="text" placeholder="$" id="price-input" class="form-control shadow-none car-list-filter-select">
+                        <label for="priceFrom">Ціна від:</label>
+                        <input formControlName="priceFrom" type="text" placeholder="$" id="priceFrom" class="form-control shadow-none car-list-filter-select">
                       </div>
                       <div class="input-wrap">
-                        <label for="price-input">Ціна до:</label>
-                        <input type="text" placeholder="$" class="form-control shadow-none car-list-filter-select">
+                        <label for="priceTo">Ціна до:</label>
+                        <input formControlName="priceTo" type="text" placeholder="$" class="form-control shadow-none car-list-filter-select">
                       </div>
                     </div>
                     <div class="form-submit text-center">

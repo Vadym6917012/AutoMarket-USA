@@ -38,6 +38,8 @@ export class CarUpdateComponent implements OnInit {
   errorMessages: string[] = [];
   submitted = false;
 
+  disableSelect: boolean = true;
+
   countries: ProducingCountry[] = [];
   bodytypes: BodyType[] = [];
   gearboxes: GearBox[] = [];
