@@ -17,6 +17,7 @@
     justify-content: center;
     left: 0;
     right: 0;
+    top: 90%;
     bottom: 0;
     transform: translate(0%, 0%);
 }
@@ -111,6 +112,7 @@
     position: relative;
     overflow: hidden;
     width: 50%;
+    max-height: 220px;
 }
 
 .item-thumb {
@@ -124,7 +126,7 @@
 
 .item-thumb img {
     object-fit: cover;
-    height: 200px;
+    height: 220px;
 }
 
 .car-model-layout-list:hover .item-thumb>img {
@@ -447,4 +449,8 @@ nav.custom-pagination .pagination li.page-item:last-child a {
 
 .car-grid-details {
     padding: 5px;
+}
+
+@media only screen and (max-width: 1200px) {
+
 }

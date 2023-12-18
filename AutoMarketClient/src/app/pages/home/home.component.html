@@ -95,7 +95,7 @@
         <ng-container *ngFor="let make of makes">
           <li class="col-md-2 col-sm-3 col-xs-6">
             <a class="text-light-black" (click)="filterMake(make.id)">
-              <span><img src="{{make.imagePath}}" alt=""></span>
+              <span><img class="img-make" src="{{make.imagePath}}" alt=""></span>
               {{make.name}}
             </a>
           </li>

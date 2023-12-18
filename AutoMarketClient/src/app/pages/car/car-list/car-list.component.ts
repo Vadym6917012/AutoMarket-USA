@@ -40,7 +40,6 @@ export class CarListComponent implements OnInit {
   filteredModifications: Modification[] = [];
 
   isListView = true;
-  selectedView = 'list';
   selectedSortOption = '';
 
   carFilter: FormGroup = new FormGroup({});
@@ -134,7 +133,6 @@ export class CarListComponent implements OnInit {
   }
 
   toggleView(view: 'list' | 'grid') {
-    console.log(view);
     if (view === 'list') {
       this.isListView = true;
     } else if (view === 'grid') {

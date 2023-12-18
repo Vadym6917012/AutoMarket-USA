@@ -1,63 +1,66 @@
 <header class="header">
-    <div class="container">
-        <nav class="navbar navbar-expand-lg p-3">
-            <div class="container-fluid">
-                <div class="navbar-brand">
-                    <a routerLink="/"><img src="./assets/images/logo.png" alt="logo" class="img-fluid" /></a>
-                </div>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-          
-              <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav ms-auto ">
-                  <li class="nav-item">
-                    <a class="nav-link mx-2" routerLink="/" routerLinkActive="active"
-                    [routerLinkActiveOptions]="{exact:true}">Головна</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link mx-2" routerLink="/car/car-list">Пошук авто</a>
-                  </li>
-                  <li class="nav-item dropdown">
-                    <a class="nav-link mx-2 dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Компанія
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                      <li><a class="dropdown-item" href="#">Блог</a></li>
-                      <li><a class="dropdown-item" href="#">Про нас</a></li>
-                      <li><a class="dropdown-item" href="#">Зв'язатися з нами</a></li>
-                    </ul>
-                  </li>
-                </ul>
-                <ul class="navbar-nav ms-auto d-lg-inline-flex" *ngIf="(accountService.user$ | async) === null">
-                    <li class="nav-item mx-2">
-                        <a class="nav-link btn navbar-btn" routerLink="/account/register">
-                            Реєстрація
-                        </a>
-                    </li>
-                    <li class="nav-item mx-2">
-                        <a class="nav-link btn navbar-btn" routerLink="/account/login">
-                            Вхід в кабінет
-                        </a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ms-auto d-lg-inline-flex" *ngIf="(accountService.user$ | async) as user">
-                    <li class="nav-item mx-2 dropdown" >
-                        <a class="nav-link btn dropdown-toggle"  id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown">Привіт, {{user.firstName}}</a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" routerLink="/admin" *appUserHasRole="['Admin']">Адмін панель</a></li>
-                            <li><a class="dropdown-item" routerLink="/account/profile/{{user.id}}">Особистий кабінет</a></li>
-                            <li><a class="dropdown-item" routerLink="/car/car-add">Подати оголошення</a></li>
-                          </ul>
-                    </li>
-                    <li class="nav-item mx-2">
-                        <a class="nav-link btn navbar-btn" (click)="logout()">
-                            Вийти
-                        </a>
-                    </li>
-                </ul>
-              </div>
-            </div>
-          </nav>
-    </div>
+  <div class="container">
+    <nav class="navbar navbar-expand-lg p-3">
+      <div class="container-fluid">
+        <div class="navbar-brand">
+          <a routerLink="/"><img src="./assets/images/logo.png" alt="logo" class="img-fluid" /></a>
+        </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav ms-auto ">
+            <li class="nav-item">
+              <a class="nav-link mx-2" routerLink="/" routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact:true}">Головна</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-2" routerLink="/car/car-list">Пошук авто</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link mx-2 dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                Компанія
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li><a class="dropdown-item" href="#">Блог</a></li>
+                <li><a class="dropdown-item" href="#">Про нас</a></li>
+                <li><a class="dropdown-item" href="#">Зв'язатися з нами</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="navbar-nav ms-auto d-lg-inline-flex" *ngIf="(accountService.user$ | async) === null">
+            <li class="nav-item mx-2">
+              <a class="nav-link btn navbar-btn" routerLink="/account/register">
+                Реєстрація
+              </a>
+            </li>
+            <li class="nav-item mx-2">
+              <a class="nav-link btn navbar-btn" routerLink="/account/login">
+                Вхід в кабінет
+              </a>
+            </li>
+          </ul>
+          <ul class="navbar-nav ms-auto d-lg-inline-flex" *ngIf="(accountService.user$ | async) as user">
+            <li class="nav-item mx-2 dropdown">
+              <a class="nav-link btn dropdown-toggle" id="navbarDropdownMenuLink" role="button"
+                data-bs-toggle="dropdown">Привіт, {{user.firstName}}</a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li *appUserHasRole="['Admin']"><a class="dropdown-item" routerLink="/admin">Адмін панель</a></li>
+                <li><a class="dropdown-item" routerLink="/account/profile/{{user.id}}">Особистий кабінет</a></li>
+                <li><a class="dropdown-item" routerLink="/car/car-add">Подати оголошення</a></li>
+              </ul>
+            </li>
+            <li class="nav-item mx-2">
+              <a class="nav-link btn navbar-btn" (click)="logout()">
+                Вийти
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
 </header>

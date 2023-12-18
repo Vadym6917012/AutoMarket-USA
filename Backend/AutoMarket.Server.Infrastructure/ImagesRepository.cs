@@ -9,9 +9,9 @@ namespace AutoMarket.Server.Infrastructure
     public class ImagesRepository
     {
         private readonly DataContext _ctx;
-        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IWebHostEnvironment _hostingEnvironment;
 
-        public ImagesRepository(DataContext ctx, IHostingEnvironment hostingEnvironment)
+        public ImagesRepository(DataContext ctx, IWebHostEnvironment hostingEnvironment)
         {
             _ctx = ctx ?? throw new ArgumentNullException(nameof(_ctx));
             _hostingEnvironment = hostingEnvironment ?? throw new ArgumentNullException(nameof(_hostingEnvironment));

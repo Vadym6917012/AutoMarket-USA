@@ -9,7 +9,7 @@
                         </div>
                         <div class="row">
                             <div class="form-floating mb-3 col-md-6">
-                                <select formControlName="modelId" name="model" class="form-select shadow-none">
+                                <select formControlName="modelId" name="model" class="form-select shadow-none" [attr.disabled] = "true">
                                     <option selected disabled value="">Модель</option>
                                     <option *ngFor="let model of filteredModels" [value]="model.id">{{model.name}}
                                     </option>
@@ -21,7 +21,7 @@
                             </div>
 
                             <div class="form-floating mb-3 col-md-6">
-                                <select formControlName="generationId" class="form-select shadow-none">
+                                <select formControlName="generationId" class="form-select shadow-none" [attr.disabled] = "true">
                                     <option selected disabled value="">Покоління</option>
                                     <option *ngFor="let generation of filteredGenerations" [value]="generation.id">
                                         {{generation.name}} [{{generation.yearFrom}} - {{generation.yearTo}}]</option>
@@ -33,7 +33,7 @@
                             </div>
 
                             <div class="form-floating mb-3 col-md-6">
-                                <select formControlName="modificationId" class="form-select shadow-none">
+                                <select formControlName="modificationId" class="form-select shadow-none" [attr.disabled] = "true">
                                     <option selected disabled value="">Модифікація</option>
                                     <option *ngFor="let modification of filteredModifications"
                                         [value]="modification.id">{{modification.name}}</option>
