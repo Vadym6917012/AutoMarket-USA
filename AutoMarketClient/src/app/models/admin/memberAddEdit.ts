@@ -5,5 +5,5 @@ export interface MemberAddEdit {
     lastName: string;
     password?: string;
     roles: string;
-    phoneNumber: string;
+    phoneNumber?: string;
 }

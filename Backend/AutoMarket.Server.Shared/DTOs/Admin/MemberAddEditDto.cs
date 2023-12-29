@@ -11,6 +11,7 @@ namespace AutoMarket.Server.Shared.DTOs.Admin
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
+        public string PhoneNumber { get; set; }
         public string Password { get; set; }
         [Required]
         public string Roles { get; set; }
