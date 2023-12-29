@@ -104,10 +104,10 @@ export class ProfileComponent implements OnInit {
     this.errorMessages = [];
 
     if (this.memberForm.valid) {
-      this.adminService.addEditMember(this.memberForm.value).subscribe({
+      this.accountService.addEditMember(this.memberForm.value).subscribe({
         next: (response: any) => {
           this.sharedService.showNotification(true, response.value.titile, response.value.message);
-          this.router.navigateByUrl('/admin');
+          this.router.navigateByUrl('/');
         },
         error: error => {
           if (error.error.errors) {

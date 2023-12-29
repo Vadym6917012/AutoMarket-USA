@@ -23,13 +23,15 @@ namespace AutoMarket.Server.Controllers
         private readonly EmailService _emailService;
         private readonly DataContext _context;
         private readonly IConfiguration _config;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public AccountController(JWTServices jwtService,
             SignInManager<User> signInManager,
             UserManager<User> userManager,
             EmailService emailService,
             DataContext context,
-            IConfiguration config)
+            IConfiguration config,
+            RoleManager<IdentityRole> roleManager)
         {
             _jwtService = jwtService;
             _signInManager = signInManager;
@@ -37,6 +39,7 @@ namespace AutoMarket.Server.Controllers
             _emailService = emailService;
             _context = context;
             _config = config;
+            _roleManager = roleManager;
         }
 
         [Authorize]
@@ -187,6 +190,7 @@ namespace AutoMarket.Server.Controllers
                 UserName = user.UserName,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber,
                 Roles = string.Join(",", await _userManager.GetRolesAsync(user))
             };
 
@@ -213,11 +217,25 @@ namespace AutoMarket.Server.Controllers
             user.FirstName = model.FirstName.ToLower();
             user.LastName = model.LastName.ToLower();
             user.UserName = model.UserName.ToLower();
+            user.PhoneNumber = model.PhoneNumber.ToLower();
 
             if (!string.IsNullOrEmpty(model.Password))
             {
                 await _userManager.RemovePasswordAsync(user);
                 await _userManager.AddPasswordAsync(user, model.Password);
+            }
+
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+            await _userManager.RemoveFromRolesAsync(user, userRoles);
+
+            foreach (var role in model.Roles.Split(",").ToArray())
+            {
+                var roleToAdd = await _roleManager.Roles.FirstOrDefaultAsync(r => r.Name == role);
+                if (roleToAdd != null)
+                {
+                    await _userManager.AddToRoleAsync(user, role);
+                }
             }
 
             return Ok(new JsonResult(new { title = "Користувач відредагований", message = $"{model.UserName} оновлений" }));

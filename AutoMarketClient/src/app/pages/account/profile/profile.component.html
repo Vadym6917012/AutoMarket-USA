@@ -1,11 +1,11 @@
 <div class="profile-top-image">
-  <img src="../../../../assets/images/subbanner.jpg" alt="">
+  <img src="../../../../assets/images/subbanner.jpg" alt="profile-image">
   <div class="sub-header-wrapper">
     <div class="container">
       <div class="row">
         <div class="col-xl-12">
           <div class="sub-header-text-wrapper text-center">
-            <h1><span class="text-orange">Мій</span> профіль</h1>
+            <h1><span class="text-orange">Особистий</span> кабінет</h1>
           </div>
         </div>
       </div>
@@ -13,81 +13,81 @@
   </div>
 </div>
 
-<!--<section class="my-account">
-  <main class="form-account-update">
-    <div class="d-flex justify-content-center" *ngIf="formInitialized">
-      <form [formGroup]="memberForm" (ngSubmit)="submit()">
-        <div class="form-floating mb-3">
-          <input formControlName="firstName" type="text" placeholder="First Name" class="form-control"
-            [class.is-invalid]="submitted && memberForm.get('firstName')?.errors">
-          <label for="firstName">First name</label>
-          <span class="text-danger" *ngIf="submitted && memberForm.get('firstName')?.hasError('required')">
-            First name is required
-          </span>
-        </div>
-
-        <div class="form-floating mb-3">
-          <input formControlName="lastName" type="text" placeholder="Last Name" class="form-control"
-            [class.is-invalid]="submitted && memberForm.get('lastName')?.errors">
-          <label for="lastName">Last name</label>
-          <span class="text-danger" *ngIf="submitted && memberForm.get('lastName')?.hasError('required')">
-            Last name is required
-          </span>
-        </div>
-
-        <div class="form-floating mb-3">
-          <input formControlName="userName" type="text" placeholder="Username" class="form-control"
-            [class.is-invalid]="submitted && memberForm.get('userName')?.errors">
-          <label for="userName">Username</label>
-          <span class="text-danger" *ngIf="submitted && memberForm.get('userName')?.hasError('required')">
-            Username is required
-          </span>
-        </div>
-
-        <div class="form-floating mb-3">
-          <input formControlName="phoneNumber" type="text" placeholder="Phone number" class="form-control"
-            [class.is-invalid]="submitted && memberForm.get('phoneNumber')?.errors">
-          <label for="phoneNumber">Номер телефону</label>
-        </div>
-
-        <div class="form-floating mb-3">
-          <input formControlName="password" type="text" placeholder="Password" class="form-control"
-            [class.is-invalid]="submitted && memberForm.get('password')?.errors" (change)="passwordOnChange()">
-          <label for="password">Password</label>
-          <span class="text-danger" *ngIf="submitted && memberForm.get('password')?.hasError('required')">
-            Password is required
-          </span>
-          <span class="text-danger" *ngIf="submitted && 
-    memberForm.get('password')?.hasError('minlength') || memberForm.get('password')?.hasError('maxlength')">
-            Password must be at least 6, and maximum 15 characters
-          </span>
-        </div>
-
-        <div class="form-floatin" *ngIf="errorMessages.length > 0">
-          <app-validation-messages [errorMessages]="errorMessages"></app-validation-messages>
-        </div>
-
-        <div class="row my-4">
-          <div class="col-6">
-            <div class="d-grid">
-              <button class="btn btn-block btn-info" type="submit">
-                Оновити
-              </button>
+<section class="user-cars-section section">
+  <div class="profile-content">
+    <div class="container">
+      <div class="profile-settings">
+        <h3>Особиста інформація</h3>
+      </div>
+      <main class="form-account-update user-cars p-3">
+        <div *ngIf="formInitialized">
+          <form [formGroup]="memberForm" (ngSubmit)="submit()">
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Ім'я</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <input formControlName="firstName" type="text" placeholder="First Name" class="form-control"
+                  [class.is-invalid]="submitted && memberForm.get('firstName')?.errors">
+                <span class="text-danger" *ngIf="submitted && memberForm.get('firstName')?.hasError('required')">
+                  Ім'я обов'язково
+                </span>
+              </div>
             </div>
-          </div>
-          <div class="col-6">
-            <div class="d-grid">
-              <button class="btn btn-block btn-danger" type="button" routerLink="/admin">
-                Back to list
-              </button>
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Прізвище</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <input formControlName="lastName" type="text" placeholder="Last Name" class="form-control"
+                  [class.is-invalid]="submitted && memberForm.get('lastName')?.errors">
+                <span class="text-danger" *ngIf="submitted && memberForm.get('lastName')?.hasError('required')">
+                  Прізвище обов'язково
+                </span>
+              </div>
             </div>
-          </div>
-        </div>
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Email</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <input formControlName="userName" type="text" placeholder="Username" class="form-control"
+                  [class.is-invalid]="submitted && memberForm.get('userName')?.errors">
+                <span class="text-danger" *ngIf="submitted && memberForm.get('userName')?.hasError('required')">
+                  Email обов'язково
+                </span>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Номер</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <input formControlName="phoneNumber" type="text" placeholder="Phone number" class="form-control"
+                  [class.is-invalid]="submitted && memberForm.get('phoneNumber')?.errors">
+              </div>
+            </div>
 
-      </form>
+            <div class="form-floatin" *ngIf="errorMessages.length > 0">
+              <app-validation-messages [errorMessages]="errorMessages"></app-validation-messages>
+            </div>
+
+            <div class="row my-4">
+              <div class="col-6">
+                <div class="d-grid">
+                  <button class="btn btn-block btn-info" type="submit">
+                    Оновити
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </main>
     </div>
-  </main>
-</section>-->
+  </div>
+</section>
 
 <section class="user-cars-section section">
   <div class="profile-content">
