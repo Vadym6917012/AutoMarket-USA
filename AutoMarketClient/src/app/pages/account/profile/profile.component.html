@@ -27,7 +27,7 @@
                 <h6 class="mb-0">Ім'я</h6>
               </div>
               <div class="col-sm-9 text-secondary">
-                <input formControlName="firstName" type="text" placeholder="First Name" class="form-control"
+                <input formControlName="firstName" type="text" placeholder="First Name" class="form-control shadow-none"
                   [class.is-invalid]="submitted && memberForm.get('firstName')?.errors">
                 <span class="text-danger" *ngIf="submitted && memberForm.get('firstName')?.hasError('required')">
                   Ім'я обов'язково
@@ -39,7 +39,7 @@
                 <h6 class="mb-0">Прізвище</h6>
               </div>
               <div class="col-sm-9 text-secondary">
-                <input formControlName="lastName" type="text" placeholder="Last Name" class="form-control"
+                <input formControlName="lastName" type="text" placeholder="Last Name" class="form-control shadow-none"
                   [class.is-invalid]="submitted && memberForm.get('lastName')?.errors">
                 <span class="text-danger" *ngIf="submitted && memberForm.get('lastName')?.hasError('required')">
                   Прізвище обов'язково
@@ -51,7 +51,7 @@
                 <h6 class="mb-0">Email</h6>
               </div>
               <div class="col-sm-9 text-secondary">
-                <input formControlName="userName" type="text" placeholder="Username" class="form-control"
+                <input formControlName="userName" type="text" placeholder="Username" class="form-control shadow-none"
                   [class.is-invalid]="submitted && memberForm.get('userName')?.errors">
                 <span class="text-danger" *ngIf="submitted && memberForm.get('userName')?.hasError('required')">
                   Email обов'язково
@@ -63,7 +63,7 @@
                 <h6 class="mb-0">Номер</h6>
               </div>
               <div class="col-sm-9 text-secondary">
-                <input formControlName="phoneNumber" type="text" placeholder="Phone number" class="form-control"
+                <input formControlName="phoneNumber" type="text" placeholder="Phone number" class="form-control shadow-none"
                   [class.is-invalid]="submitted && memberForm.get('phoneNumber')?.errors">
               </div>
             </div>
@@ -75,7 +75,7 @@
             <div class="row my-4">
               <div class="col-6">
                 <div class="d-grid">
-                  <button class="btn btn-block btn-info" type="submit">
+                  <button class="btn btn-user-upd" type="submit">
                     Оновити
                   </button>
                 </div>

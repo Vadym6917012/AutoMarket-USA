@@ -20,5 +20,7 @@
         public string? UserEmail { get; set; }
         public string? UserPhoneNumber { get; set; }
         public List<string>? ImagesPath { get; set; }
+        public bool? IsAdvertisementApproved { get; set; } = false;
+        public DateTime? DateCreated { get; set; } = DateTime.UtcNow;
     }
 }

@@ -12,7 +12,7 @@ export class MakeService {
   constructor(private http: HttpClient) { }
 
   getMakes (): Observable<Make[]> {
-    return this.http.get<Make[]>(`${environment.apiUrl}/api/make`);
+    return this.http.get<Make[]>(`${environment.apiUrl}/api/make/get-makes`);
   }
 
   getMakeByCountry(producingCountryId: number): Observable<Make[]> {
@@ -21,5 +21,9 @@ export class MakeService {
   
   getMakeByModel(modelId: number): Observable<Make> {
     return this.http.get<Make>(`${environment.apiUrl}/api/make/get-make-by-model/${modelId}`);
+  }
+
+  deleteMake (id: number) {
+    return this.http.delete<Make>(`${environment.apiUrl}/api/make/delete-make/${id}`, {});
   }
 }

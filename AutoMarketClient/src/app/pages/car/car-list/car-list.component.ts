@@ -128,7 +128,8 @@ export class CarListComponent implements OnInit {
 
   showCars() {
     this.carService.getCars().subscribe((data) => {
-      this.carInfo = data;
+      this.carInfo = data.filter(car => car.isAdvertisementApproved);
+      console.log(data);
     });
   }
 

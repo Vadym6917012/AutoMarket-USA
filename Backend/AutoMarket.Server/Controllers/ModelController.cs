@@ -19,7 +19,7 @@ namespace AutoMarket.Server.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet("get-models")]
         public async Task<IEnumerable<ModelDTO>> GetModels()
         {
             var models = await _repository.GetAllAsync();
@@ -28,8 +28,7 @@ namespace AutoMarket.Server.Controllers
             return modelDTOs.ToList();
         }
 
-        [HttpGet]
-        [Route("{id:int}")]
+        [HttpGet("get-model/{id}")]
         public async Task<ModelDTO> GetById(int id)
         {
             var model = await _repository.GetByIdAsync(id);
@@ -38,7 +37,7 @@ namespace AutoMarket.Server.Controllers
             return modelDTO;
         }
 
-        [HttpPost("create")]
+        [HttpPost("create-model")]
         public async Task<IActionResult> CreateModel([FromBody] ModelDTO modelDTO)
         {
             if (modelDTO == null)
@@ -70,8 +69,7 @@ namespace AutoMarket.Server.Controllers
             return CreatedAtAction("GetById", new { id = createdModelDTO.Id }, createdModelDTO);
         }
 
-        [HttpPut]
-        [Route("{id:int}")]
+        [HttpPut("update-model/{id}")]
         public async Task<IActionResult> UpdateModel(int id, [FromBody] ModelDTO modelDTO)
         {
             var existingEntity = _repository.GetById(id);
@@ -92,8 +90,7 @@ namespace AutoMarket.Server.Controllers
             return Ok(_mapper.Map<ModelDTO>(existingEntity));
         }
 
-        [HttpDelete]
-        [Route("{id:int}")]
+        [HttpDelete("delete-model/{id}")]
         public async Task<IActionResult> DeleteModel(int id)
         {
             var existingEntity = _repository.GetById(id);
@@ -108,8 +105,7 @@ namespace AutoMarket.Server.Controllers
             return NoContent();
         }
 
-        [HttpGet]
-        [Route("get-model-by-make/{makeId:int}")]
+        [HttpGet("get-model-by-make/{makeId:int}")]
         public IActionResult GetModelsByMake(int makeId)
         {
             var model = _repository.GetModelByMake(makeId);

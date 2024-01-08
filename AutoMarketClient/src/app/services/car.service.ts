@@ -17,6 +17,10 @@ export class CarService {
   getCars (): Observable<Car[]> {
     return this.http.get<Car[]>(`${environment.apiUrl}/api/car/get-cars`);
   }
+  
+  getUnverifiedCars(): Observable<Car[]> {
+    return this.http.get<Car[]>(`${environment.apiUrl}/api/car/get-unverified-cars`);
+  }
 
   getCar(carId: number) {
     return this.http.get<Car>(`${environment.apiUrl}/api/car/get-car/${carId}`);

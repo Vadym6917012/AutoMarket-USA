@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { MemberView } from '../models/admin/memberView';
 import { environment } from 'src/environments/environment.development';
 import { MemberAddEdit } from '../models/admin/memberAddEdit';
+import { CarAdd } from '../models/car/car-add';
+import { catchError, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +31,16 @@ export class AdminService {
 
   deleteMember(id: string) {
     return this.http.delete(`${environment.apiUrl}/api/admin/delete-member/${id}`, {});
+  }
+
+  approveAdv(carId: number, isApproved: boolean) {
+    const body = {carId, isApproved}
+    return this.http.put<CarAdd>(`${environment.apiUrl}/api/admin/approve-advertisement?carId=${carId}&isApproved=${isApproved}`, {}).pipe(
+      catchError(error => {
+          console.error('Error approving/rejecting advertisement:', error);
+          console.error('Server error details:', error.error); // Додано вивід деталей помилки
+          return throwError(error);
+      })
+  );
   }
 }

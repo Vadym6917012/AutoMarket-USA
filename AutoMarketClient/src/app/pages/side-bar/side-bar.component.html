@@ -1,0 +1,46 @@
+<div class="sidebar d-flex flex-column flex-shrink-0 p-3" style="width: 280px;">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+      <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+      <span class="fs-4">AutoMarket</span>
+    </a>
+    <hr>
+    <ul class="nav flex-column mb-auto">
+      <li class="nav-item">
+        <a routerLink="/admin/dashboard" class="nav-link link-dark" aria-current="page" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+          <i class="bi bi-house me-2" width="16" height="16"></i>
+          Dashboard
+        </a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/admin/users" class="nav-link link-dark" routerLinkActive="active">
+          <i class="bi bi-people me-2" width="16" height="16"></i>
+          Користувачі
+        </a>
+      </li>
+      <li>
+        <a routerLink="/admin/makes" class="nav-link link-dark" routerLinkActive="active">
+          <i class="bi bi-archive me-2" width="16" height="16"></i>
+          Марки
+        </a>
+      </li>
+      <li>
+        <a routerLink="/admin/models" class="nav-link link-dark" routerLinkActive="active">
+          <i class="bi bi-archive me-2" width="16" height="16"></i>
+          Моделі
+        </a>
+      </li>
+      <li>
+        <a routerLink="/admin/generations" class="nav-link link-dark" routerLinkActive="active">
+          <i class="bi bi-archive me-2" width="16" height="16"></i>
+          Покоління
+        </a>
+      </li>
+      <li>
+        <a routerLink="/admin/modifications" class="nav-link link-dark" routerLinkActive="active">
+          <i class="bi bi-archive me-2" width="16" height="16"></i>
+          Модифікації
+        </a>
+      </li>
+    </ul>
+    <hr>
+  </div>

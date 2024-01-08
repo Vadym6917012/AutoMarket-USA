@@ -1,6 +1,8 @@
 footer{
     background-color: #1c1d1f;
     color: #a5a5a5;
+    position: relative;
+    z-index: 3;
 }
 
 footer h6 {

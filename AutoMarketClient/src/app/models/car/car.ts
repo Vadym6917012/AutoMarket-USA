@@ -17,4 +17,5 @@ export interface Car {
     userEmail: string;
     userPhoneNumber: string;
     imagesPath: string[];
+    isAdvertisementApproved: boolean;
 }

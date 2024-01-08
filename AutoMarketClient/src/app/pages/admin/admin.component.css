@@ -1,0 +1,9 @@
+.wrapper {
+    margin-left: 280px;
+    top: 0;
+    width: auto;
+    position: relative;
+    overflow: auto;
+    z-index: 1;
+}
+

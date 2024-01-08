@@ -1,9 +1,16 @@
-﻿using AutoMarket.Server.Core.Models;
+﻿using AutoMapper;
+using AutoMarket.Server.Core;
+using AutoMarket.Server.Core.Models;
+using AutoMarket.Server.Infrastructure;
+using AutoMarket.Server.Shared.DTOs.Account;
 using AutoMarket.Server.Shared.DTOs.Admin;
+using AutoMarket.Server.Shared.DTOs.Car;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
+using System.Text;
 
 namespace AutoMarket.Server.Controllers
 {
@@ -14,12 +21,21 @@ namespace AutoMarket.Server.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly CarRepository _carRepository;
+        private readonly EmailService _emailService;
+        private readonly IConfiguration _config;
 
         public AdminController(UserManager<User> userManager,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            CarRepository carRepository,
+            EmailService emailService,
+            IConfiguration config)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+            _carRepository = carRepository;
+            _emailService = emailService;
+            _config = config;
         }
 
         [HttpGet("get-members")]
@@ -65,6 +81,29 @@ namespace AutoMarket.Server.Controllers
             };
 
             return Ok(member);
+        }
+
+        [HttpPut("approve-advertisement")]
+        public async Task<IActionResult> UpdateCar(int carId, bool isApproved)
+        {
+            var existingEntity = _carRepository.GetById(carId);
+
+            if (existingEntity == null)
+            {
+                return NotFound();
+            }
+
+            existingEntity.IsAdvertisementApproved = isApproved;
+
+            await _carRepository.UpdateAsync(existingEntity);
+
+            var user = await _userManager.Users
+                .Where(x => x.Id == existingEntity.UserId)
+                .FirstOrDefaultAsync();
+
+            SendEmailForUser(user, isApproved);
+
+            return Ok(new JsonResult(new { title = "Оголошення підтвердженно успішно", message = "Оголошення було підтвердженно успішно", id = existingEntity.Id }));
         }
 
         [HttpPost("add-edit-member")]
@@ -165,9 +204,38 @@ namespace AutoMarket.Server.Controllers
             return Ok(await _roleManager.Roles.Select(x => x.Name).ToListAsync());
         }
 
+        #region Private Helper Methods
+
         private bool IsAdminUserId(string userId)
         {
             return _userManager.FindByIdAsync(userId).GetAwaiter().GetResult().UserName.Equals(SD.AdminUserName);
         }
+
+        private async Task<bool> SendEmailForUser(User user, bool isApproved)
+        {
+            var body = "";
+
+            if (isApproved == true)
+            {
+                body = $"<p>Вітаємо! : {user.FirstName} {user.LastName}</p>" +
+                "<p>Ваше оголошення було підтвердженно:</p>" +
+                "<p>Дякуємо за вибір нашого сервісу!</p>" +
+                "<br><p>З найкращими побажаннями,</p>" +
+                $"{_config["Email:ApplicationName"]}";
+            } else if (isApproved == false)
+            {
+                body = $"<p>Вітаємо! : {user.FirstName} {user.LastName}</p>" +
+                "<p>Ваше оголошення було відхилено:</p>" +
+                "<p>Дякуємо за вибір нашого сервісу!</p>" +
+                "<br><p>З найкращими побажаннями,</p>" +
+                $"{_config["Email:ApplicationName"]}";
+            }
+            
+            var emailSend = new EmailSendDTO(to: user.Email, "Підтвердження статусу оголошення", body);
+
+            return await _emailService.SendEmailAsync(emailSend);
+        }
+
+        #endregion
     }
-}
+}   

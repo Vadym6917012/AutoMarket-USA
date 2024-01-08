@@ -6,7 +6,7 @@ namespace AutoMarket.Server.Shared.DTOs.Car
     {
         public CarCreateDTO() 
         {
-            Year = DateTime.Now.Year;
+            
         }
 
         public int Id { get; set; }
@@ -50,5 +50,7 @@ namespace AutoMarket.Server.Shared.DTOs.Car
         public int Mileage { get; set; }
         public string? Description { get; set; }
         public string? UserId { get; set; }
+        public bool? IsAdvertisementApproved { get; set; } = false;
+        public DateTime? DateCreated { get; set; } = DateTime.UtcNow;
     }
 }

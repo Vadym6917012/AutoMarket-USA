@@ -37,7 +37,6 @@
     color: #ffffff;
 }
 
-
 .profile-content {
     height: auto;
 }
@@ -46,4 +45,15 @@
     box-shadow: 3px 3px 11px rgba(0, 0, 0, 0.06);
     border: 1px solid #eee;
     background-color: #fff;
+}
+
+.btn-user-upd {
+    background: #1c1d1f;
+    color: #fff;
+    height: 50px;
+    user-select: none;
+}
+
+.btn-user-upd:hover {
+    background: #ff8500;
 }

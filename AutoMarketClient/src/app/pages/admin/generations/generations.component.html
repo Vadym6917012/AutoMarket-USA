@@ -1,0 +1,46 @@
+    <div class="generations">
+        <div class="container">
+            <div class="my-3">
+                <a class="btn btn-outline-primary" routerLink="/admin/add-edit-generation">Створити покоління</a>
+            </div>
+            
+            <table class="table">
+                <thead>
+                    <tr class="table-light">
+                        <th>Назва</th>
+                        <th>Рік від</th>
+                        <th>Рік до</th>
+                        <th class="text-center">Редагувати / Видалити</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="generations.length === 0">
+                        <td colspan="7" class="text-center">Немає поколінь</td>
+                    </tr>
+            
+                    <tr *ngFor="let generation of generations">
+                        <td>{{generation.name | titlecase}}</td>
+                        <td>{{generation.yearFrom }}</td>
+                        <td>{{generation.yearTo}}</td>
+                        <td class="text-center">
+                            <button class="btn btn-primary btn-sm me-2" routerLink="/admin/add-edit-generation/{{generation.id}}">
+                                Редагувати
+                            </button>
+                            <button class="btn btn-danger btn-sm" (click)="deleteGeneration(generation.id, template)">
+                                Видалити
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <ng-template #template>
+                <div class="modal-body text-center">
+                    <p>Ви впевненні, що хочете видалити це покоління?</p>
+                    <button type="button" class="btn btn-default" (click)="confirmGeneration()">Так</button>
+                    <button type="button" class="btn btn-primary" (click)="declineGeneration()">Ні</button>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+

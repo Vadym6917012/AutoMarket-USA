@@ -22,6 +22,8 @@ namespace AutoMarket.Server.Core.Models
         public string? Description { get; set; }
         public int TechnicalConditionId { get; set; }
         public string? UserId { get; set; }
+        public bool IsAdvertisementApproved { get; set; } = false;
+        public DateTime? DateCreated { get; set; } = DateTime.UtcNow;
 
         public Model? Model { get; set; }
         public Generation? Generation { get; set; }

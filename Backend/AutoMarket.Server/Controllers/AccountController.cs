@@ -442,6 +442,14 @@ namespace AutoMarket.Server.Controllers
             return true;
         }
 
+        public static string CreateHtmlEmail(string content)
+        {
+            
+            string htmlBody = $@"";
+
+            return htmlBody;
+        }
+
         #endregion
     }
 }

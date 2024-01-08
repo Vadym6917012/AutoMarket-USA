@@ -76,6 +76,9 @@ namespace AutoMarket.Server.Core.Migrations
                     b.Property<int>("BodyTypeId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("DateCreated")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -90,6 +93,9 @@ namespace AutoMarket.Server.Core.Migrations
 
                     b.Property<int>("GenerationId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsAdvertisementApproved")
+                        .HasColumnType("bit");
 
                     b.Property<int>("Mileage")
                         .HasColumnType("int");

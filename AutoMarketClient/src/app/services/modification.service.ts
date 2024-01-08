@@ -12,10 +12,14 @@ export class ModificationService {
   constructor(private http: HttpClient) { }
 
   getModifications (): Observable<Modification[]> {
-    return this.http.get<Modification[]>(`${environment.apiUrl}/api/modification`);
+    return this.http.get<Modification[]>(`${environment.apiUrl}/api/modification/get-modifications`);
   }
   
   getModificationsByModel(modelId: number): Observable<Modification[]> {
     return this.http.get<Modification[]>(`${environment.apiUrl}/api/modification/get-modification-by-model/${modelId}`)
+  }
+
+  deleteModification (id: number) {
+    return this.http.delete<Modification>(`${environment.apiUrl}/api/modification/delete-modification/${id}`, {});
   }
 }

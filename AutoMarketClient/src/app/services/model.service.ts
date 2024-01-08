@@ -12,11 +12,15 @@ export class ModelService {
   constructor(private http: HttpClient) { }
 
   getModels (): Observable<Model[]> {
-    return this.http.get<Model[]>(`${environment.apiUrl}/api/model`);
+    return this.http.get<Model[]>(`${environment.apiUrl}/api/model/get-models`);
   }
 
   getModelsByMake(makeId: number): Observable<Model[]> {
     return this.http.get<Model[]>(`${environment.apiUrl}/api/model/get-model-by-make/${makeId}`);
+  }
+
+  deleteModel (id: number) {
+    return this.http.delete<Model>(`${environment.apiUrl}/api/model/delete-model/${id}`, {});
   }
 
 }

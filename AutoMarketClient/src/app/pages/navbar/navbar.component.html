@@ -17,11 +17,11 @@
                 [routerLinkActiveOptions]="{exact:true}">Головна</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link mx-2" routerLink="/car/car-list">Пошук авто</a>
+              <a class="nav-link mx-2" routerLink="/car/car-list" routerLinkActive="active">Пошук авто</a>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link mx-2 dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-                data-bs-toggle="dropdown" aria-expanded="false">
+                data-bs-toggle="dropdown" aria-expanded="false" routerLinkActive="active">
                 Компанія
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -46,9 +46,9 @@
           <ul class="navbar-nav ms-auto d-lg-inline-flex" *ngIf="(accountService.user$ | async) as user">
             <li class="nav-item mx-2 dropdown">
               <a class="nav-link btn dropdown-toggle" id="navbarDropdownMenuLink" role="button"
-                data-bs-toggle="dropdown">Привіт, {{user.firstName}}</a>
+                data-bs-toggle="dropdown">Привіт, {{user.firstName | titlecase}}</a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <li *appUserHasRole="['Admin']"><a class="dropdown-item" routerLink="/admin">Адмін панель</a></li>
+                <li *appUserHasRole="['Admin']"><a class="dropdown-item" routerLink="/admin/dashboard">Адмін панель</a></li>
                 <li><a class="dropdown-item" routerLink="/account/profile/{{user.id}}">Особистий кабінет</a></li>
                 <li><a class="dropdown-item" routerLink="/car/car-add">Подати оголошення</a></li>
               </ul>

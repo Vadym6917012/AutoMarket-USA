@@ -19,7 +19,7 @@ namespace AutoMarket.Server.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet("get-modifications")]
         public async Task<IEnumerable<ModificationDTO>> GetModifications()
         {
             var modifications = await _repository.GetAllAsync();
@@ -28,8 +28,7 @@ namespace AutoMarket.Server.Controllers
             return modificationDTOs.ToList();
         }
 
-        [HttpGet]
-        [Route("{id:int}")]
+        [HttpGet("get-modification/{id}")]
         public async Task<ModificationDTO> GetById(int id)
         {
             var modification = await _repository.GetByIdAsync(id);
@@ -38,7 +37,7 @@ namespace AutoMarket.Server.Controllers
             return modificationDTO;
         }
 
-        [HttpPost]
+        [HttpPost("create-modification")]
         public async Task<IActionResult> CreateModification([FromBody] ModificationDTO modificationDTO)
         {
             if (modificationDTO == null)
@@ -53,8 +52,7 @@ namespace AutoMarket.Server.Controllers
             return CreatedAtAction("GetById", new { id = modification.Id }, _mapper.Map<ModificationDTO>(modification));
         }
 
-        [HttpPut]
-        [Route("{id:int}")]
+        [HttpPut("update-modification/{id}")]
         public async Task<IActionResult> UpdateModification(int id, [FromBody] ModificationDTO modificationDTO)
         {
             var existingEntity = _repository.GetById(id);
@@ -75,8 +73,7 @@ namespace AutoMarket.Server.Controllers
             return Ok(_mapper.Map<ModificationDTO>(existingEntity));
         }
 
-        [HttpDelete]
-        [Route("{id:int}")]
+        [HttpDelete("delete-modification/{id}")]
         public async Task<IActionResult> DeleteModification(int id)
         {
             var existingEntity = _repository.GetById(id);

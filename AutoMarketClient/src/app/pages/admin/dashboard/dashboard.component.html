@@ -1,0 +1,41 @@
+<div class="advertisement">
+    <div class="container">
+        <div class="my-3">
+            <h5>Оголошення, які очікують підтвердження</h5>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr class="table-light">
+                    <th>Id</th>
+                    <th>Марка</th>
+                    <th>Модель</th>
+                    <th>Модифікація</th>
+                    <th>VIN</th>
+                    <th class="text-center">Підтвердити / Відхилити</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="cars.length === 0">
+                    <td colspan="7" class="text-center">Немає оголошень</td>
+                </tr>
+        
+                <tr *ngFor="let car of cars">
+                    <td>{{car.id}}</td>
+                    <td>{{car.makeName | titlecase}}</td>
+                    <td>{{car.modelName | titlecase}}</td>
+                    <td>{{car.modificationName | titlecase}}</td>
+                    <td>{{car.vin}}</td>
+                    <td class="text-center">
+                        <button class="btn btn-primary btn-sm me-2" (click)="approve(car.id, true)">
+                            Підтвердити
+                        </button>
+                        <button class="btn btn-danger btn-sm" (click)="approve(car.id, false)">
+                            Відхилити
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

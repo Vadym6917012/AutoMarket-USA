@@ -61,6 +61,7 @@
 	text-align: left !important;
 	white-space: nowrap;
 	border-radius: 0;
+	height: 50px;
 }
 
 .home-select:active {
@@ -294,6 +295,7 @@
 .make-list li a span img {
 	height: 60px;
 	width: 60px;
+	filter: grayscale(100%);
 }
 
 .make-list li a span img:hover {

@@ -1,0 +1,42 @@
+    <div class="makes">
+        <div class="container">
+            <div class="my-3">
+                <a class="btn btn-outline-primary" routerLink="/admin/add-edit-make">Створити марку</a>
+            </div>
+            
+            <table class="table">
+                <thead>
+                    <tr class="table-light">
+                        <th>Назва</th>
+                        <th class="text-center">Редагувати / Видалити</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="makes.length === 0">
+                        <td colspan="7" class="text-center">Немає марок</td>
+                    </tr>
+            
+                    <tr *ngFor="let make of makes">
+                        <td>{{make.name | titlecase}}</td>
+                        <td class="text-center">
+                            <button class="btn btn-primary btn-sm me-2" routerLink="/admin/add-edit-make/{{make.id}}">
+                                Редагувати
+                            </button>
+                            <button class="btn btn-danger btn-sm" (click)="deleteMake(make.id, template)">
+                                Видалити
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <ng-template #template>
+                <div class="modal-body text-center">
+                    <p>Ви впевненні, що хочете видалити цю марку?</p>
+                    <button type="button" class="btn btn-default" (click)="confirmMake()">Так</button>
+                    <button type="button" class="btn btn-primary" (click)="declineMake()">Ні</button>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+

@@ -4,62 +4,62 @@
             <form [formGroup]="memberForm" (ngSubmit)="submit()" autocomplete="off">
                 <div class="text-center mb-4">
                     <h3 class="mb-3 font-weight-normal">
-                        <span class="text-warning" *ngIf="addNew">Add</span>
-                        <span class="text-warning" *ngIf="!addNew">Update</span>
-                        Member
+                        <span *ngIf="addNew">Додати</span>
+                        <span *ngIf="!addNew">Редагувати</span>
+                        Користувача
                     </h3>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input formControlName="firstName" type="text" placeholder="First Name" class="form-control"
+                    <input formControlName="firstName" type="text" placeholder="First Name" class="form-control shadow-none"
                         [class.is-invalid]="submitted && memberForm.get('firstName')?.errors">
-                    <label for="firstName">First name</label>
+                    <label for="firstName">Ім'я</label>
                     <span class="text-danger" *ngIf="submitted && memberForm.get('firstName')?.hasError('required')">
-                        First name is required
+                        Ім'я є обов'язковим
                     </span>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input formControlName="lastName" type="text" placeholder="Last Name" class="form-control"
+                    <input formControlName="lastName" type="text" placeholder="Last Name" class="form-control shadow-none"
                         [class.is-invalid]="submitted && memberForm.get('lastName')?.errors">
-                    <label for="lastName">Last name</label>
+                    <label for="lastName">Прізвище</label>
                     <span class="text-danger" *ngIf="submitted && memberForm.get('lastName')?.hasError('required')">
-                        Last name is required
+                        Прізвище є обов'язковим
                     </span>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input formControlName="userName" type="text" placeholder="Username" class="form-control"
+                    <input formControlName="userName" type="text" placeholder="Username" class="form-control shadow-none"
                         [class.is-invalid]="submitted && memberForm.get('userName')?.errors">
-                    <label for="userName">Username</label>
+                    <label for="userName">Email</label>
                     <span class="text-danger" *ngIf="submitted && memberForm.get('userName')?.hasError('required')">
-                        Username is required
+                        Email є обов'язковим
                     </span>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input formControlName="password" type="text" placeholder="Password" class="form-control"
+                    <input formControlName="password" type="text" placeholder="Password" class="form-control shadow-none"
                         [class.is-invalid]="submitted && memberForm.get('password')?.errors"
                         (change)="passwordOnChange()">
-                    <label for="password">Password</label>
+                    <label for="password">Пароль</label>
                     <span class="text-danger" *ngIf="submitted && memberForm.get('password')?.hasError('required')">
-                        Password is required
+                        Пароль є обов'язковим
                     </span>
                     <span class="text-danger"
                         *ngIf="submitted && 
                 memberForm.get('password')?.hasError('minlength') || memberForm.get('password')?.hasError('maxlength')">
-                        Password must be at least 6, and maximum 15 characters
+                        Пароль повинен бути не менше 6 і не більше 15 символів
                     </span>
 
                     <div *ngIf="!addNew">
-                        <span class="text-info fw-bold">Note:</span>
-                        if you don't intend to change the member password, then leave the password field empty
+                        <span class="text-info fw-bold">Примітка:</span>
+                        Якщо ви не збираєтеся змінювати пароль користувача, залиште поле пароля порожнім
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-2">
-                        <label for="roles">Roles:</label>
+                        <label for="roles">Ролі:</label>
                     </div>
                     <div class="col-10">
                         <div class="btn-group">
@@ -73,7 +73,7 @@
                     </div>
                 </div>
                 <div class="text-danger" *ngIf="submitted && memberForm.get('roles')?.hasError('required')">
-                    Please select at least one role
+                    Виберіть принаймні одну роль
                 </div>
 
                 <div class="form-floatin" *ngIf="errorMessages.length > 0">
@@ -84,14 +84,14 @@
                     <div class="col-6">
                         <div class="d-grid">
                             <button class="btn btn-block btn-info" type="submit">
-                                {{addNew ? 'Create' : 'Update'}} Member
+                                {{addNew ? 'Створити' : 'Редагувати'}} Користувача
                             </button>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="d-grid">
-                            <button class="btn btn-block btn-danger" type="button" routerLink="/admin">
-                                Back to list
+                            <button class="btn btn-block btn-danger" type="button" routerLink="/admin/users">
+                                Назад до списку
                             </button>
                         </div>
                     </div>

@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { NotFoundComponent } from './shared/components/errors/not-found/not-found.component';
 import { AuthorizationGuard } from './guards/authorization.guard';
-import { AdminComponent } from './pages/admin/admin.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},

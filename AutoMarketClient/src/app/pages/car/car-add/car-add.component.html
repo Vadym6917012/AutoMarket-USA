@@ -50,7 +50,7 @@
                             </div>
 
                             <div class="form-floating mb-3 col-md-12">
-                                <input formControlName="vin" type="text" placeholder="VIN" class="form-control shadow-none"
+                                <input formControlName="vin" id="vin" type="text" placeholder="VIN" class="form-control shadow-none"
                                     [class.is-invalid]="submitted && addCarForm.get('vin')?.errors">
                                 <label for="vin">VIN</label>
                                 <span class="text-danger" *ngIf="submitted && addCarForm.get('vin')?.hasError('required')">
@@ -109,7 +109,7 @@
                             </div>
 
                             <div class="form-floating mb-3 col-md-4">
-                                <input formControlName="year" type="number" placeholder="Рік" class="form-control shadow-none"
+                                <input formControlName="year" id="year" type="number" placeholder="Рік" class="form-control shadow-none"
                                     [class.is-invalid]="submitted && addCarForm.get('year')?.errors">
                                 <label for="year">Рік</label>
                                 <span class="text-danger" *ngIf="submitted && addCarForm.get('year')?.hasError('required')">
@@ -121,7 +121,7 @@
                             </div>
 
                             <div class="form-floating mb-3 col-md-6">
-                                <input formControlName="price" type="number" placeholder="Ціна" class="form-control shadow-none"
+                                <input formControlName="price" id="price" type="number" placeholder="Ціна" class="form-control shadow-none"
                                     [class.is-invalid]="submitted && addCarForm.get('price')?.errors">
                                 <label for="price">Ціна</label>
                                 <span class="text-danger" *ngIf="submitted && addCarForm.get('price')?.hasError('required')">
@@ -130,7 +130,7 @@
                             </div>
 
                             <div class="form-floating mb-3 col-md-6">
-                                <input formControlName="mileage" type="number" placeholder="Пробіг" class="form-control shadow-none"
+                                <input formControlName="mileage" id="mileage" type="number" placeholder="Пробіг" class="form-control shadow-none"
                                     [class.is-invalid]="submitted && addCarForm.get('mileage')?.errors">
                                 <label for="mileage">Пробіг</label>
                                 <span class="text-danger" *ngIf="submitted && addCarForm.get('mileage')?.hasError('required')">

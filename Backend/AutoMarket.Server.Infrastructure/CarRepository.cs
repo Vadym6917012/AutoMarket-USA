@@ -55,6 +55,23 @@ namespace AutoMarket.Server.Infrastructure
             await _ctx.SaveChangesAsync();
         }
 
+        public async Task<IEnumerable<Car>> GetNotVerifiedCarsAsync()
+        {
+            return await _ctx.Set<Car>()
+                .Include(m => m.Model).ThenInclude(m => m.Make).ThenInclude(c => c.ProducingCountry)
+                .Include(m => m.Modification)
+                .Include(g => g.Generation)
+                .Include(b => b.BodyType)
+                .Include(g => g.GearBoxType)
+                .Include(d => d.DriveTrain)
+                .Include(t => t.TechnicalCondition)
+                .Include(f => f.FuelType)
+                .Include(i => i.Images)
+                .Include(u => u.User)
+                .Where(x => x.IsAdvertisementApproved == false)
+                .ToListAsync();
+        }
+
         public async Task<Car> GetByIdAsync(int id)
         {
             return await _ctx.Set<Car>().Include(m => m.Model).ThenInclude(m => m.Make).ThenInclude(c => c.ProducingCountry)
@@ -72,6 +89,37 @@ namespace AutoMarket.Server.Infrastructure
         public Car GetById(int id)
         {
             return _ctx.Set<Car>().Find(id);
+        }
+
+        public async Task<string> CheckVin (string vin)
+        {
+            try
+            {
+                var apiUrl = $"https://api.api-ninjas.com/v1/vinlookup?vin={vin}";
+
+                using (var client = new HttpClient())
+                {
+                    using (HttpResponseMessage response = await client.GetAsync(apiUrl))
+                    {
+                        response.EnsureSuccessStatusCode();
+                        string responseBody = await response.Content.ReadAsStringAsync();
+
+                        
+
+                        return responseBody;
+                    }
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                // Обробка помилок HTTP-запиту
+                return ex.Message;
+            }
+            catch (Exception ex)
+            {
+                // Обробка інших помилок
+                return ex.Message;
+            }
         }
 
         public async Task<IEnumerable<Car>> HomeFilter(CarHomeFilter filter)

@@ -1,10 +1,6 @@
 ﻿using AutoMarket.Server.Core;
-using AutoMarket.Server.Core.Models;
 using AutoMarket.Server.Infrastructure;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.Extensions.Hosting.Internal;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;

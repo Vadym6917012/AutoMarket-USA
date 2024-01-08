@@ -31,10 +31,10 @@ constructor(private accountService: AccountService,
                 token: params.get('token'),
                 email: params.get('email')
               }
-
               this.accountService.confirmEmail(confirmEmail).subscribe({
                 next: (response: any) => {
                   this.sharedService.showNotification(true, response.value.title, response.value.message);
+                  this.router.navigateByUrl('/account/login');
                 }, error: error => {
                   this.success = false;
                   this.sharedService.showNotification(false, "Filed", error.error);

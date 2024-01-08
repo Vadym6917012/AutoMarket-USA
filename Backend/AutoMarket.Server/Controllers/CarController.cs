@@ -31,6 +31,15 @@ namespace AutoMarket.Server.Controllers
             return carDTOs.ToList();
         }
 
+        [HttpGet("get-unverified-cars")]
+        public async Task<IEnumerable<CarDTO>> GetUnverifiedCars()
+        {
+            var cars = await _repository.GetNotVerifiedCarsAsync();
+            var carDtos = _mapper.Map<IEnumerable<CarDTO>>(cars);
+
+            return carDtos.ToList();
+        }
+
         [HttpGet("get-car/{id}")]
         public async Task<CarDTO> GetById(int id)
         {
@@ -38,6 +47,12 @@ namespace AutoMarket.Server.Controllers
             var carDTO = _mapper.Map<CarDTO>(car);
 
             return carDTO;
+        }
+
+        [HttpGet("check-cars-vin/{vin}")]
+        public async Task<bool> CheckVin(string vin)
+        {
+            return true;
         }
 
         [HttpGet("get-car-for-update/{id}")]

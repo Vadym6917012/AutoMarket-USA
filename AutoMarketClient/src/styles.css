@@ -141,6 +141,19 @@ img {
     border: 1px solid #ff8c00;
 }
 
+.table {
+    box-shadow: 3px 3px 11px rgba(0, 0, 0, 0.06);
+    border: 1px solid #eee;
+    border-top: 0;
+}
+
+td {
+    vertical-align: baseline;
+}
+
+.form-floating > label {
+    padding: 1rem 1.5rem;
+}
 
 @media (max-width: 768px) {
     

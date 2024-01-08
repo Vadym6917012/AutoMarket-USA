@@ -19,7 +19,7 @@ namespace AutoMarket.Server.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet("get-makes")]
         public async Task<IEnumerable<MakeDTO>> GetMakes()
         {
             var makes = await _repository.GetAllAsync();
@@ -28,8 +28,7 @@ namespace AutoMarket.Server.Controllers
             return makeDTOs.ToList();
         }
 
-        [HttpGet]
-        [Route("{id:int}")]
+        [HttpGet("get-make/{id}")]
         public async Task<MakeDTO> GetById(int id)
         {
             var make = await _repository.GetByIdAsync(id);
@@ -38,7 +37,7 @@ namespace AutoMarket.Server.Controllers
             return makeDTO;
         }
 
-        [HttpPost]
+        [HttpPost("create-make")]
         public async Task<IActionResult> CreateMake([FromBody] MakeDTO makeDTO)
         {
             if (makeDTO == null)
@@ -53,8 +52,7 @@ namespace AutoMarket.Server.Controllers
             return CreatedAtAction("GetById", new { id = make.Id }, _mapper.Map<MakeDTO>(make));
         }
 
-        [HttpPut]
-        [Route("{id:int}")]
+        [HttpPut("update-make")]
         public async Task<IActionResult> UpdateMake(int id, [FromBody] MakeDTO makeDTO)
         {
             var existingEntity = _repository.GetById(id);
@@ -75,8 +73,7 @@ namespace AutoMarket.Server.Controllers
             return Ok(_mapper.Map<MakeDTO>(existingEntity));
         }
 
-        [HttpDelete]
-        [Route("{id:int}")]
+        [HttpDelete("delete-make/{id}")]
         public async Task<IActionResult> DeleteMake(int id)
         {
             var existingEntity = _repository.GetById(id);
@@ -91,16 +88,14 @@ namespace AutoMarket.Server.Controllers
             return NoContent();
         }
 
-        [HttpGet]
-        [Route("get-make-by-country/{producingCountryId:int}")]
+        [HttpGet("get-make-by-country/{producingCountryId}")]
         public IActionResult GetMakeByProducingCountry(int producingCountryId)
         {
             var make = _repository.GetMakeByCountry(producingCountryId);
             return Ok(make);
         }
 
-        [HttpGet]
-        [Route("get-make-by-model/{modelId:int}")]
+        [HttpGet("get-make-by-model/{modelId}")]
         public async Task<ActionResult> GetMakeByModel(int modelId)
         {
             var make = _repository.GetMakeByModel(modelId);

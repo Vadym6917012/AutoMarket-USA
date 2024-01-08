@@ -1,0 +1,42 @@
+
+    <div class="models">
+        <div class="container">
+            <div class="my-3">
+                <a class="btn btn-outline-primary" routerLink="/admin/add-edit-model">Створити модель</a>
+            </div>
+            
+            <table class="table">
+                <thead>
+                    <tr class="table-light">
+                        <th>Назва</th>
+                        <th class="text-center">Редагувати / Видалити</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="models.length === 0">
+                        <td colspan="7" class="text-center">Немає моделей</td>
+                    </tr>
+            
+                    <tr *ngFor="let model of models">
+                        <td>{{model.name | titlecase}}</td>
+                        <td class="text-center">
+                            <button class="btn btn-primary btn-sm me-2" routerLink="/admin/add-edit-model/{{model.id}}">
+                                Редагувати
+                            </button>
+                            <button class="btn btn-danger btn-sm" (click)="deleteModel(model.id, template)">
+                                Видалити
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <ng-template #template>
+                <div class="modal-body text-center">
+                    <p>Ви впевненні, що хочете видалити цю модель?</p>
+                    <button type="button" class="btn btn-default" (click)="confirmModel()">Так</button>
+                    <button type="button" class="btn btn-primary" (click)="declineModel()">Ні</button>
+                </div>
+            </ng-template>
+        </div>
+    </div>
