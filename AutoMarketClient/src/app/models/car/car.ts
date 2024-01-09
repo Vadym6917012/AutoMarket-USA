@@ -18,4 +18,5 @@ export interface Car {
     userPhoneNumber: string;
     imagesPath: string[];
     isAdvertisementApproved: boolean;
+    dateCreated: Date;
 }

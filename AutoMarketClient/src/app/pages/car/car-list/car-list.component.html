@@ -19,17 +19,29 @@
       <div class="col-12">
         <form class="search-filter-options">
           <div class="d-flex justify-content-between row align-items-end">
-            <div class="col-lg-3 col-md-6">
-              <div class="products-ordering-list"> <span>Ціна</span>
-                <select [(ngModel)]="selectedSortOption" class="form-select car-list-select shadow-none"
-                  [ngModelOptions]="{standalone: true}">
-                  <option value="" disabled selected>Сортувати за ціною</option>
-                  <option value="default" (click)="sortCars()">За замовчуванням</option>
-                  <option value="asc" (click)="sortCars()">За зростанням</option>
-                  <option value="desc" (click)="sortCars()">За спаданням</option>
-                </select>
+            <div class="col-lg-6 col-md-6">
+              <div class="row justify-content-between">
+                <div class="products-ordering-list col"> <span>Ціна</span>
+                  <select [(ngModel)]="selectedSortOption" class="form-select car-list-select shadow-none"
+                    [ngModelOptions]="{standalone: true}">
+                    <option value="" disabled selected>Сортувати за ціною</option>
+                    <option value="default" (click)="sortCars()">За замовчуванням</option>
+                    <option value="asc" (click)="sortCars()">За зростанням</option>
+                    <option value="desc" (click)="sortCars()">За спаданням</option>
+                  </select>
+                </div>
+                <div class="products-ordering-list col"> <span>Дата</span>
+                  <select [(ngModel)]="selectedSortOption" class="form-select car-list-select shadow-none"
+                    [ngModelOptions]="{standalone: true}">
+                    <option value="" disabled selected>Сортувати за датою</option>
+                    <option value="default" (click)="sortCars()">За замовчуванням</option>
+                    <option value="asc" (click)="sortCars()">Від нових</option>
+                    <option value="desc" (click)="sortCars()">Від старих</option>
+                  </select>
+                </div>
               </div>
             </div>
+            
             <div class="col-lg-3 col-md-6">
               <div class="filter-by-grid-list"> <span>Переглянути як: </span>
                 <div class="filter-tab-area">

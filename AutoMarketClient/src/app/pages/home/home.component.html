@@ -52,10 +52,10 @@
       <h3>Недавно створені <span class="text-orange">оголошення</span></h3>
     </div>
     <div class="carousel_cards">
-      <ng-container *ngIf="cars.length == 0">
-        <p>Ще немає оголошень</p>
+      <ng-container *ngIf="cars.length < 4">
+        <p class="text-center">Ще немає оголошень</p>
       </ng-container>
-      <owl-carousel-o id="slider" [options]="customOptions">
+      <owl-carousel-o id="slider" [options]="customOptions" *ngIf="cars.length == 4">
         <ng-container>
           <ng-template carouselSlide *ngFor="let car of cars">
             <div class="home-card card">

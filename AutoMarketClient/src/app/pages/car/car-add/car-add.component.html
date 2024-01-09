@@ -109,7 +109,7 @@
                             </div>
 
                             <div class="form-floating mb-3 col-md-4">
-                                <input formControlName="year" id="year" type="number" placeholder="Рік" class="form-control shadow-none"
+                                <input formControlName="year" id="year" min="0" type="number" oninput="this.value = Math.abs(this.value)" max="2024" placeholder="Рік" class="form-control shadow-none"
                                     [class.is-invalid]="submitted && addCarForm.get('year')?.errors">
                                 <label for="year">Рік</label>
                                 <span class="text-danger" *ngIf="submitted && addCarForm.get('year')?.hasError('required')">
@@ -121,7 +121,7 @@
                             </div>
 
                             <div class="form-floating mb-3 col-md-6">
-                                <input formControlName="price" id="price" type="number" placeholder="Ціна" class="form-control shadow-none"
+                                <input formControlName="price" id="price" oninput="this.value = Math.abs(this.value)" min="0" type="number" placeholder="Ціна" class="form-control shadow-none"
                                     [class.is-invalid]="submitted && addCarForm.get('price')?.errors">
                                 <label for="price">Ціна</label>
                                 <span class="text-danger" *ngIf="submitted && addCarForm.get('price')?.hasError('required')">
@@ -130,7 +130,7 @@
                             </div>
 
                             <div class="form-floating mb-3 col-md-6">
-                                <input formControlName="mileage" id="mileage" type="number" placeholder="Пробіг" class="form-control shadow-none"
+                                <input formControlName="mileage" id="mileage" oninput="this.value = Math.abs(this.value)" min="0" type="number" placeholder="Пробіг" class="form-control shadow-none"
                                     [class.is-invalid]="submitted && addCarForm.get('mileage')?.errors">
                                 <label for="mileage">Пробіг</label>
                                 <span class="text-danger" *ngIf="submitted && addCarForm.get('mileage')?.hasError('required')">

@@ -11,6 +11,7 @@ import { SharedService } from 'src/app/shared/shared.service';
 })
 export class DashboardComponent implements OnInit {
 
+  carsUnverified: Car[] = [];
   cars: Car[] = [];
 
   constructor(private carService: CarService,
@@ -19,8 +20,11 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.carService.getUnverifiedCars().subscribe({
-      next: cars => this.cars = cars
+      next: cars => this.carsUnverified = cars
     });
+    this.carService.getCars().subscribe({
+      next: cars => this.cars = cars
+    })
   }
 
   approve(carId: number, isApproved: boolean) {
@@ -31,7 +35,7 @@ export class DashboardComponent implements OnInit {
         } else {
           this.sharedService.showNotification(false, 'Відхилено', `Оголошення відхилено успішно!`);
         }
-        this.cars = this.cars.filter(x => x.id !== carId);
+        this.carsUnverified = this.carsUnverified.filter(x => x.id !== carId);
       },
       error: error => {
         console.error('Error approving/rejecting advertisement:', error);

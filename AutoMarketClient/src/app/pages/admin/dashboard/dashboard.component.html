@@ -16,18 +16,18 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngIf="cars.length === 0">
+                <tr *ngIf="carsUnverified.length === 0">
                     <td colspan="7" class="text-center">Немає оголошень</td>
                 </tr>
         
-                <tr *ngFor="let car of cars">
+                <tr *ngFor="let car of carsUnverified">
                     <td>{{car.id}}</td>
                     <td>{{car.makeName | titlecase}}</td>
                     <td>{{car.modelName | titlecase}}</td>
                     <td>{{car.modificationName | titlecase}}</td>
                     <td>{{car.vin}}</td>
                     <td class="text-center">
-                        <button class="btn btn-primary btn-sm me-2" (click)="approve(car.id, true)">
+                        <button class="btn btn-success btn-sm me-2" (click)="approve(car.id, true)">
                             Підтвердити
                         </button>
                         <button class="btn btn-danger btn-sm" (click)="approve(car.id, false)">
@@ -37,5 +37,49 @@
                 </tr>
             </tbody>
         </table>
+    </div>
+    <div class="container">
+        <div class="my-3">
+            <h5>Усі оголошення</h5>
+        </div>
+        <div class="advertisements-table">
+            <table class="table">
+                <thead>
+                    <tr class="table-light">
+                        <th>Id</th>
+                        <th>Марка</th>
+                        <th>Модель</th>
+                        <th>Модифікація</th>
+                        <th>VIN</th>
+                        <th>Детальніше</th>
+                        <th class="text-center">Заблокувати / Розблукувати</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="cars.length === 0">
+                        <td colspan="7" class="text-center">Немає оголошень</td>
+                    </tr>
+            
+                    <tr *ngFor="let car of cars">
+                        <td>{{car.id}}</td>
+                        <td>{{car.makeName | titlecase}}</td>
+                        <td>{{car.modelName | titlecase}}</td>
+                        <td>{{car.modificationName | titlecase}}</td>
+                        <td>{{car.vin}}</td>
+                        <td>
+                            <a class="btn btn-primary" routerLink="/car/car-details/{{car.id}}">Перейти до оголошення</a>
+                        </td>
+                        <td class="text-center">
+                            <button class="btn btn-danger btn-sm me-2" *ngIf="car.isAdvertisementApproved == true" (click)="approve(car.id, false)">
+                                Заблокувати
+                            </button>
+                            <button class="btn btn-success btn-sm" *ngIf="car.isAdvertisementApproved == false" (click)="approve(car.id, true)">
+                                Розблукувати
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
