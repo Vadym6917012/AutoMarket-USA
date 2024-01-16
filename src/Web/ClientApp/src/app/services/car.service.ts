@@ -55,7 +55,7 @@ export class CarService {
   }
   
   getByCount(count: number) :Observable<Car[]> {
-    return this.http.get<Car[]>(`${environment.apiUrl}/api/car/get-cars-by-count/${count}`);
+    return this.http.get<Car[]>(`${environment.apiUrl}/api/car/get-recent-cars/${count}`);
   }
   
   getByUserId(id: string) :Observable<Car[]> {

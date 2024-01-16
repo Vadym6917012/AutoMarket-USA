@@ -1,4 +1,6 @@
-﻿using Application.DTOs.Car;
+﻿using Application.CarMediatoR.Commands;
+using Application.CarMediatoR.Queries;
+using Application.DTOs.Car;
 using AutoMapper;
 using Domain.Entities;
 
@@ -23,6 +25,10 @@ namespace Application.Mapper
                 .ForMember(dest => dest.ImagesPath, opt => opt.MapFrom(src => src.Images.Select(p => p.ImagePathToDisplay)))
                 .ForMember(dest => dest.UserEmail, opt => opt.MapFrom(src => src.User.Email))
                 .ForMember(dest => dest.UserPhoneNumber, opt => opt.MapFrom(src => src.User.PhoneNumber));
+            CreateMap<CreateCar, CarCreateDTO>().ReverseMap();
+            CreateMap<UpdateCar, CarCreateDTO>().ReverseMap();
+            CreateMap<CarAdvanceFilter, CarFilter>().ReverseMap();
+            CreateMap<CarAdvanceFilter, CarHomeFilter>().ReverseMap();
         }
     }
 }

@@ -29,6 +29,7 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+
 // Конфігурація маршрутизації
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 

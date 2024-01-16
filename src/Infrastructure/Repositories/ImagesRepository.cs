@@ -1,73 +1,24 @@
 ﻿using Application.Common.Interfaces;
 using Domain.Entities;
 using Infrastructure.Data;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace Infrastructure.Repositories
 {
-    public class ImagesRepository : IImagesRepository<IFormFile>
+    public class ImagesRepository : IImagesRepository
     {
         private readonly DataContext _ctx;
-        private readonly IWebHostEnvironment _hostingEnvironment;
 
-        public ImagesRepository(DataContext ctx, IWebHostEnvironment hostingEnvironment)
+        public ImagesRepository(DataContext ctx)
         {
             _ctx = ctx ?? throw new ArgumentNullException(nameof(_ctx));
-            _hostingEnvironment = hostingEnvironment ?? throw new ArgumentNullException(nameof(_hostingEnvironment));
         }
 
         public async Task AddAsync(Images entities)
         {
             _ctx.Set<Images>().Add(entities);
             await _ctx.SaveChangesAsync();
-        }
-
-        public string AddImagesToDirectory(IFormFile images)
-        {
-            if (images == null || images.Length == 0)
-            {
-                var uniqueFileName = "NoImage.png";
-                var uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "User Photos");
-                var filePathCombained = Path.Combine(uploadsFolder, uniqueFileName);
-
-                return filePathCombained;
-            }
-            else if (images != null && images.Length > 0)
-            {
-                var uniqueFileName = Guid.NewGuid().ToString() + "_" + images.FileName;
-                var uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "User Photos");
-
-                if (!Directory.Exists(uploadsFolder))
-                {
-                    Directory.CreateDirectory(uploadsFolder);
-                }
-                var filePathCombained = Path.Combine(uploadsFolder, uniqueFileName);
-
-                using (var fileStream = new FileStream(filePathCombained, FileMode.Create))
-                {
-                    images.CopyTo(fileStream);
-                }
-
-                return filePathCombained;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        public string GetPhotoByName(string name)
-        {
-            var filePath = Path.Combine(_hostingEnvironment.WebRootPath, "User Photos", name);
-
-            if (File.Exists(filePath))
-            {
-                return filePath;
-            }
-            return null;
         }
 
         public void RemoveImages(ICollection<Images> images)

@@ -1,136 +1,114 @@
-﻿using Application.DTOs.Car;
+﻿using Application.CarMediatoR.Commands;
+using Application.CarMediatoR.Queries;
+using Application.DTOs.Car;
+using Application.ImagesMediatoR.Commands;
 using AutoMapper;
-using Domain.Entities;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Web.Controllers
+namespace Web.Endpoints
 {
     [Route("api/[controller]")]
     [ApiController]
     public class CarController : ControllerBase
     {
-        private readonly ICarRepository _repository;
-        private readonly IImagesRepository<IFormFile> _imagesRepository;
         private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
+        private readonly IWebHostEnvironment _hostingEnvironment;
 
-        public CarController(ICarRepository repository, IImagesRepository<IFormFile> imagesRepository, IMapper mapper)
+
+        public CarController(IMapper mapper, IMediator mediator, IWebHostEnvironment hostingEnvironment)
         {
-            _repository = repository;
-            _imagesRepository = imagesRepository;
             _mapper = mapper;
+            _mediator = mediator;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         [HttpGet("get-cars")]
-        public async Task<IEnumerable<CarDTO>> GetCars()
+        public async Task<IResult> GetCars()
         {
-            var cars = await _repository.GetAllAsync();
+            var cars = await _mediator.Send(new GetAllCars());
             var carDTOs = _mapper.Map<IEnumerable<CarDTO>>(cars);
 
-            return carDTOs.ToList();
+            return TypedResults.Ok(carDTOs.ToList());
         }
 
         [HttpGet("get-unverified-cars")]
-        public async Task<IEnumerable<CarDTO>> GetUnverifiedCars()
+        public async Task<IResult> GetUnverifiedCars()
         {
-            var cars = await _repository.GetNotVerifiedCarsAsync();
+            var cars = await _mediator.Send(new GetUnverifiedCars());
             var carDtos = _mapper.Map<IEnumerable<CarDTO>>(cars);
 
-            return carDtos.ToList();
+            return TypedResults.Ok(carDtos.ToList());
         }
 
         [HttpGet("get-car/{id}")]
-        public async Task<CarDTO> GetById(int id)
+        public async Task<IResult> GetById(int id)
         {
-            var car = await _repository.GetByIdAsync(id);
+            var car = await _mediator.Send(new GetCarById { Id = id });
             var carDTO = _mapper.Map<CarDTO>(car);
 
-            return carDTO;
-        }
-
-        [HttpGet("check-cars-vin/{vin}")]
-        public async Task<bool> CheckVin(string vin)
-        {
-            return true;
+            return TypedResults.Ok(carDTO);
         }
 
         [HttpGet("get-car-for-update/{id}")]
-        public async Task<CarCreateDTO> GetByIdForUpdate(int id)
+        public async Task<IResult> GetByIdForUpdate(int id)
         {
-            var car = await _repository.GetByIdAsync(id);
+            var car = await _mediator.Send(new GetCarById { Id = id });
             var carDTO = _mapper.Map<CarCreateDTO>(car);
 
-            return carDTO;
+            return TypedResults.Ok(carDTO);
         }
 
         [HttpGet("get-car-by-userid/{id}")]
-        public async Task<IEnumerable<CarDTO>> GetCarByUserId(string id)
+        public async Task<IResult> GetCarByUserId(string id)
         {
-            var car = await _repository.GetCarByUserId(id);
+            var car = await _mediator.Send(new GetCarByUserId { UserId = id });
             var carDTO = _mapper.Map<IEnumerable<CarDTO>>(car);
 
-            return carDTO.ToList();
+            return TypedResults.Ok(carDTO.ToList());
         }
 
         [HttpGet("car-home-filter")]
-        public async Task<IEnumerable<CarDTO>> CarHomeFilter([FromQuery] CarHomeFilter filter)
+        public async Task<IResult> CarHomeFilter([FromQuery] CarHomeFilter filter)
         {
-            var car = await _repository.HomeFilter(filter);
+            var query = _mapper.Map<CarAdvanceFilter>(filter);
+            var car = await _mediator.Send(query);
             var carDTO = _mapper.Map<IEnumerable<CarDTO>>(car);
 
-            return carDTO.ToList();
+            return TypedResults.Ok(carDTO.ToList());
         }
 
         [HttpGet("car-filter")]
-        public async Task<IEnumerable<CarDTO>> CarFilter([FromQuery] CarFilter filter)
+        public async Task<IResult> CarFilter([FromQuery] CarFilter filter)
         {
-            var car = await _repository.CarFilter(filter);
+            var query = _mapper.Map<CarAdvanceFilter>(filter);
+            var car = await _mediator.Send(query);
             var carDTO = _mapper.Map<IEnumerable<CarDTO>>(car);
 
-            return carDTO.ToList();
+            return TypedResults.Ok(carDTO.ToList());
         }
 
-        [HttpGet("get-cars-by-count/{count}")]
-        public async Task<IEnumerable<CarDTO>> GetByCount(int count)
+        [HttpGet("get-recent-cars/{count}")]
+        public async Task<IResult> GetRecentCars(int count)
         {
-            var cars = await _repository.GetByCount(count);
+            var cars = await _mediator.Send(new GetRecentCars { Count = count });
             var carDto = _mapper.Map<IEnumerable<CarDTO>>(cars);
 
-            return carDto.ToList();
-        }
-
-        [HttpPost("create")]
-        public async Task<IActionResult> CreateCar([FromBody] CarCreateDTO carDTO)
-        {
-            if (carDTO == null)
-            {
-                return BadRequest("Invalid data");
-            }
-
-            var car = _mapper.Map<Car>(carDTO);
-            await _repository.AddAsync(car);
-
-            return CreatedAtAction("GetById", new { id = car.Id }, _mapper.Map<CarCreateDTO>(car));
+            return TypedResults.Ok(carDto.ToList());
         }
 
         [HttpPost("create-with-images")]
-        public async Task<IActionResult> CreateCarWithImages([FromForm] CarCreateDTO carDTO, List<IFormFile> images)
+        public async Task<IResult> CreateCarWithImages([FromForm] CarCreateDTO carDTO, List<IFormFile> images)
         {
             if (carDTO == null)
             {
-                return BadRequest("Invalid data");
+                return Results.BadRequest("Invalid data");
             }
 
-            var car = _mapper.Map<Car>(carDTO);
+            var createCommand = _mapper.Map<CreateCar>(carDTO);
 
-            var checkYear = await _repository.CheckYear(car);
-
-            if (checkYear == null)
-            {
-                ModelState.AddModelError("errors", "Рік повинен співпадати з роком створення покоління");
-                return BadRequest(ModelState);
-            }
-
-            await _repository.AddAsync(car);
+            var car = await _mediator.Send(createCommand);
 
             if (images != null && images.Count > 0)
             {
@@ -138,68 +116,90 @@ namespace Web.Controllers
                 {
                     if (image != null && image.Length > 0)
                     {
-                        var filePathToImage = _imagesRepository.AddImagesToDirectory(image);
+                        var filePathToImage = AddImagesToDirectory(image);
                         var filePathToDisplay = filePathToImage.Substring(filePathToImage.LastIndexOf("\\User Photos\\") + 1);
                         filePathToDisplay.Replace(@"\\", "/");
 
                         if (!string.IsNullOrEmpty(filePathToImage))
                         {
-                            var imageAdded = new Images { ImagePathToDisplay = "https://localhost:7119/" + filePathToDisplay, ImagePath = filePathToImage, CarId = car.Id, Car = car };
-                            await _imagesRepository.AddAsync(imageAdded);
+                            var imageAdded = new CreateImage { ImagePathToDisplay = "https://localhost:7119/" + filePathToDisplay, ImagePath = filePathToImage, CarId = car.Id, Car = car };
+                            await _mediator.Send(imageAdded);
                         }
                     }
                 }
             }
             else
             {
-                var defaultImagePath = _imagesRepository.AddImagesToDirectory(null);
+                var defaultImagePath = AddImagesToDirectory(null);
                 var defaultImagePathToDisplay = defaultImagePath.Substring(defaultImagePath.LastIndexOf("\\User Photos\\") + 1);
                 defaultImagePathToDisplay.Replace(@"\\", "/");
 
                 if (!string.IsNullOrEmpty(defaultImagePath))
                 {
-                    var defaultImage = new Images { ImagePathToDisplay = "https://localhost:7119/" + defaultImagePathToDisplay, ImagePath = defaultImagePath, CarId = car.Id, Car = car };
-                    await _imagesRepository.AddAsync(defaultImage);
+                    var defaultImage = new CreateImage { ImagePathToDisplay = "https://localhost:7119/" + defaultImagePathToDisplay, ImagePath = defaultImagePath, CarId = car.Id, Car = car };
+                    await _mediator.Send(defaultImage);
                 }
             }
 
-            return Ok(new JsonResult(new { title = "Оголошення додано успішно", message = "Ваше оголошення додано успішно", id = car.Id }));
+            return Results.Ok(new JsonResult(new { title = "Оголошення додано успішно", message = "Ваше оголошення додано успішно", id = car.Id }));
         }
 
         [HttpPut("update-car")]
-        public async Task<IActionResult> UpdateCar([FromBody] CarCreateDTO carDTO)
+        public async Task<IResult> UpdateCar(int id, [FromBody] CarCreateDTO carDTO)
         {
-            if (carDTO == null)
-            {
-                return BadRequest("Invalid data");
-            }
+            if (id != carDTO.Id) return Results.BadRequest("Invalid data");
 
-            var existingEntity = _repository.GetById(carDTO.Id);
+            var command = _mapper.Map<UpdateCar>(carDTO);
 
-            if (existingEntity == null)
-            {
-                return NotFound();
-            }
+            var car = await _mediator.Send(command);
 
-            _mapper.Map(carDTO, existingEntity);
-            await _repository.UpdateAsync(existingEntity);
-
-            return Ok(new JsonResult(new { title = "Оголошення оновлено успішно", message = "Ваше оголошення було оновлено успішно", id = existingEntity.Id }));
+            return Results.Ok(new JsonResult(new { title = "Оголошення оновлено успішно", message = "Ваше оголошення було оновлено успішно", id = car.Id }));
         }
 
         [HttpDelete("delete-car/{carId}")]
-        public async Task<IActionResult> DeleteCar(int carId)
+        public async Task<IResult> DeleteCar(int carId)
         {
-            var existingEntity = _repository.GetById(carId);
+            await _mediator.Send(new DeleteCar { Id = carId });
 
-            if (existingEntity == null)
-            {
-                return NotFound(new JsonResult(new { title = "Такого оголошення не існує", message = "Ваше оголошення не знайдене тому не було видалено" }));
-            }
-
-            await _repository.DeleteAsync(existingEntity);
-
-            return Ok(new JsonResult(new { title = "Оголошення видалено успішно", message = "Ваше оголошення було видалено успішно" }));
+            return Results.Ok(new JsonResult(new { title = "Оголошення видалено успішно", message = "Ваше оголошення було видалено успішно" }));
         }
+
+        #region private Helpers
+
+        private string AddImagesToDirectory(IFormFile? images)
+        {
+            if (images == null || images.Length == 0)
+            {
+                var uniqueFileName = "NoImage.png";
+                var uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "User Photos");
+                var filePathCombained = Path.Combine(uploadsFolder, uniqueFileName);
+
+                return filePathCombained;
+            }
+            else if (images != null && images.Length > 0)
+            {
+                var uniqueFileName = Guid.NewGuid().ToString() + "_" + images.FileName;
+                var uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "User Photos");
+
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+                var filePathCombained = Path.Combine(uploadsFolder, uniqueFileName);
+
+                using (var fileStream = new FileStream(filePathCombained, FileMode.Create))
+                {
+                    images.CopyTo(fileStream);
+                }
+
+                return filePathCombained;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        #endregion
     }
 }

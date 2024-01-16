@@ -38,7 +38,7 @@ export class AdminService {
     return this.http.put<CarAdd>(`${environment.apiUrl}/api/admin/approve-advertisement?carId=${carId}&isApproved=${isApproved}`, {}).pipe(
       catchError(error => {
           console.error('Error approving/rejecting advertisement:', error);
-          console.error('Server error details:', error.error); // Додано вивід деталей помилки
+          console.error('Server error details:', error.error); 
           return throwError(error);
       })
   );

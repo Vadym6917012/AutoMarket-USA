@@ -1,43 +1,44 @@
 ﻿using Application.DTOs.FuelType;
+using Application.FuelTypeMediatoR.Commands;
+using Application.FuelTypeMediatoR.Queries;
 using AutoMapper;
-using Domain.Entities;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Web.Controllers
+namespace Web.Endpoints
 {
     [Route("api/[controller]")]
     [ApiController]
     public class FuelTypeController : Controller
     {
-        public readonly IRepository<FuelType> _repository;
-        public readonly IMapper _mapper;
+        private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-        public FuelTypeController(IRepository<FuelType> repository, IMapper mapper)
+        public FuelTypeController(IMapper mapper, IMediator mediator)
         {
-            _repository = repository;
             _mapper = mapper;
+            _mediator = mediator;
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<FuelTypeDTO>> GetFuelTypes()
+        [HttpGet("get-fueltypes")]
+        public async Task<IResult> GetFuelTypes()
         {
-            var fuelTypes = await _repository.GetAllAsync();
+            var fuelTypes = await _mediator.Send(new GetAllFuelTypes());
             var fuelTypeDTOs = _mapper.Map<IEnumerable<FuelTypeDTO>>(fuelTypes);
 
-            return fuelTypeDTOs.ToList();
+            return TypedResults.Ok(fuelTypeDTOs.ToList());
         }
 
-        [HttpGet]
-        [Route("{id:int}")]
-        public async Task<FuelTypeDTO> GetById(int id)
+        [HttpGet("get-fueltype/{id}")]
+        public async Task<IResult> GetById(int id)
         {
-            var fuelType = await _repository.GetByIdAsync(id);
+            var fuelType = await _mediator.Send(new GetFuelTypeById { Id = id});
             var fuelTypeDTO = _mapper.Map<FuelTypeDTO>(fuelType);
 
-            return fuelTypeDTO;
+            return TypedResults.Ok(fuelTypeDTO);
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateFuelType([FromBody] FuelTypeDTO fuelTypeDTO)
         {
             if (fuelTypeDTO == null)
@@ -45,49 +46,35 @@ namespace Web.Controllers
                 return BadRequest("Invalid data");
             }
 
-            var fuelType = _mapper.Map<FuelType>(fuelTypeDTO);
-            await _repository.AddAsync(fuelType);
+            var fuelType = _mapper.Map<CreateFuelType>(fuelTypeDTO);
+            var addedFuelType =  await _mediator.Send(fuelType);
 
             // Return the created product
-            return CreatedAtAction("GetById", new { id = fuelType.Id }, _mapper.Map<FuelTypeDTO>(fuelType));
+            return CreatedAtAction("GetById", new { id = addedFuelType.Id }, _mapper.Map<FuelTypeDTO>(addedFuelType));
         }
 
-        [HttpPut]
-        [Route("{id:int}")]
-        public async Task<IActionResult> UpdateFuelType(int id, [FromBody] FuelTypeDTO fuelTypeDTO)
+        [HttpPut("update-fueltype")]
+        public async Task<IResult> UpdateFuelType(int id, [FromBody] FuelTypeDTO fuelTypeDTO)
         {
-            var existingEntity = _repository.GetById(id);
-
-            if (existingEntity == null)
-            {
-                return NotFound();
-            }
+            if (id != fuelTypeDTO.Id) return Results.BadRequest();
 
             if (fuelTypeDTO == null)
             {
-                return BadRequest("Invalid data");
+                return Results.BadRequest("Invalid data");
             }
 
-            _mapper.Map(fuelTypeDTO, existingEntity);
-            await _repository.UpdateAsync(existingEntity);
+            var command = _mapper.Map<UpdateFuelType>(fuelTypeDTO);
+            await _mediator.Send(command);
 
-            return Ok(_mapper.Map<FuelTypeDTO>(existingEntity));
+            return Results.NoContent();
         }
 
-        [HttpDelete]
-        [Route("{id:int}")]
-        public async Task<IActionResult> DeleteFuelType(int id)
+        [HttpDelete("delete-fueltype/{id}")]
+        public async Task<IResult> DeleteFuelType(int id)
         {
-            var existingEntity = _repository.GetById(id);
+            await _mediator.Send(new DeleteFuelType { Id = id});
 
-            if (existingEntity == null)
-            {
-                return NotFound();
-            }
-
-            await _repository.DeleteAsync(existingEntity);
-
-            return NoContent();
+            return Results.NoContent();
         }
     }
 }

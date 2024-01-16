@@ -88,24 +88,6 @@ namespace Infrastructure.Data
                     new Claim(ClaimTypes.Email, member.Email),
                     new Claim(ClaimTypes.Surname, member.LastName)
                 });
-
-                var vipMember = new ApplicationUser
-                {
-                    FirstName = "vipmember",
-                    LastName = "vipmember",
-                    UserName = "vipMember@automarket.com",
-                    NormalizedUserName = "vipMember@automarket.com".ToUpper(),
-                    Email = "vipMember@automarket.com",
-                    NormalizedEmail = "vipMember@automarket.com".ToUpper(),
-                    EmailConfirmed = true
-                };
-                await _userManager.CreateAsync(vipMember, "memberPassword");
-                await _userManager.AddToRoleAsync(vipMember, SD.MemberRole);
-                await _userManager.AddClaimsAsync(vipMember, new Claim[]
-                {
-                    new Claim(ClaimTypes.Email, vipMember.Email),
-                    new Claim(ClaimTypes.Surname, vipMember.LastName)
-                });
             }
         }
     }

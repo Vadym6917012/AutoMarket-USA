@@ -20,7 +20,7 @@ namespace Application.BodyTypeMediatoR.CommandHandlers
             var entity = await _repository.GetByIdAsync(request.Id);
 
             Guard.Against.NotFound(request.Id, entity);
-            
+
             await _repository.DeleteAsync(entity);
         }
     }

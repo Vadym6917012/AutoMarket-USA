@@ -4,11 +4,6 @@ namespace Application.DTOs.Car
 {
     public class CarCreateDTO
     {
-        public CarCreateDTO()
-        {
-
-        }
-
         public int Id { get; set; }
         [Required(ErrorMessage = "Модель є обов'язковим полем.")]
         public int ModelId { get; set; }

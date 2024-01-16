@@ -1,11 +1,12 @@
 ﻿using Application.BodyTypeMediatoR.Commands;
 using Application.BodyTypeMediatoR.Queries;
 using Application.DTOs.BodyType;
+using Application.DTOs.FuelType;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Web.Controllers
+namespace Web.Endpoints
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -32,9 +33,7 @@ namespace Web.Controllers
         [HttpGet("get-bodytype/{id}")]
         public async Task<IResult> GetById(int id)
         {
-            var getBodyType = new GetBodyTypeById { Id = id };
-            
-            var bodyType = await _mediator.Send(getBodyType);
+            var bodyType = await _mediator.Send(new GetBodyTypeById { Id = id });
             var bodyTypeDTO = _mapper.Map<BodyTypeDTO>(bodyType);
 
             return TypedResults.Ok(bodyTypeDTO);
@@ -60,6 +59,11 @@ namespace Web.Controllers
         public async Task<IResult> UpdateBodyType(int id, [FromBody] BodyTypeDTO bodyTypeDTO)
         {
             if (id != bodyTypeDTO.Id) return Results.BadRequest();
+
+            if (bodyTypeDTO == null)
+            {
+                return Results.BadRequest("Invalid data");
+            }
 
             var command = _mapper.Map<UpdateBodyType>(bodyTypeDTO);
 

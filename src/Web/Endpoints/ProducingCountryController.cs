@@ -3,7 +3,7 @@ using AutoMapper;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Web.Controllers
+namespace Web.Endpoints
 {
     [Route("api/[controller]")]
     [ApiController]

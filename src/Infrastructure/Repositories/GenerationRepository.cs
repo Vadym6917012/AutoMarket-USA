@@ -29,7 +29,7 @@ namespace Infrastructure.Repositories
 
                 if (existGeneration == null)
                 {
-                    await _ctx.Set<Generation>().AddAsync(entity);
+                    var addedEntity = await _ctx.Set<Generation>().AddAsync(entity);
 
                     await _ctx.SaveChangesAsync();
 
@@ -44,10 +44,12 @@ namespace Infrastructure.Repositories
             await _ctx.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(Generation entity)
+        public async Task<Generation> UpdateAsync(Generation entity)
         {
             _ctx.Set<Generation>().Update(entity);
             await _ctx.SaveChangesAsync();
+
+            return entity;
         }
 
         public async Task DeleteAsync(Generation entity)
@@ -66,7 +68,7 @@ namespace Infrastructure.Repositories
             return _ctx.Set<Generation>().Find(id);
         }
 
-        public IEnumerable<Generation> GetGenerationsByModel(int modelId)
+        public async Task<IEnumerable<Generation>> GetGenerationsByModel(int modelId)
         {
             return _ctx.Set<ModelGeneration>()
                 .Where(mg => mg.ModelId == modelId)

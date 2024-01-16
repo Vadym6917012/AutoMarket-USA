@@ -1,39 +1,41 @@
 ﻿using Application.DTOs.Make;
+using Application.MakeMediatoR.Commands;
+using Application.MakeMediatoR.Queries;
 using AutoMapper;
-using Domain.Entities;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Web.Controllers
+namespace Web.Endpoints
 {
     [Route("api/[controller]")]
     [ApiController]
     public class MakeController : ControllerBase
     {
-        private readonly IMakeRepository _repository;
+        private readonly IMediator _mediator;
         private readonly IMapper _mapper;
 
-        public MakeController(IMakeRepository repository, IMapper mapper)
+        public MakeController(IMediator mediator, IMapper mapper)
         {
-            _repository = repository;
+            _mediator = mediator;
             _mapper = mapper;
         }
 
         [HttpGet("get-makes")]
-        public async Task<IEnumerable<MakeDTO>> GetMakes()
+        public async Task<IResult> GetMakes()
         {
-            var makes = await _repository.GetAllAsync();
+            var makes = await _mediator.Send(new GetAllMakes());
             var makeDTOs = _mapper.Map<IEnumerable<MakeDTO>>(makes);
 
-            return makeDTOs.ToList();
+            return TypedResults.Ok(makeDTOs.ToList());
         }
 
         [HttpGet("get-make/{id}")]
-        public async Task<MakeDTO> GetById(int id)
+        public async Task<IResult> GetById(int id)
         {
-            var make = await _repository.GetByIdAsync(id);
+            var make = await _mediator.Send(new GetMakeById { Id = id });
             var makeDTO = _mapper.Map<MakeDTO>(make);
 
-            return makeDTO;
+            return TypedResults.Ok(makeDTO);
         }
 
         [HttpPost("create-make")]
@@ -44,69 +46,42 @@ namespace Web.Controllers
                 return BadRequest("Invalid make data");
             }
 
-            var make = _mapper.Map<Make>(makeDTO);
-            await _repository.AddAsync(make);
+            var make = _mapper.Map<CreateMake>(makeDTO);
+            var addedEntity = await _mediator.Send(make);
 
             // Return the created product
-            return CreatedAtAction("GetById", new { id = make.Id }, _mapper.Map<MakeDTO>(make));
+            return CreatedAtAction("GetById", new { id = addedEntity.Id }, _mapper.Map<MakeDTO>(addedEntity));
         }
 
         [HttpPut("update-make")]
-        public async Task<IActionResult> UpdateMake(int id, [FromBody] MakeDTO makeDTO)
+        public async Task<IResult> UpdateMake(int id, [FromBody] MakeDTO makeDTO)
         {
-            var existingEntity = _repository.GetById(id);
-
-            if (existingEntity == null)
-            {
-                return NotFound();
-            }
+            if (id != makeDTO.Id) return Results.BadRequest();
 
             if (makeDTO == null)
             {
-                return BadRequest("Invalid make data");
+                return Results.BadRequest("Invalid make data");
             }
 
-            _mapper.Map(makeDTO, existingEntity);
-            await _repository.UpdateAsync(existingEntity);
+            var command = _mapper.Map<UpdateMake>(makeDTO);
+            var updEntity = await _mediator.Send(command);
 
-            return Ok(_mapper.Map<MakeDTO>(existingEntity));
+            return Results.Ok(_mapper.Map<MakeDTO>(updEntity));
         }
 
         [HttpDelete("delete-make/{id}")]
-        public async Task<IActionResult> DeleteMake(int id)
+        public async Task<IResult> DeleteMake(int id)
         {
-            var existingEntity = _repository.GetById(id);
+            await _mediator.Send(new DeleteMake { Id = id});
 
-            if (existingEntity == null)
-            {
-                return NotFound();
-            }
-
-            await _repository.DeleteAsync(existingEntity);
-
-            return NoContent();
+            return Results.NoContent();
         }
 
         [HttpGet("get-make-by-country/{producingCountryId}")]
-        public IActionResult GetMakeByProducingCountry(int producingCountryId)
+        public async Task<IResult> GetMakeByProducingCountry(int producingCountryId)
         {
-            var make = _repository.GetMakeByCountry(producingCountryId);
-            return Ok(make);
-        }
-
-        [HttpGet("get-make-by-model/{modelId}")]
-        public async Task<ActionResult> GetMakeByModel(int modelId)
-        {
-            var make = _repository.GetMakeByModel(modelId);
-
-            if (make == null)
-            {
-                return BadRequest("Не вдалося знайти марку за даною моделлю");
-            }
-
-            var makeDTO = _mapper.Map<MakeDTO>(make);
-
-            return Ok(makeDTO);
+            var make = await _mediator.Send(new GetMakeByProducingCountry { Id = producingCountryId });
+            return TypedResults.Ok(make.ToList());
         }
     }
 }

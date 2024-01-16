@@ -1,114 +1,95 @@
 ﻿using Application.DTOs.Generation;
+using Application.GenerationMediatoR.Commands;
+using Application.GenerationMediatoR.Queries;
 using AutoMapper;
-using Domain.Entities;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Web.Controllers
+namespace Web.Endpoints
 {
     [Route("api/[controller]")]
     [ApiController]
     public class GenerationController : ControllerBase
     {
-        public readonly IGenerationRepository _repository;
-        public readonly IMapper _mapper;
+        private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-        public GenerationController(IGenerationRepository repository, IMapper mapper)
+        public GenerationController(IMapper mapper, IMediator mediator)
         {
-            _repository = repository;
             _mapper = mapper;
+            _mediator = mediator;
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<GenerationDTO>> GetGenerations()
+        [HttpGet("get-generations")]
+        public async Task<IResult> GetGenerations()
         {
-            var generations = await _repository.GetAllAsync();
+            var generations = await _mediator.Send(new GetAllGenerations());
             var generationDTOs = _mapper.Map<IEnumerable<GenerationDTO>>(generations);
 
-            return generationDTOs.ToList();
+            return TypedResults.Ok(generationDTOs.ToList());
         }
 
-        [HttpGet]
-        [Route("get-generation-by-model/{modelId:int}")]
-        public IActionResult GetGenerationsByModel(int modelId)
+        [HttpGet("get-generation-by-model/{modelId}")]
+        public async Task<IResult> GetGenerationsByModel(int modelId)
         {
-            var generations = _repository.GetGenerationsByModel(modelId);
-            return Ok(generations);
+            var generations = await _mediator.Send(new GetGenerationsByModel { Id = modelId });
+            var generationDTOs = _mapper.Map<IEnumerable<GenerationDTO>>(generations);
+
+            return TypedResults.Ok(generationDTOs.ToList());
         }
 
-        [HttpGet]
-        [Route("{id:int}")]
-        public async Task<GenerationDTO> GetById(int id)
+        [HttpGet("get-generation/{id}")]
+        public async Task<IResult> GetById(int id)
         {
-            var generation = await _repository.GetByIdAsync(id);
+            var generation = await _mediator.Send(new GetGenerationById { Id = id });
             var generationDTO = _mapper.Map<GenerationDTO>(generation);
 
-            return generationDTO;
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> CreateGeneration([FromBody] GenerationDTO generationDTO)
-        {
-            if (generationDTO == null)
-            {
-                return BadRequest("Invalid generation data");
-            }
-
-            var generation = _mapper.Map<Generation>(generationDTO);
-            await _repository.AddAsync(generation);
-
-            return CreatedAtAction("GetById", new { id = generation.Id }, _mapper.Map<GenerationDTO>(generation));
+            return TypedResults.Ok(generationDTO);
         }
 
         [HttpPost("add-generation-to-model")]
-        public async Task<IActionResult> AddGenerationToModel([FromQuery] int modelId, [FromBody] GenerationDTO generationDTO)
+        public async Task<IResult> AddGenerationToModel([FromQuery] int modelId, [FromBody] GenerationDTO generationDTO)
         {
             if (generationDTO == null)
             {
-                return BadRequest("Invalid generation data");
+                return Results.BadRequest("Invalid generation data");
             }
 
-            var generation = _mapper.Map<Generation>(generationDTO);
-            await _repository.AddToModelAsync(modelId, generation);
+            var command = new CreateGeneration
+            {
+                ModelId = modelId,
+                Name = generationDTO.Name,
+                YearFrom = generationDTO.YearFrom,
+                YearTo = generationDTO.YearTo,
+            };
 
-            return Ok(new JsonResult(new { title = "Покоління додано успішно", message = "Покоління додано успішно", id = generation.Id }));
+            await _mediator.Send(command);
+
+            return Results.Ok(new JsonResult(new { title = "Покоління додано успішно", message = $"Покоління {generationDTO.Name}  додано успішно", id = generationDTO.Id }));
         }
 
-        [HttpPut]
-        [Route("{id:int}")]
-        public async Task<IActionResult> UpdateGeneration(int id, [FromBody] GenerationDTO generationDTO)
+        [HttpPut("update-generation/{id}")]
+        public async Task<IResult> UpdateGeneration(int id, [FromBody] GenerationDTO generationDTO)
         {
-            var existingEntity = _repository.GetById(id);
-
-            if (existingEntity == null)
-            {
-                return NotFound();
-            }
+            if (id != generationDTO.Id) return Results.BadRequest();
 
             if (generationDTO == null)
             {
-                return BadRequest("Invalid body type data");
+                return TypedResults.BadRequest("Invalid body type data");
             }
 
-            _mapper.Map(generationDTO, existingEntity);
-            await _repository.UpdateAsync(existingEntity);
+            var command = _mapper.Map<UpdateGeneration>(generationDTO);
+            await _mediator.Send(command);
 
-            return Ok(_mapper.Map<GenerationDTO>(existingEntity));
+            return TypedResults.NoContent();
         }
 
-        [HttpDelete]
-        [Route("{id:int}")]
-        public async Task<IActionResult> DeleteGeneration(int id)
+        [HttpDelete("delete-generation/{id}")]
+        public async Task<IResult> DeleteGeneration(int id)
         {
-            var existingEntity = _repository.GetById(id);
+            await _mediator.Send(new DeleteGeneration { Id = id });
 
-            if (existingEntity == null)
-            {
-                return NotFound();
-            }
-
-            await _repository.DeleteAsync(existingEntity);
-
-            return NoContent();
+            return TypedResults.NoContent();
         }
     }
 }

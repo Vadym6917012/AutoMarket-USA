@@ -1,43 +1,44 @@
 ﻿using Application.DTOs.GearBox;
+using Application.GearBoxMediatoR.Commands;
+using Application.GearBoxMediatoR.Queries;
 using AutoMapper;
-using Domain.Entities;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Web.Controllers
+namespace Web.Endpoints
 {
     [Route("api/[controller]")]
     [ApiController]
     public class GearBoxTypeController : ControllerBase
     {
-        public readonly IRepository<GearBoxType> _repository;
-        public readonly IMapper _mapper;
+        private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-        public GearBoxTypeController(IRepository<GearBoxType> repository, IMapper mapper)
+        public GearBoxTypeController(IMapper mapper, IMediator mediator)
         {
-            _repository = repository;
             _mapper = mapper;
+            _mediator = mediator;
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<GearBoxTypeDTO>> GetGearBoxTypes()
+        [HttpGet("get-gearboxtypes")]
+        public async Task<IResult> GetGearBoxTypes()
         {
-            var producingCountries = await _repository.GetAllAsync();
-            var gearBoxTypeDTOs = _mapper.Map<IEnumerable<GearBoxTypeDTO>>(producingCountries);
+            var gearBoxTypes = await _mediator.Send(new GetAllGearBoxes());
+            var gearBoxTypeDTOs = _mapper.Map<IEnumerable<GearBoxTypeDTO>>(gearBoxTypes);
 
-            return gearBoxTypeDTOs.ToList();
+            return TypedResults.Ok(gearBoxTypeDTOs.ToList());
         }
 
-        [HttpGet]
-        [Route("{id:int}")]
-        public async Task<GearBoxTypeDTO> GetById(int id)
+        [HttpGet("get-gearboxtype/{id}")]
+        public async Task<IResult> GetById(int id)
         {
-            var gearBoxType = await _repository.GetByIdAsync(id);
+            var gearBoxType = await _mediator.Send(new GetGearBoxById { Id = id });
             var gearBoxTypeDTO = _mapper.Map<GearBoxTypeDTO>(gearBoxType);
 
-            return gearBoxTypeDTO;
+            return TypedResults.Ok(gearBoxTypeDTO);
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateGearBoxType([FromBody] GearBoxTypeDTO gearBoxTypeDTO)
         {
             if (gearBoxTypeDTO == null)
@@ -45,49 +46,35 @@ namespace Web.Controllers
                 return BadRequest("Invalid data");
             }
 
-            var gearBoxType = _mapper.Map<GearBoxType>(gearBoxTypeDTO);
-            await _repository.AddAsync(gearBoxType);
+            var gearBoxType = _mapper.Map<CreateGearBox>(gearBoxTypeDTO);
+            var addedGearBoxType = await _mediator.Send(gearBoxType);
 
             // Return the created product
-            return CreatedAtAction("GetById", new { id = gearBoxType.Id }, _mapper.Map<GearBoxTypeDTO>(gearBoxType));
+            return CreatedAtAction("GetById", new { id = addedGearBoxType.Id }, _mapper.Map<GearBoxTypeDTO>(addedGearBoxType));
         }
 
-        [HttpPut]
-        [Route("{id:int}")]
-        public async Task<IActionResult> UpdateGearBoxType(int id, [FromBody] GearBoxTypeDTO gearBoxTypeDTO)
+        [HttpPut("update-gearboxtype/{id}")]
+        public async Task<IResult> UpdateGearBoxType(int id, [FromBody] GearBoxTypeDTO gearBoxTypeDTO)
         {
-            var existingEntity = _repository.GetById(id);
-
-            if (existingEntity == null)
-            {
-                return NotFound();
-            }
+            if (id != gearBoxTypeDTO.Id) return Results.BadRequest();
 
             if (gearBoxTypeDTO == null)
             {
-                return BadRequest("Invalid data");
+                return Results.BadRequest("Invalid data");
             }
 
-            _mapper.Map(gearBoxTypeDTO, existingEntity);
-            await _repository.UpdateAsync(existingEntity);
+            var command = _mapper.Map<UpdateGearBox>(gearBoxTypeDTO);
+            await _mediator.Send(command);
 
-            return Ok(_mapper.Map<GearBoxTypeDTO>(existingEntity));
+            return Results.NoContent();
         }
 
-        [HttpDelete]
-        [Route("{id:int}")]
-        public async Task<IActionResult> DeleteGearBoxType(int id)
+        [HttpDelete("delete-gearboxtype/{id}")]
+        public async Task<IResult> DeleteGearBoxType(int id)
         {
-            var existingEntity = _repository.GetById(id);
+            await _mediator.Send(new DeleteGearBox { Id = id });
 
-            if (existingEntity == null)
-            {
-                return NotFound();
-            }
-
-            await _repository.DeleteAsync(existingEntity);
-
-            return NoContent();
+            return Results.NoContent();
         }
     }
 }

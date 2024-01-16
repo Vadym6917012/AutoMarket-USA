@@ -4,7 +4,6 @@ using Infrastructure.Data;
 using Infrastructure.Identity;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -28,19 +27,19 @@ namespace Infrastructure
 
             services.AddScoped<JWTServices>();
             services.AddScoped<IRepository<BodyType>, Repository<BodyType>>();
-            services.AddScoped<IModelRepository,ModelRepository>();
-            services.AddScoped<IGenerationRepository,GenerationRepository>();
-            services.AddScoped<IMakeRepository,MakeRepository>();
+            services.AddScoped<IModelRepository, ModelRepository>();
+            services.AddScoped<IGenerationRepository, GenerationRepository>();
+            services.AddScoped<IMakeRepository, MakeRepository>();
             services.AddScoped<IRepository<FuelType>, Repository<FuelType>>();
             services.AddScoped<IRepository<GearBoxType>, Repository<GearBoxType>>();
-            services.AddScoped<IModificationRepository,ModificationRepository>();
-            services.AddScoped<ICarRepository,CarRepository>();
-            services.AddScoped<IImagesRepository<IFormFile>,ImagesRepository>();
-            services.AddScoped<IEmailService,EmailService>();
-            services.AddScoped<IRepository<ProducingCountry>,ProducingCountryRepository>();
+            services.AddScoped<IModificationRepository, ModificationRepository>();
+            services.AddScoped<ICarRepository, CarRepository>();
+            services.AddScoped<IImagesRepository, ImagesRepository>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IRepository<ProducingCountry>, ProducingCountryRepository>();
             services.AddScoped<ContextSeedService>();
-            services.AddScoped<IRepository<DriveTrain>,Repository<DriveTrain>>();
-            services.AddScoped<IRepository<TechnicalCondition>,Repository<TechnicalCondition>>();
+            services.AddScoped<IRepository<DriveTrain>, Repository<DriveTrain>>();
+            services.AddScoped<IRepository<TechnicalCondition>, Repository<TechnicalCondition>>();
             services.AddScoped<IAccountRepository<ApplicationUser, RefreshToken>, AccountRepository>();
             services.AddScoped<IAdminRepository<ApplicationUser>, AdminRepository>();
 

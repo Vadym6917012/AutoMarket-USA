@@ -13,10 +13,12 @@ namespace Infrastructure.Repositories
         {
             _ctx = ctx ?? throw new ArgumentNullException(nameof(_ctx));
         }
-        public async Task AddAsync(Model entity)
+        public async Task<Model> AddAsync(Model entity)
         {
-            await _ctx.Set<Model>().AddAsync(entity);
+            var addedEntity = await _ctx.Set<Model>().AddAsync(entity);
             await _ctx.SaveChangesAsync();
+
+            return addedEntity.Entity;
         }
 
         public async Task AddWithGeneration(Model entity, string generationName, int yearFrom, int yearTo)
@@ -72,10 +74,12 @@ namespace Infrastructure.Repositories
             }
         }
 
-        public async Task UpdateAsync(Model entity)
+        public async Task<Model> UpdateAsync(Model entity)
         {
             _ctx.Set<Model>().Update(entity);
             await _ctx.SaveChangesAsync();
+
+            return entity;
         }
 
         public async Task DeleteAsync(Model entity)
@@ -104,7 +108,7 @@ namespace Infrastructure.Repositories
             return await _ctx.Set<Model>().Include(m => m.ModelGenerations).ThenInclude(mg => mg.Generation).ToListAsync();
         }
 
-        public IEnumerable<Model> GetModelByMake(int makeId)
+        public async Task<IEnumerable<Model>> GetModelByMake(int makeId)
         {
             return _ctx.Set<Model>()
                 .Where(m => m.MakeId == makeId)

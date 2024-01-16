@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using System.Security.Claims;
 using System.Text;
 
-namespace Web.Controllers
+namespace Web.Endpoints
 {
     [Route("api/[controller]")]
     [ApiController]

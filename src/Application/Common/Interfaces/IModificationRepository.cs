@@ -5,7 +5,7 @@ namespace Application.Common.Interfaces
 {
     public interface IModificationRepository
     {
-        Task AddAsync(Modification entity);
+        Task<Modification> AddAsync(Modification entity);
         Task UpdateAsync(Modification entity);
         Task DeleteAsync(Modification entity);
         Task<Modification> GetByIdAsync(int id);

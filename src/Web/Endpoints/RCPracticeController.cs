@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AutoMarket.Server.Controllers
+namespace Web.Endpoints
 {
     [Route("api/[controller]")]
     [ApiController]

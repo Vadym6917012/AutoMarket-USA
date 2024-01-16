@@ -18,10 +18,6 @@ export class MakeService {
   getMakeByCountry(producingCountryId: number): Observable<Make[]> {
     return this.http.get<Make[]>(`${environment.apiUrl}/api/make/get-make-by-country/${producingCountryId}`);
   }
-  
-  getMakeByModel(modelId: number): Observable<Make> {
-    return this.http.get<Make>(`${environment.apiUrl}/api/make/get-make-by-model/${modelId}`);
-  }
 
   deleteMake (id: number) {
     return this.http.delete<Make>(`${environment.apiUrl}/api/make/delete-make/${id}`, {});

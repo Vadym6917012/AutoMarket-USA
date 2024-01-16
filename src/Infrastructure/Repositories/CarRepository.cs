@@ -2,7 +2,6 @@
 using Application.DTOs.Car;
 using Domain.Entities;
 using Infrastructure.Data;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -11,17 +10,19 @@ namespace Infrastructure.Repositories
     public class CarRepository : ICarRepository
     {
         private readonly DataContext _ctx;
-        private readonly IImagesRepository<IFormFile> _imagesRepository;
+        private readonly IImagesRepository _imagesRepository;
 
-        public CarRepository(DataContext ctx, IImagesRepository<IFormFile> imagesRepository)
+        public CarRepository(DataContext ctx, IImagesRepository imagesRepository)
         {
             _ctx = ctx ?? throw new ArgumentNullException(nameof(_ctx));
             _imagesRepository = imagesRepository ?? throw new ArgumentNullException(nameof(_imagesRepository));
         }
-        public async Task AddAsync(Car entity)
+        public async Task<Car> AddAsync(Car entity)
         {
-            _ctx.Set<Car>().AddAsync(entity);
+            await _ctx.Set<Car>().AddAsync(entity);
             await _ctx.SaveChangesAsync();
+
+            return entity;
         }
 
         public async Task<bool> CheckYear(Car entity)
@@ -39,10 +40,12 @@ namespace Infrastructure.Repositories
             }
         }
 
-        public async Task UpdateAsync(Car entity)
+        public async Task<Car> UpdateAsync(Car entity)
         {
             _ctx.Set<Car>().Update(entity);
             await _ctx.SaveChangesAsync();
+
+            return entity;
         }
 
         public async Task DeleteAsync(Car entity)
@@ -105,8 +108,6 @@ namespace Infrastructure.Repositories
                     {
                         response.EnsureSuccessStatusCode();
                         string responseBody = await response.Content.ReadAsStringAsync();
-
-
 
                         return responseBody;
                     }
@@ -257,10 +258,10 @@ namespace Infrastructure.Repositories
             return filteredCars;
         }
 
-        public async Task<IEnumerable<Car>> GetByCount(int count)
+        public async Task<IEnumerable<Car>> GetRecentCars(int count)
         {
             return await _ctx.Cars
-               .OrderBy(car => car.Id)
+               .OrderByDescending(car => car.DateCreated)
                .Take(count)
                .Include(m => m.Model).ThenInclude(m => m.Make).ThenInclude(c => c.ProducingCountry)
                 .Include(m => m.Modification)

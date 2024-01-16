@@ -3,7 +3,7 @@ using AutoMapper;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Web.Controllers
+namespace Web.Endpoints
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -87,7 +87,7 @@ namespace Web.Controllers
             return NoContent();
         }
 
-        [HttpGet("get-modification-by-model/{modelId:int}")]
+        [HttpGet("get-modification-by-model/{modelId}")]
         public IActionResult GetModificationsByModel(int modelId)
         {
             var modification = _repository.GetModificationByModel(modelId);

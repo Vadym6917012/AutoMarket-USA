@@ -13,10 +13,12 @@ namespace Infrastructure.Repositories
         {
             _ctx = ctx ?? throw new ArgumentNullException(nameof(_ctx));
         }
-        public async Task AddAsync(Modification entity)
+        public async Task<Modification> AddAsync(Modification entity)
         {
-            await _ctx.Set<Modification>().AddAsync(entity);
+            var addedEntity = await _ctx.Set<Modification>().AddAsync(entity);
             await _ctx.SaveChangesAsync();
+
+            return addedEntity.Entity;
         }
 
         public async Task UpdateAsync(Modification entity)

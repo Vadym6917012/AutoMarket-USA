@@ -1,39 +1,41 @@
 ﻿using Application.DTOs.Model;
+using Application.ModelMediatoR.Commands;
+using Application.ModelMediatoR.Queries;
 using AutoMapper;
-using Domain.Entities;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Web.Controllers
+namespace Web.Endpoints
 {
     [Route("api/[controller]")]
     [ApiController]
     public class ModelController : ControllerBase
     {
-        private readonly IModelRepository _repository;
+        private readonly IMediator _mediator;
         private readonly IMapper _mapper;
 
-        public ModelController(IModelRepository repository, IMapper mapper)
+        public ModelController(IMediator mediator, IMapper mapper)
         {
-            _repository = repository;
+            _mediator = mediator;
             _mapper = mapper;
         }
 
         [HttpGet("get-models")]
-        public async Task<IEnumerable<ModelDTO>> GetModels()
+        public async Task<IResult> GetModels()
         {
-            var models = await _repository.GetAllAsync();
+            var models = await _mediator.Send(new GetAllModels());
             var modelDTOs = _mapper.Map<IEnumerable<ModelDTO>>(models);
 
-            return modelDTOs.ToList();
+            return TypedResults.Ok(modelDTOs.ToList());
         }
 
         [HttpGet("get-model/{id}")]
-        public async Task<ModelDTO> GetById(int id)
+        public async Task<IResult> GetById(int id)
         {
-            var model = await _repository.GetByIdAsync(id);
+            var model = await _mediator.Send(new GetModelById { Id = id});
             var modelDTO = _mapper.Map<ModelDTO>(model);
 
-            return modelDTO;
+            return TypedResults.Ok(modelDTO);
         }
 
         [HttpPost("create-model")]
@@ -44,71 +46,43 @@ namespace Web.Controllers
                 return BadRequest("Invalid model data");
             }
 
-            var model = _mapper.Map<Model>(modelDTO);
-            await _repository.AddAsync(model);
+            var model = _mapper.Map<CreateModel>(modelDTO);
+            var addedModel = await _mediator.Send(model);
 
             // Return the created product
-            return CreatedAtAction("GetById", new { id = model.Id }, _mapper.Map<ModelDTO>(model));
-        }
-
-        [HttpPost("create-with-generation")]
-        public async Task<IActionResult> CreateWithGeneration([FromBody] ModelDTO modelDTO, string name, int yearFrom, int yearTo)
-        {
-            if (modelDTO == null)
-            {
-                return BadRequest("Invalid model data");
-            }
-
-            var model = _mapper.Map<Model>(modelDTO);
-            await _repository.AddWithGeneration(model, name, yearFrom, yearTo);
-
-            var createdModelDTO = _mapper.Map<ModelDTO>(model);
-
-            // Return the created product
-            return CreatedAtAction("GetById", new { id = createdModelDTO.Id }, createdModelDTO);
+            return CreatedAtAction("GetById", new { id = addedModel.Id }, _mapper.Map<ModelDTO>(addedModel));
         }
 
         [HttpPut("update-model/{id}")]
-        public async Task<IActionResult> UpdateModel(int id, [FromBody] ModelDTO modelDTO)
+        public async Task<IResult> UpdateModel(int id, [FromBody] ModelDTO modelDTO)
         {
-            var existingEntity = _repository.GetById(id);
-
-            if (existingEntity == null)
-            {
-                return NotFound();
-            }
+            if (id != modelDTO.Id) return Results.BadRequest();
 
             if (modelDTO == null)
             {
-                return BadRequest("Invalid model data");
+                return Results.BadRequest("Invalid model data");
             }
 
-            _mapper.Map(modelDTO, existingEntity);
-            await _repository.UpdateAsync(existingEntity);
+            var command = _mapper.Map<UpdateModel>(modelDTO);
+            var updEntity = await _mediator.Send(command);
 
-            return Ok(_mapper.Map<ModelDTO>(existingEntity));
+            return TypedResults.Ok(_mapper.Map<ModelDTO>(updEntity));
         }
 
         [HttpDelete("delete-model/{id}")]
-        public async Task<IActionResult> DeleteModel(int id)
+        public async Task<IResult> DeleteModel(int id)
         {
-            var existingEntity = _repository.GetById(id);
+            await _mediator.Send(new DeleteModel { Id = id});
 
-            if (existingEntity == null)
-            {
-                return NotFound();
-            }
-
-            await _repository.DeleteAsync(existingEntity);
-
-            return NoContent();
+            return Results.NoContent();
         }
 
         [HttpGet("get-model-by-make/{makeId:int}")]
-        public IActionResult GetModelsByMake(int makeId)
+        public async Task<IResult> GetModelsByMake(int makeId)
         {
-            var model = _repository.GetModelByMake(makeId);
-            return Ok(model);
+            var model = _mediator.Send(new GetModelsByMake { Id = makeId});
+
+            return TypedResults.Ok(model);
         }
     }
 }

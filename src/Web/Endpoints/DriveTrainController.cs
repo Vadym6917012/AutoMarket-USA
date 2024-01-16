@@ -1,44 +1,45 @@
-﻿using Application.DTOs.DriveTrain;
+﻿using Application.DriveTrainMediatoR.Commands;
+using Application.DriveTrainMediatoR.Queries;
+using Application.DTOs.DriveTrain;
 using AutoMapper;
-using Domain.Entities;
-using Infrastructure.Repositories;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Web.Controllers
+namespace Web.Endpoints
 {
     [Route("api/[controller]")]
     [ApiController]
     public class DriveTrainController : ControllerBase
     {
-        private readonly IRepository<DriveTrain> _repository;
+        private readonly IMediator _mediator;
         private readonly IMapper _mapper;
 
-        public DriveTrainController(Repository<DriveTrain> repository, IMapper mapper)
+        public DriveTrainController(IMediator mediator, IMapper mapper)
         {
-            _repository = repository;
+            _mediator = mediator;
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<DriveTrainDTO>> GetDriveTrains()
+        [HttpGet("get-drivetrains")]
+        public async Task<IResult> GetDriveTrains()
         {
-            var driveTrains = await _repository.GetAllAsync();
+            var driveTrains = await _mediator.Send(new GetAllDriveTrains());
             var driveTrainDTOs = _mapper.Map<IEnumerable<DriveTrainDTO>>(driveTrains);
 
-            return driveTrainDTOs.ToList();
+            return TypedResults.Ok(driveTrainDTOs.ToList());
         }
 
-        [HttpGet]
-        [Route("{id:int}")]
-        public async Task<DriveTrainDTO> GetById(int id)
+        [HttpGet("get-drivetrain/{id}")]
+        public async Task<IResult> GetById(int id)
         {
-            var driveTrain = await _repository.GetByIdAsync(id);
+
+            var driveTrain = await _mediator.Send(new GetDriveTrainById { Id = id });
             var driveTrainDTO = _mapper.Map<DriveTrainDTO>(driveTrain);
 
-            return driveTrainDTO;
+            return TypedResults.Ok(driveTrainDTO);
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateDriveTrain([FromBody] DriveTrainDTO driveTrainDTO)
         {
             if (driveTrainDTO == null)
@@ -46,49 +47,31 @@ namespace Web.Controllers
                 return BadRequest("Invalid data");
             }
 
-            var driveTrain = _mapper.Map<DriveTrain>(driveTrainDTO);
-            await _repository.AddAsync(driveTrain);
+            var createCommand = _mapper.Map<CreateDriveTrain>(driveTrainDTO);
+            var driveTrain = await _mediator.Send(createCommand);
 
             // Return the created product
             return CreatedAtAction("GetById", new { id = driveTrain.Id }, _mapper.Map<DriveTrainDTO>(driveTrain));
         }
 
-        [HttpPut]
-        [Route("{id:int}")]
-        public async Task<IActionResult> UpdateDriveTrain(int id, [FromBody] DriveTrainDTO driveTrainDTO)
+        [HttpPut("update-drivetrain/{id}")]
+        public async Task<IResult> UpdateDriveTrain(int id, [FromBody] DriveTrainDTO driveTrainDTO)
         {
-            var existingEntity = _repository.GetById(id);
+            if (id != driveTrainDTO.Id) return Results.BadRequest();
 
-            if (existingEntity == null)
-            {
-                return NotFound();
-            }
+            var command = _mapper.Map<UpdateDriveTrain>(driveTrainDTO);
 
-            if (driveTrainDTO == null)
-            {
-                return BadRequest("Invalid data");
-            }
+            await _mediator.Send(command);
 
-            _mapper.Map(driveTrainDTO, existingEntity);
-            await _repository.UpdateAsync(existingEntity);
-
-            return Ok(_mapper.Map<DriveTrainDTO>(existingEntity));
+            return Results.NoContent();
         }
 
-        [HttpDelete]
-        [Route("{id:int}")]
-        public async Task<IActionResult> DeleteDriveTrain(int id)
+        [HttpDelete("delete-drivetrain/{id}")]
+        public async Task<IResult> DeleteDriveTrain(int id)
         {
-            var existingEntity = _repository.GetById(id);
+            await _mediator.Send(new DeleteDriveTrain { Id = id });
 
-            if (existingEntity == null)
-            {
-                return NotFound();
-            }
-
-            await _repository.DeleteAsync(existingEntity);
-
-            return NoContent();
+            return Results.NoContent();
         }
     }
 }

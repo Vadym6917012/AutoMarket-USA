@@ -13,16 +13,19 @@ namespace Infrastructure.Repositories
         {
             _ctx = ctx ?? throw new ArgumentNullException(nameof(_ctx));
         }
-        public async Task AddAsync(Make entity)
+        public async Task<Make> AddAsync(Make entity)
         {
             await _ctx.Set<Make>().AddAsync(entity);
             await _ctx.SaveChangesAsync();
+            return entity;
         }
 
-        public async Task UpdateAsync(Make entity)
+        public async Task<Make> UpdateAsync(Make entity)
         {
             _ctx.Set<Make>().Update(entity);
             await _ctx.SaveChangesAsync();
+
+            return entity;
         }
 
         public async Task DeleteAsync(Make entity)
@@ -49,13 +52,6 @@ namespace Infrastructure.Repositories
         public async Task<IEnumerable<Make>> GetAllAsync()
         {
             return await _ctx.Set<Make>().Include(m => m.Models).ToListAsync();
-        }
-
-        public Make GetMakeByModel(int modelId)
-        {
-            var make = _ctx.Set<Make>().Include(m => m.Models).Where(m => m.Models.Any(i => i.Id == modelId)).FirstOrDefault();
-
-            return make;
         }
 
         public IEnumerable<Make> GetMakeByCountry(int id)

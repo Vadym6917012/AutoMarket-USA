@@ -1,5 +1,5 @@
-﻿using MediatR;
-using Domain.Entities;
+﻿using Domain.Entities;
+using MediatR;
 
 namespace Application.BodyTypeMediatoR.Commands
 {
