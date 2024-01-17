@@ -1,6 +1,8 @@
 ﻿using Application.DTOs.ProducingCountry;
+using Application.ProducingCountryMediatoR.Commands;
+using Application.ProducingCountryMediatoR.Queries;
 using AutoMapper;
-using Domain.Entities;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Endpoints
@@ -9,35 +11,34 @@ namespace Web.Endpoints
     [ApiController]
     public class ProducingCountryController : Controller
     {
-        private readonly IRepository<ProducingCountry> _repository;
+        private readonly IMediator _mediator;
         private readonly IMapper _mapper;
 
-        public ProducingCountryController(IRepository<ProducingCountry> repository, IMapper mapper)
+        public ProducingCountryController(IMediator mediator, IMapper mapper)
         {
-            _repository = repository;
+            _mediator = mediator;
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<ProducingCountryDTO>> GetProducingCountrys()
+        [HttpGet("get-countries")]
+        public async Task<IResult> GetProducingCountrys()
         {
-            var producingCountries = await _repository.GetAllAsync();
+            var producingCountries = await _mediator.Send(new GetAllProducingCountries());
             var producingCountryDTOs = _mapper.Map<IEnumerable<ProducingCountryDTO>>(producingCountries);
 
-            return producingCountryDTOs.ToList();
+            return TypedResults.Ok(producingCountryDTOs.ToList());
         }
 
-        [HttpGet]
-        [Route("{id:int}")]
-        public async Task<ProducingCountryDTO> GetById(int id)
+        [HttpGet("get-country/{id}")]
+        public async Task<IResult> GetById(int id)
         {
-            var producingCountry = await _repository.GetByIdAsync(id);
+            var producingCountry = await _mediator.Send(new GetProducingCountryById { Id = id });
             var producingCountryDTO = _mapper.Map<ProducingCountryDTO>(producingCountry);
 
-            return producingCountryDTO;
+            return TypedResults.Ok(producingCountryDTO);
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateProducingCountry([FromBody] ProducingCountryDTO producingCountryDTO)
         {
             if (producingCountryDTO == null)
@@ -45,47 +46,33 @@ namespace Web.Endpoints
                 return BadRequest("Invalid body type data");
             }
 
-            var producingCountry = _mapper.Map<ProducingCountry>(producingCountryDTO);
-            await _repository.AddAsync(producingCountry);
+            var command = _mapper.Map<CreateProducingCountry>(producingCountryDTO);
+            var addedEntity = await _mediator.Send(command);
 
             // Return the created product
-            return CreatedAtAction("GetById", new { id = producingCountry.Id }, _mapper.Map<ProducingCountryDTO>(producingCountry));
+            return CreatedAtAction("GetById", new { id = addedEntity.Id }, _mapper.Map<ProducingCountryDTO>(addedEntity));
         }
 
-        [HttpPut]
-        [Route("{id:int}")]
-        public async Task<IActionResult> UpdateProducingCountry(int id, [FromBody] ProducingCountryDTO producingCountryDTO)
+        [HttpPut("update-country/{id}")]
+        public async Task<IResult> UpdateProducingCountry(int id, [FromBody] ProducingCountryDTO producingCountryDTO)
         {
-            var existingEntity = _repository.GetById(id);
-
-            if (existingEntity == null)
-            {
-                return NotFound();
-            }
+            if (id != producingCountryDTO.Id) return Results.BadRequest();
 
             if (producingCountryDTO == null)
             {
-                return BadRequest("Invalid body type data");
+                return Results.BadRequest("Invalid body type data");
             }
 
-            _mapper.Map(producingCountryDTO, existingEntity);
-            await _repository.UpdateAsync(existingEntity);
+            var command = _mapper.Map<UpdateProducingCountry>(producingCountryDTO);
+            await _mediator.Send(command);
 
-            return Ok(_mapper.Map<ProducingCountryDTO>(existingEntity));
+            return Results.NoContent();
         }
 
-        [HttpDelete]
-        [Route("{id:int}")]
+        [HttpDelete("delete-country/{id}")]
         public async Task<IActionResult> DeleteProducingCountry(int id)
         {
-            var existingEntity = _repository.GetById(id);
-
-            if (existingEntity == null)
-            {
-                return NotFound();
-            }
-
-            await _repository.DeleteAsync(existingEntity);
+            await _mediator.Send(new DeleteProducingCountry { Id = id });
 
             return NoContent();
         }

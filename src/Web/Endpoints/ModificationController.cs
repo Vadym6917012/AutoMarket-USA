@@ -1,6 +1,8 @@
 ﻿using Application.DTOs.Modification;
+using Application.ModificationMediatoR.Commands;
+using Application.ModificationMediatoR.Queries;
 using AutoMapper;
-using Domain.Entities;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Endpoints
@@ -9,31 +11,31 @@ namespace Web.Endpoints
     [ApiController]
     public class ModificationController : ControllerBase
     {
-        public readonly IModificationRepository _repository;
+        public readonly IMediator _mediator;
         public readonly IMapper _mapper;
 
-        public ModificationController(IModificationRepository repository, IMapper mapper)
+        public ModificationController(IMediator mediator, IMapper mapper)
         {
-            _repository = repository;
+            _mediator = mediator;
             _mapper = mapper;
         }
 
         [HttpGet("get-modifications")]
-        public async Task<IEnumerable<ModificationDTO>> GetModifications()
+        public async Task<IResult> GetModifications()
         {
-            var modifications = await _repository.GetAllAsync();
+            var modifications = await _mediator.Send(new GetAllModifications());
             var modificationDTOs = _mapper.Map<IEnumerable<ModificationDTO>>(modifications);
 
-            return modificationDTOs.ToList();
+            return TypedResults.Ok(modificationDTOs.ToList());
         }
 
         [HttpGet("get-modification/{id}")]
-        public async Task<ModificationDTO> GetById(int id)
+        public async Task<IResult> GetById(int id)
         {
-            var modification = await _repository.GetByIdAsync(id);
+            var modification = await _mediator.Send(new GetModificationById { Id = id });
             var modificationDTO = _mapper.Map<ModificationDTO>(modification);
 
-            return modificationDTO;
+            return TypedResults.Ok(modificationDTO);
         }
 
         [HttpPost("create-modification")]
@@ -44,54 +46,44 @@ namespace Web.Endpoints
                 return BadRequest("Invalid data");
             }
 
-            var modification = _mapper.Map<Modification>(modificationDTO);
-            await _repository.AddAsync(modification);
+            var modification = _mapper.Map<CreateModification>(modificationDTO);
+            var addedModification = await _mediator.Send(modification);
 
             // Return the created product
-            return CreatedAtAction("GetById", new { id = modification.Id }, _mapper.Map<ModificationDTO>(modification));
+            return CreatedAtAction("GetById", new { id = addedModification.Id }, _mapper.Map<ModificationDTO>(addedModification));
         }
 
         [HttpPut("update-modification/{id}")]
-        public async Task<IActionResult> UpdateModification(int id, [FromBody] ModificationDTO modificationDTO)
+        public async Task<IResult> UpdateModification(int id, [FromBody] ModificationDTO modificationDTO)
         {
-            var existingEntity = _repository.GetById(id);
-
-            if (existingEntity == null)
-            {
-                return NotFound();
-            }
+            if (id != modificationDTO.Id) return Results.BadRequest();
 
             if (modificationDTO == null)
             {
-                return BadRequest("Invalid data");
+                return Results.BadRequest("Invalid data");
             }
 
-            _mapper.Map(modificationDTO, existingEntity);
-            await _repository.UpdateAsync(existingEntity);
+            var command = _mapper.Map<UpdateModification>(modificationDTO);
+            await _mediator.Send(command);
 
-            return Ok(_mapper.Map<ModificationDTO>(existingEntity));
+            return Results.NoContent();
         }
 
         [HttpDelete("delete-modification/{id}")]
-        public async Task<IActionResult> DeleteModification(int id)
+        public async Task<IResult> DeleteModification(int id)
         {
-            var existingEntity = _repository.GetById(id);
+            await _mediator.Send(new DeleteModification { Id = id });
 
-            if (existingEntity == null)
-            {
-                return NotFound();
-            }
-
-            await _repository.DeleteAsync(existingEntity);
-
-            return NoContent();
+            return Results.NoContent();
         }
 
         [HttpGet("get-modification-by-model/{modelId}")]
-        public IActionResult GetModificationsByModel(int modelId)
+        public async Task<IResult> GetModificationsByModel(int modelId)
         {
-            var modification = _repository.GetModificationByModel(modelId);
-            return Ok(modification);
+            var modification = await _mediator.Send(new GetModificationsByModel { Id = modelId });
+            var modificationDto = _mapper.Map<ModificationDTO>(modification);
+
+            return TypedResults.Ok(modificationDto);
         }
     }
 }

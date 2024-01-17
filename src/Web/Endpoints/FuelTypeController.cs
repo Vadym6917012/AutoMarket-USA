@@ -32,7 +32,7 @@ namespace Web.Endpoints
         [HttpGet("get-fueltype/{id}")]
         public async Task<IResult> GetById(int id)
         {
-            var fuelType = await _mediator.Send(new GetFuelTypeById { Id = id});
+            var fuelType = await _mediator.Send(new GetFuelTypeById { Id = id });
             var fuelTypeDTO = _mapper.Map<FuelTypeDTO>(fuelType);
 
             return TypedResults.Ok(fuelTypeDTO);
@@ -47,7 +47,7 @@ namespace Web.Endpoints
             }
 
             var fuelType = _mapper.Map<CreateFuelType>(fuelTypeDTO);
-            var addedFuelType =  await _mediator.Send(fuelType);
+            var addedFuelType = await _mediator.Send(fuelType);
 
             // Return the created product
             return CreatedAtAction("GetById", new { id = addedFuelType.Id }, _mapper.Map<FuelTypeDTO>(addedFuelType));
@@ -72,7 +72,7 @@ namespace Web.Endpoints
         [HttpDelete("delete-fueltype/{id}")]
         public async Task<IResult> DeleteFuelType(int id)
         {
-            await _mediator.Send(new DeleteFuelType { Id = id});
+            await _mediator.Send(new DeleteFuelType { Id = id });
 
             return Results.NoContent();
         }

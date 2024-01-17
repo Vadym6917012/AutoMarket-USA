@@ -53,11 +53,11 @@ namespace Infrastructure.Repositories
             return await _ctx.Set<Modification>().ToListAsync();
         }
 
-        public IEnumerable<Modification> GetModificationByModel(int id)
+        public async Task<IEnumerable<Modification>> GetModificationByModel(int id)
         {
-            return _ctx.Set<Modification>()
+            return await _ctx.Set<Modification>()
                 .Where(m => m.ModelId == id)
-                .ToList();
+                .ToListAsync();
         }
     }
 }

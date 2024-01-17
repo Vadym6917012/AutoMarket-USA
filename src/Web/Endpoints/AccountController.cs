@@ -1,10 +1,13 @@
-﻿using Application.DTOs.Account;
+﻿using Application.AccountMediatoR.Commands;
+using Application.AccountMediatoR.Queries;
+using Application.DTOs.Account;
 using Application.DTOs.Admin;
-using Domain.Constants;
-using Domain.Entities;
+using Domain.Exceptions;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
+using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using System.Text;
 
@@ -14,11 +17,11 @@ namespace Web.Endpoints
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly IAccountRepository<ApplicationUser, RefreshToken> _accountRepository;
+        private readonly IMediator _mediator;
 
-        public AccountController(IAccountRepository<ApplicationUser, RefreshToken> accountRepository)
+        public AccountController(IMediator mediator)
         {
-            _accountRepository = accountRepository;
+            _mediator = mediator;
         }
 
         [Authorize]
@@ -28,29 +31,21 @@ namespace Web.Endpoints
             var token = Request.Cookies["identityAppRefreshToken"];
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            if (_accountRepository.IsValidRefreshTokenAsync(userId, token).GetAwaiter().GetResult())
+            var query = new RefreshTokenQuery { Token = token, UserId = userId };
+            var result = await _mediator.Send(query);
+
+            if (result != null)
             {
-                var user = await _accountRepository.FindByIdAsync(userId);
-
-                if (user == null) return Unauthorized("Недійсний або застарілий токен. Будь ласка, спробуйте увійти знову.");
-
-                var refreshToken = await _accountRepository.SaveRefreshTokenAsync(user);
-
                 var cookieOptions = new CookieOptions
                 {
-                    Expires = refreshToken.DateExpiresUtc,
+                    Expires = result.DateExpiresUtc,
                     IsEssential = true,
                     HttpOnly = true,
                 };
 
-                Response.Cookies.Append("identityAppRefreshToken", refreshToken.Token, cookieOptions);
-            }
+                Response.Cookies.Append("identityAppRefreshToken", result.RefreshedToken, cookieOptions);
 
-            var result = await _accountRepository.RefreshToken(userId, token);
-
-            if (result != null)
-            {
-                return result;
+                return result.ApplicationUserDTO;
             }
 
             return Unauthorized("Недійсний або застарілий токен. Будь ласка, спробуйте увійти знову.");
@@ -60,120 +55,121 @@ namespace Web.Endpoints
         [HttpGet("refresh-page")]
         public async Task<ActionResult<ApplicationUserDTO>> RefreshPage()
         {
-            var user = await _accountRepository.FindByEmailAsync(User.FindFirst(ClaimTypes.Email)?.Value);
-
-            return await _accountRepository.CreateApplicationUserDTO(user);
-        }
-
-        [HttpPost("login")]
-        public async Task<ActionResult<ApplicationUserDTO>> Login(LoginUserRequest model)
-        {
-            var user = await _accountRepository.FindByEmailAsync(model.UserName);
-            if (user == null)
+            var query = new RefreshPageQuery
             {
-                return Unauthorized("Неправильне ім`я або пароль");
-            }
-
-            if (user.EmailConfirmed == false)
-            {
-                return Unauthorized("Підтвердіть ваш email.");
-            }
-
-            var result = await _accountRepository.CheckPasswordSignInAsync(user, model.Password, false);
-            if (!result.Succeeded)
-            {
-                if (!user.UserName.Equals(SD.AdminUserName))
-                {
-                    await _accountRepository.AccessFailedAsync(user);
-                }
-
-                if (user.AccessFailedCount >= SD.MaximumLoginAttempts)
-                {
-                    await _accountRepository.SetLockoutEndDateAsync(user, DateTime.UtcNow.AddDays(1));
-                    return Unauthorized(string.Format("Ваш акаунт було заблоковано. Вам потрібно зачекати до {0} щоб залогінитися", user.LockoutEnd));
-                }
-                return Unauthorized("Неправильне ім`я або пароль");
-            }
-
-            await _accountRepository.ResetAccessFailedCountAsync(user);
-            await _accountRepository.SetLockoutEndDateAsync(user, null);
-
-            return await _accountRepository.CreateApplicationUserDTO(user);
-        }
-
-        [HttpPost("register")]
-        public async Task<IActionResult> Register(RegisterUserRequest model)
-        {
-            if (await _accountRepository.CheckEmailExistAsync(model.Email))
-            {
-                return BadRequest($"Існуючий акаунт вже є під таким email: {model.Email}");
-            }
-
-            var user = await _accountRepository.CreateUserAsync(model, SD.MemberRole);
+                Email = User.FindFirst(ClaimTypes.Email)?.Value
+            };
 
             try
             {
-                if (await _accountRepository.SendConfirmEmailAsync(user))
-                {
-                    return Ok(new JsonResult(new { title = "Акаунт створено успішно", message = "Ваш акаунт створено успішно, підтвердіть, будь ласка, вашу email пошту" }));
-                }
-
-                return BadRequest("Не вдалося відправити електронного листа. Зверніться до адміністратора для отримання додаткової допомоги.");
+                var result = await _mediator.Send(query);
+                return Ok(result);
             }
             catch (Exception)
             {
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
 
-                return BadRequest("Не вдалося відправити електронного листа. Зверніться до адміністратора для отримання додаткової допомоги.");
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(LoginDTO model)
+        {
+            var query = new LoginUserQuery
+            {
+                UserName = model.UserName,
+                Password = model.Password,
+            };
+
+            try
+            {
+                var result = await _mediator.Send(query);
+                return Ok(result);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
+        }
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(RegisterDTO model)
+        {
+            try
+            {
+                await _mediator.Send(new RegisterUserCommand { RegistrationData = model });
+
+                return Ok(new JsonResult(new { title = "Акаунт створено успішно", message = "Ваш акаунт створено успішно, підтвердіть, будь ласка, вашу email пошту" }));
+            }
+            catch (ValidationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Server Error");
             }
         }
 
         [HttpPut("confirm-email")]
         public async Task<IActionResult> ConfirmEmail(ConfirmEmailDTO model)
         {
-            var user = await _accountRepository.FindByEmailAsync(model.Email);
-            if (user == null)
+            var command = new ConfirmEmailCommand
             {
-                return Unauthorized("Email адреса ще не зареєстрована");
-            }
-
-            if (user.EmailConfirmed == true)
-            {
-                return BadRequest("Ваш email вже підтверджений, увійдіть в особистий кабінет");
-            }
+                Email = model.Email,
+                Token = model.Token,
+            };
 
             try
             {
-                if (await _accountRepository.ConfirmEmailAsync(model.Email, model.Token))
+                var result = await _mediator.Send(command);
+
+                if (result == true)
                 {
                     return Ok(new JsonResult(new { title = "Email підтверджений", message = "Ваш email підтверджений, увійдіть в особистий кабінет" }));
                 }
 
                 return BadRequest("Неправильний токен, спробуйте пізніше");
             }
+            catch (UnauthorizedAccessException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (ValidationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
             catch (Exception ex)
             {
-                return BadRequest($"Помилка підтвердження email, спробуйте пізніше: {ex.Message}");
+                return BadRequest(ex.Message);
             }
         }
 
         [HttpGet("get-member/{id}")]
         public async Task<ActionResult<MemberAddEditDto>> GetMember(string id)
         {
-            var user = _accountRepository.GetMemberAsync(id);
-
-            if (user == null)
+            try
             {
-                return NotFound($"Користувача по ID: {id} не знайдено");
-            }
+                var entity = await _mediator.Send(new GetUserById { Id = id });
 
-            return Ok(user);
+                return entity;
+            }
+            catch (ValidationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
         }
 
-        [HttpPost("add-edit-member")]
-        public async Task<IActionResult> AddEditMember(MemberAddEditDto model)
+        [HttpPost("edit-member")]
+        public async Task<IActionResult> EditUser(MemberAddEditDto model)
         {
-            ApplicationUser user;
-
             if (!string.IsNullOrEmpty(model.Password))
             {
                 if (model.Password.Length < 6)
@@ -183,37 +179,22 @@ namespace Web.Endpoints
                 }
             }
 
-            user = await _accountRepository.FindByIdAsync(model.Id);
-            if (user == null) return NotFound();
-
-            user.FirstName = model.FirstName.ToLower();
-            user.LastName = model.LastName.ToLower();
-            user.UserName = model.UserName.ToLower();
-            user.PhoneNumber = model.PhoneNumber.ToLower();
-
-            if (!string.IsNullOrEmpty(model.Password))
+            var command = new UpdateUser
             {
-                await _accountRepository.RemovePasswordAsync(user);
-                await _accountRepository.AddPasswordAsync(user, model.Password);
-            }
+                Id = model.Id,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Password = model.Password,
+                PhoneNumber = model.PhoneNumber,
+                Roles = model.Roles,
+                UserName = model.UserName
+            };
 
-            var userRoles = await _accountRepository.GetRolesAsync(user);
-
-            await _accountRepository.RemoveFromRolesAsync(user, userRoles);
-
-            foreach (var role in model.Roles.Split(",").ToArray())
-            {
-                var roleToAdd = await _accountRepository.GetRolesAsync(role);
-                if (roleToAdd != null)
-                {
-                    await _accountRepository.AddToRoleAsync(user, role);
-                }
-            }
+            await _mediator.Send(command);
 
             return Ok(new JsonResult(new { title = "Користувач відредагований", message = $"{model.UserName} оновлений" }));
 
         }
-
 
         [HttpPost("resend-email-confirmation-link/{email}")]
         public async Task<IActionResult> ResendEmailConfirmationLink(string email)
@@ -223,27 +204,29 @@ namespace Web.Endpoints
                 return BadRequest("Неправильний email");
             }
 
-            var user = await _accountRepository.FindByEmailAsync(email);
-            if (user == null)
-            {
-                return Unauthorized("Цей email ще не був зареєстрований");
-            }
-            if (user.EmailConfirmed == true)
-            {
-                return BadRequest("Ваш email вже підтверджений, увійдіть в особистий кабінет");
-            }
+            var command = new ResendEmailConfirmationLinkCommand { Email = email };
 
             try
             {
-                if (await _accountRepository.SendConfirmEmailAsync(user))
+                var result = await _mediator.Send(command);
+
+                if (result == true)
                 {
                     return Ok(new JsonResult(new { title = "Відправлено посилання для підтвердження.", message = "Підтвердіть вашу email адресу" }));
                 }
                 return BadRequest("Не вдалося відправити електронного листа.");
             }
+            catch (ValidationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
             catch (Exception)
             {
-                return BadRequest("Не вдалося відправити електронного листа.");
+                return StatusCode(500, "Internal Server Error");
             }
         }
 
@@ -255,63 +238,69 @@ namespace Web.Endpoints
                 return BadRequest("Неправильний email");
             }
 
-            var user = await _accountRepository.FindByEmailAsync(email);
-
-            if (user == null)
+            var command = new ForgotUsernameOrPasswordCommand
             {
-                return Unauthorized("Такий email ще не зареєстрований");
-            }
-
-            if (user.EmailConfirmed == false)
-            {
-                return BadRequest("Підтвердіть спочатку ваш email.");
-            }
+                Email = email
+            };
 
             try
             {
-                if (await _accountRepository.SendForgotUsernameOrPassword(user))
+                var result = await _mediator.Send(command);
+                if (result == true)
                 {
                     return Ok(new JsonResult(new { title = "Відправлено листа щодо забутого імені користувача або паролю.", message = "Перевірте ваш email" }));
                 }
-
                 return BadRequest("Не вдалося відправити електронного листа. Зверніться до адміністратора для отримання додаткової допомоги.");
             }
-            catch (Exception)
+            catch (ValidationException ex)
             {
-                return BadRequest("Не вдалося відправити електронного листа. Зверніться до адміністратора для отримання додаткової допомоги.");
+                return BadRequest(ex.Message);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
 
         [HttpPut("reset-password")]
         public async Task<IActionResult> ResetPassword(ResetPasswordDTO model)
         {
-            var user = await _accountRepository.FindByEmailAsync(model.Email);
-            if (user == null)
-            {
-                return Unauthorized("Такий email ще не зареєстрований");
-            }
+            var decodedTokenBytes = WebEncoders.Base64UrlDecode(model.Token);
+            var decodedToken = Encoding.UTF8.GetString(decodedTokenBytes);
 
-            if (user.EmailConfirmed == false)
+            var command = new ResetPasswordCommand
             {
-                return BadRequest("Підтвердіть спочатку ваш email.");
-            }
+                Email = model.Email,
+                Token = model.Token,
+                NewPassword = model.NewPassword,
+                DecodedToken = decodedToken
+            };
 
             try
             {
-                var decodedTokenBytes = WebEncoders.Base64UrlDecode(model.Token);
-                var decodedToken = Encoding.UTF8.GetString(decodedTokenBytes);
+                var result = await _mediator.Send(command);
 
-                var result = await _accountRepository.ResetPasswordAsync(user, decodedToken, model.NewPassword);
-                if (result.Succeeded)
+                if (result == true)
                 {
                     return Ok(new JsonResult(new { title = "Пароль змінено успішно", message = "Ваш пароль було змінено" }));
                 }
-
                 return BadRequest("Неправильний токен, спробуйте пізніше");
+            }
+            catch (BadRequestException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex.Message);
             }
             catch (Exception)
             {
-                return BadRequest("Неправильний токен, спробуйте пізніше");
+                return StatusCode(500, "Internal Server Error");
             }
         }
     }

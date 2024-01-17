@@ -12,6 +12,6 @@ namespace Application.Common.Interfaces
         Modification GetById(int id);
         Task<Modification> GetFirstAsync(Expression<Func<Modification, bool>> expression);
         Task<IEnumerable<Modification>> GetAllAsync();
-        IEnumerable<Modification> GetModificationByModel(int id);
+        Task<IEnumerable<Modification>> GetModificationByModel(int id);
     }
 }

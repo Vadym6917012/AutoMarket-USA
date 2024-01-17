@@ -32,7 +32,7 @@ namespace Web.Endpoints
         [HttpGet("get-model/{id}")]
         public async Task<IResult> GetById(int id)
         {
-            var model = await _mediator.Send(new GetModelById { Id = id});
+            var model = await _mediator.Send(new GetModelById { Id = id });
             var modelDTO = _mapper.Map<ModelDTO>(model);
 
             return TypedResults.Ok(modelDTO);
@@ -72,7 +72,7 @@ namespace Web.Endpoints
         [HttpDelete("delete-model/{id}")]
         public async Task<IResult> DeleteModel(int id)
         {
-            await _mediator.Send(new DeleteModel { Id = id});
+            await _mediator.Send(new DeleteModel { Id = id });
 
             return Results.NoContent();
         }
@@ -80,7 +80,7 @@ namespace Web.Endpoints
         [HttpGet("get-model-by-make/{makeId:int}")]
         public async Task<IResult> GetModelsByMake(int makeId)
         {
-            var model = _mediator.Send(new GetModelsByMake { Id = makeId});
+            var model = _mediator.Send(new GetModelsByMake { Id = makeId });
 
             return TypedResults.Ok(model);
         }

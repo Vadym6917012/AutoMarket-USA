@@ -40,7 +40,8 @@ namespace Infrastructure
             services.AddScoped<ContextSeedService>();
             services.AddScoped<IRepository<DriveTrain>, Repository<DriveTrain>>();
             services.AddScoped<IRepository<TechnicalCondition>, Repository<TechnicalCondition>>();
-            services.AddScoped<IAccountRepository<ApplicationUser, RefreshToken>, AccountRepository>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IAdminRepository<ApplicationUser>, AdminRepository>();
 
             // Налаштування IdentityCore юзера

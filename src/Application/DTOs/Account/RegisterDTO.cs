@@ -2,7 +2,7 @@
 
 namespace Application.DTOs.Account
 {
-    public class RegisterUserRequest
+    public class RegisterDTO
     {
         [Required]
         [StringLength(15, MinimumLength = 3, ErrorMessage = "Імя повинне бути від {2} до {1} символів")]

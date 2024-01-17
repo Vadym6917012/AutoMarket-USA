@@ -1,6 +1,8 @@
 ﻿using Application.DTOs.TechnicalCondition;
+using Application.TechnicalConditionMediatoR.Commands;
+using Application.TechnicalConditionMediatoR.Queries;
 using AutoMapper;
-using Domain.Entities;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Endpoints
@@ -9,35 +11,34 @@ namespace Web.Endpoints
     [ApiController]
     public class TechnicalConditionController : ControllerBase
     {
-        private readonly IRepository<TechnicalCondition> _repository;
+        private readonly IMediator _mediator;
         private readonly IMapper _mapper;
 
-        public TechnicalConditionController(IRepository<TechnicalCondition> repository, IMapper mapper)
+        public TechnicalConditionController(IMediator mediator, IMapper mapper)
         {
-            _repository = repository;
+            _mediator = mediator;
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<TechnicalConditionDTO>> GetTechnicalConditions()
+        [HttpGet("get-technicalconditions")]
+        public async Task<IResult> GetTechnicalConditions()
         {
-            var technicalConditions = await _repository.GetAllAsync();
-            var technicalConditionDTOs = _mapper.Map<IEnumerable<TechnicalConditionDTO>>(technicalConditions);
+            var query = await _mediator.Send(new GetAllTechnicalConditions());
+            var technicalConditionDTOs = _mapper.Map<IEnumerable<TechnicalConditionDTO>>(query);
 
-            return technicalConditionDTOs.ToList();
+            return TypedResults.Ok(technicalConditionDTOs.ToList());
         }
 
-        [HttpGet]
-        [Route("{id:int}")]
-        public async Task<TechnicalConditionDTO> GetById(int id)
+        [HttpGet("get-technicalcondition/{id}")]
+        public async Task<IResult> GetById(int id)
         {
-            var technicalCondition = await _repository.GetByIdAsync(id);
-            var technicalConditionDTO = _mapper.Map<TechnicalConditionDTO>(technicalCondition);
+            var query = await _mediator.Send(new GetTechnicalConditionById { Id = id });
+            var technicalConditionDTO = _mapper.Map<TechnicalConditionDTO>(query);
 
-            return technicalConditionDTO;
+            return TypedResults.Ok(technicalConditionDTO);
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateTechnicalCondition([FromBody] TechnicalConditionDTO technicalConditionDTO)
         {
             if (technicalConditionDTO == null)
@@ -45,47 +46,33 @@ namespace Web.Endpoints
                 return BadRequest("Invalid data");
             }
 
-            var technicalCondition = _mapper.Map<TechnicalCondition>(technicalConditionDTO);
-            await _repository.AddAsync(technicalCondition);
+            var command = _mapper.Map<CreateTechnicalCondition>(technicalConditionDTO);
+            var technicalCondition = await _mediator.Send(command);
 
             // Return the created product
             return CreatedAtAction("GetById", new { id = technicalCondition.Id }, _mapper.Map<TechnicalConditionDTO>(technicalCondition));
         }
 
-        [HttpPut]
-        [Route("{id:int}")]
-        public async Task<IActionResult> UpdateTechnicalCondition(int id, [FromBody] TechnicalConditionDTO technicalConditionDTO)
+        [HttpPut("update-technicalcondition/{id}")]
+        public async Task<IResult> UpdateTechnicalCondition(int id, [FromBody] TechnicalConditionDTO technicalConditionDTO)
         {
-            var existingEntity = _repository.GetById(id);
-
-            if (existingEntity == null)
-            {
-                return NotFound();
-            }
+            if (id != technicalConditionDTO.Id) return Results.BadRequest();
 
             if (technicalConditionDTO == null)
             {
-                return BadRequest("Invalid data");
+                return Results.BadRequest("Invalid data");
             }
 
-            _mapper.Map(technicalConditionDTO, existingEntity);
-            await _repository.UpdateAsync(existingEntity);
+            var command = _mapper.Map<CreateTechnicalCondition>(technicalConditionDTO);
+            await _mediator.Send(command);
 
-            return Ok(_mapper.Map<TechnicalConditionDTO>(existingEntity));
+            return Results.NoContent();
         }
 
-        [HttpDelete]
-        [Route("{id:int}")]
+        [HttpDelete("delete-technicalcondition/{id}")]
         public async Task<IActionResult> DeleteTechnicalCondition(int id)
         {
-            var existingEntity = _repository.GetById(id);
-
-            if (existingEntity == null)
-            {
-                return NotFound();
-            }
-
-            await _repository.DeleteAsync(existingEntity);
+            await _mediator.Send(new DeleteTechnicalCondition { Id = id });
 
             return NoContent();
         }

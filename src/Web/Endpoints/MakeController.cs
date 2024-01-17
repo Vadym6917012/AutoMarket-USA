@@ -72,7 +72,7 @@ namespace Web.Endpoints
         [HttpDelete("delete-make/{id}")]
         public async Task<IResult> DeleteMake(int id)
         {
-            await _mediator.Send(new DeleteMake { Id = id});
+            await _mediator.Send(new DeleteMake { Id = id });
 
             return Results.NoContent();
         }

@@ -87,7 +87,7 @@ export class AccountService {
   }
 
   addEditMember(model: MemberAddEdit) {
-    return this.http.post(`${environment.apiUrl}/api/account/add-edit-member`, model);
+    return this.http.post(`${environment.apiUrl}/api/account/edit-member`, model);
   }
 
   resetPassword(model: ResetPassword) {

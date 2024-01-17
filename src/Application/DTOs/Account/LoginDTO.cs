@@ -2,7 +2,7 @@
 
 namespace Application.DTOs.Account
 {
-    public class LoginUserRequest
+    public class LoginDTO
     {
         [Required(ErrorMessage = "Email обов`язковий")]
         public string UserName { get; set; }
