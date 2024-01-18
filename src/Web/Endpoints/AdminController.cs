@@ -1,6 +1,10 @@
-﻿using Application.DTOs.Admin;
-using Domain.Constants;
-using Domain.Entities;
+﻿using Application.AdminMediatoR.Commands;
+using Application.AdminMediatoR.Queries;
+using Application.DTOs.Admin;
+using Ardalis.GuardClauses;
+using Domain.Exceptions;
+using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,134 +15,109 @@ namespace Web.Endpoints
     [ApiController]
     public class AdminController : ControllerBase
     {
-        private readonly IAdminRepository<ApplicationUser> _adminRepository;
+        private readonly IMediator _mediator;
 
-        public AdminController(IAdminRepository<ApplicationUser> adminRepository)
+        public AdminController(IMediator mediator)
         {
-            _adminRepository = adminRepository;
+            _mediator = mediator;
         }
 
         [HttpGet("get-members")]
-        public async Task<ActionResult<IEnumerable<MemberViewDto>>> GetMembers()
+        public async Task<IResult> GetMembers()
         {
-            var members = await _adminRepository.GetMembersAsync();
+            var members = await _mediator.Send(new GetAllUsers());
 
-            return Ok(members);
+            return TypedResults.Ok(members);
         }
 
         [HttpGet("get-member/{id}")]
-        public async Task<ActionResult<MemberAddEditDto>> GetMember(string id)
+        public async Task<IResult> GetMember(string id)
         {
-            var member = await _adminRepository.GetMemberAsync(id);
+            var member = await _mediator.Send(new GetUserById { Id = id });
 
             if (member == null)
             {
-                return NotFound();
+                return Results.NotFound();
             }
 
-            return Ok(member);
+            return TypedResults.Ok(member);
         }
 
         [HttpPut("approve-advertisement")]
-        public async Task<IActionResult> UpdateCar(int carId, bool isApproved)
+        public async Task<IResult> UpdateCar(int carId, bool isApproved)
         {
-            var success = await _adminRepository.UpdateAdvertisementApprovalAsync(carId, isApproved);
+            var success = await _mediator.Send(new ApproveAdvertisement { Id = carId, IsApproved = isApproved });
 
             if (!success)
             {
-                return NotFound();
+                return Results.NotFound();
             }
 
-            return Ok(new JsonResult(new { title = "Оголошення підтвердженно успішно", message = "Оголошення було підтвердженно успішно", id = carId }));
+            return Results.Ok(new JsonResult(new { title = "Оголошення підтвердженно успішно", message = "Оголошення було підтвердженно успішно", id = carId }));
         }
 
         [HttpPost("add-edit-member")]
         public async Task<IActionResult> AddEditMember(MemberAddEditDto model)
         {
-            ApplicationUser user;
-
-            if (string.IsNullOrEmpty(model.Id))
+            try
             {
-                if (string.IsNullOrEmpty(model.Password) || model.Password.Length < 6)
+                var command = new AddEditUser { model = model };
+                var result = await _mediator.Send(command);
+
+                if (string.IsNullOrEmpty(result.model.Id))
                 {
-                    ModelState.AddModelError("errors", "Пароль повинен складатися зі шести або більше символів.");
-                    return BadRequest(ModelState);
+                    return Ok(new JsonResult(new { title = "Користувач доданий", message = $"{model.UserName} створений" }));
                 }
-
-                user = await _adminRepository.CreateAsync(model, model.Password);
-
-                if (user == null)
+                else
                 {
-                    return BadRequest("Не вдалося створити користувача");
+                    return Ok(new JsonResult(new { title = "Користувач відредагований", message = $"{model.UserName} оновлений" }));
                 }
             }
-            else
+            catch (ValidationException ex)
             {
-                if (!string.IsNullOrEmpty(model.Password))
-                {
-                    if (model.Password.Length < 6)
-                    {
-                        ModelState.AddModelError("errors", "Пароль повинен складатися зі шести або більше символів.");
-                        return BadRequest(ModelState);
-                    }
-                }
-
-                if (_adminRepository.IsAdminUserId(model.Id))
-                {
-                    return BadRequest(SD.SuperAdminChangeNotAllowed);
-                }
-
-                user = await _adminRepository.FindByIdAsync(model.Id);
-                if (user == null)
-                {
-                    return NotFound();
-                }
-
-                await _adminRepository.UpdateAsync(model.Id, model, model.Password);
+                return BadRequest(ex.Message);
             }
-
-            var userRoles = await _adminRepository.GetRolesAsync(user);
-
-            await _adminRepository.RemoveFromRolesAsync(user, userRoles);
-
-            foreach (var role in model.Roles.Split(",").ToArray())
+            catch (NotFoundException ex)
             {
-                var roleToAdd = await _adminRepository.GetRolesAsync(role);
-                if (roleToAdd != null)
-                {
-                    await _adminRepository.AddToRoleAsync(user, role);
-                }
+                return NotFound(ex.Message);
             }
-
-            if (string.IsNullOrEmpty(model.Id))
+            catch (BadRequestException ex)
             {
-                return Ok(new JsonResult(new { title = "Користувач доданий", message = $"{model.UserName} створений" }));
+                return BadRequest(ex.Message);
             }
-            else
+            catch (Exception)
             {
-                return Ok(new JsonResult(new { title = "Користувач відредагований", message = $"{model.UserName} оновлений" }));
+                return StatusCode(500, "Internal Server Error");
             }
         }
 
         [HttpDelete("delete-member/{id}")]
-        public async Task<IActionResult> DeleteMember(string id)
+        public async Task<IResult> DeleteMember(string id)
         {
-            var user = await _adminRepository.FindByIdAsync(id);
-            if (user == null) return NotFound();
-
-            if (_adminRepository.IsAdminUserId(id))
+            try
             {
-                return BadRequest(SD.SuperAdminChangeNotAllowed);
+                await _mediator.Send(new DeleteUser { Id = id });
             }
-
-            await _adminRepository.DeleteAsync(user);
-            return NoContent();
+            catch (NotFound ex)
+            {
+                return Results.BadRequest(ex.Message);
+            }
+            catch (BadRequestException ex)
+            {
+                return Results.BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return Results.BadRequest("Internal Server Error");
+            }
+            return Results.NoContent();
         }
 
         [HttpGet("get-application-roles")]
-        public async Task<ActionResult<string[]>> GetApplicationRoles()
+        public async Task<IResult> GetApplicationRoles()
         {
-            return Ok(await _adminRepository.GetApplicationRolesAsync());
+            var query = await _mediator.Send(new GetApplicationRoles());
+            return TypedResults.Ok(query);
         }
     }
 }

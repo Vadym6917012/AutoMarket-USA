@@ -8,7 +8,7 @@
         public const string MemberRole = "Member";
 
         public const string AdminUserName = "admin@automarket.com";
-        public const string SuperAdminChangeNotAllowed = "Super Admin change is not allowed!";
+        public const string SuperAdminChangeNotAllowed = "Зміна облікового запису Суперадміна заборонена!";
         public const int MaximumLoginAttempts = 3;
     }
 }
