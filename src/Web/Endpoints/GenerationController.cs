@@ -1,6 +1,6 @@
 ﻿using Application.DTOs.Generation;
-using Application.GenerationMediatoR.Commands;
-using Application.GenerationMediatoR.Queries;
+using Application.Generations.Commands;
+using Application.Generations.Queries;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

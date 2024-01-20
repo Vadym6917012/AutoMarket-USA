@@ -1,6 +1,6 @@
 ﻿using Application.DTOs.ProducingCountry;
-using Application.ProducingCountryMediatoR.Commands;
-using Application.ProducingCountryMediatoR.Queries;
+using Application.ProducingCountries.Commands;
+using Application.ProducingCountries.Queries;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

@@ -1,6 +1,6 @@
 ﻿using Application.DTOs.FuelType;
-using Application.FuelTypeMediatoR.Commands;
-using Application.FuelTypeMediatoR.Queries;
+using Application.FuelTypes.Commands;
+using Application.FuelTypes.Queries;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

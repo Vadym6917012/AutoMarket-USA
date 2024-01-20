@@ -1,5 +1,5 @@
-﻿using Application.DriveTrainMediatoR.Commands;
-using Application.DriveTrainMediatoR.Queries;
+﻿using Application.DriveTrains.Commands;
+using Application.DriveTrains.Queries;
 using Application.DTOs.DriveTrain;
 using AutoMapper;
 using MediatR;

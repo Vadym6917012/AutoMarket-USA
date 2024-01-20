@@ -1,6 +1,6 @@
 ﻿using Application.DTOs.TechnicalCondition;
-using Application.TechnicalConditionMediatoR.Commands;
-using Application.TechnicalConditionMediatoR.Queries;
+using Application.TechnicalConditions.Commands;
+using Application.TechnicalConditions.Queries;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

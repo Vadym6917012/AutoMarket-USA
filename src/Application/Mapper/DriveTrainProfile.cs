@@ -1,7 +1,6 @@
-﻿using Application.DriveTrainMediatoR.Commands;
+﻿using Application.DriveTrains.Commands;
 using Application.DTOs.DriveTrain;
 using AutoMapper;
-using Domain.Entities;
 
 namespace Application.Mapper
 {

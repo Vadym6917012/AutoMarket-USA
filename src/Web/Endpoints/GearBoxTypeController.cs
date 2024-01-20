@@ -1,6 +1,6 @@
 ﻿using Application.DTOs.GearBox;
-using Application.GearBoxMediatoR.Commands;
-using Application.GearBoxMediatoR.Queries;
+using Application.GearBoxes.Commands;
+using Application.GearBoxes.Queries;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

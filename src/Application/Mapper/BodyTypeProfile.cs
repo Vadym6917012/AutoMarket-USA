@@ -1,7 +1,6 @@
-﻿using Application.BodyTypeMediatoR.Commands;
+﻿using Application.BodyTypes.Commands;
 using Application.DTOs.BodyType;
 using AutoMapper;
-using Domain.Entities;
 
 namespace Application.Mapper
 {

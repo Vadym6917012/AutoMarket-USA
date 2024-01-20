@@ -1,6 +1,5 @@
 ﻿using Application.DTOs.FuelType;
 using AutoMapper;
-using Domain.Entities;
 
 namespace Application.Mapper
 {

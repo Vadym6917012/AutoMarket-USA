@@ -1,6 +1,5 @@
 ﻿using Application.DTOs.ModelGeneration;
 using AutoMapper;
-using Domain.Entities;
 
 namespace Application.Mapper
 {

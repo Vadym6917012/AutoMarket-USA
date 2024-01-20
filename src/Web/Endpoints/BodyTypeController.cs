@@ -1,5 +1,5 @@
-﻿using Application.BodyTypeMediatoR.Commands;
-using Application.BodyTypeMediatoR.Queries;
+﻿using Application.BodyTypes.Commands;
+using Application.BodyTypes.Queries;
 using Application.DTOs.BodyType;
 using AutoMapper;
 using MediatR;

@@ -1,5 +1,5 @@
-﻿using Application.AccountMediatoR.Commands;
-using Application.AccountMediatoR.Queries;
+﻿using Application.Accounts.Commands;
+using Application.Accounts.Queries;
 using Application.DTOs.Account;
 using Application.DTOs.Admin;
 using Domain.Exceptions;

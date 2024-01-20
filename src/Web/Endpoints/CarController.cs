@@ -1,7 +1,7 @@
-﻿using Application.CarMediatoR.Commands;
-using Application.CarMediatoR.Queries;
+﻿using Application.Cars.Commands;
+using Application.Cars.Queries;
 using Application.DTOs.Car;
-using Application.ImagesMediatoR.Commands;
+using Application.Image.Commands;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

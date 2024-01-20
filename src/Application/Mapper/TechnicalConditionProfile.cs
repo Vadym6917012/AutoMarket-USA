@@ -1,6 +1,5 @@
 ﻿using Application.DTOs.TechnicalCondition;
 using AutoMapper;
-using Domain.Entities;
 
 namespace Application.Mapper
 {

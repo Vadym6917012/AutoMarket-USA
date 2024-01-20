@@ -1,5 +1,5 @@
-﻿using Application.AdminMediatoR.Commands;
-using Application.AdminMediatoR.Queries;
+﻿using Application.Admins.Commands;
+using Application.Admins.Queries;
 using Application.DTOs.Admin;
 using Ardalis.GuardClauses;
 using Domain.Exceptions;

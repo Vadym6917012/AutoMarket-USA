@@ -1,8 +1,7 @@
-﻿using Application.CarMediatoR.Commands;
-using Application.CarMediatoR.Queries;
+﻿using Application.Cars.Commands;
+using Application.Cars.Queries;
 using Application.DTOs.Car;
 using AutoMapper;
-using Domain.Entities;
 
 namespace Application.Mapper
 {

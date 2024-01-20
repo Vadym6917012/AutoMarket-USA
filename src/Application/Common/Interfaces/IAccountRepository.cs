@@ -1,5 +1,4 @@
 ﻿using Application.DTOs.Account;
-using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 
 namespace Application.Common.Interfaces

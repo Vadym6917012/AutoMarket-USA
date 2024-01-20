@@ -1,6 +1,5 @@
 ﻿using Application.DTOs.Images;
 using AutoMapper;
-using Domain.Entities;
 
 namespace Application.Mapper
 {

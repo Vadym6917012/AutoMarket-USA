@@ -1,5 +1,4 @@
 ﻿using Application.DTOs.Car;
-using Domain.Entities;
 using System.Linq.Expressions;
 
 namespace Application.Common.Interfaces

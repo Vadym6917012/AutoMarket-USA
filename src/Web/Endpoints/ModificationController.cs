@@ -1,6 +1,6 @@
 ﻿using Application.DTOs.Modification;
-using Application.ModificationMediatoR.Commands;
-using Application.ModificationMediatoR.Queries;
+using Application.Modifications.Commands;
+using Application.Modifications.Queries;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
