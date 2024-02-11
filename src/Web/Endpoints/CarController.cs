@@ -15,8 +15,6 @@ namespace Web.Endpoints
         private readonly IMapper _mapper;
         private readonly IMediator _mediator;
         private readonly IWebHostEnvironment _hostingEnvironment;
-
-
         public CarController(IMapper mapper, IMediator mediator, IWebHostEnvironment hostingEnvironment)
         {
             _mapper = mapper;
@@ -145,10 +143,8 @@ namespace Web.Endpoints
         }
 
         [HttpPut("update-car")]
-        public async Task<IResult> UpdateCar(int id, [FromBody] CarCreateDTO carDTO)
+        public async Task<IResult> UpdateCar([FromBody] CarCreateDTO carDTO)
         {
-            if (id != carDTO.Id) return Results.BadRequest("Invalid data");
-
             var command = _mapper.Map<UpdateCar>(carDTO);
 
             var car = await _mediator.Send(command);

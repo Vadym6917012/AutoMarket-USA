@@ -12,6 +12,6 @@ export class DriveTrainService {
   constructor(private http: HttpClient) { }
 
   getDriveTrains() :Observable<DriveTrain[]> {
-    return this.http.get<DriveTrain[]>(`${environment.apiUrl}/api/drivetrain`);
+    return this.http.get<DriveTrain[]>(`${environment.apiUrl}/api/drivetrain/get-drivetrains`);
   }
 }

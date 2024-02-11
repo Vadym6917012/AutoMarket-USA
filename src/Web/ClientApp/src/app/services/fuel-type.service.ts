@@ -12,6 +12,6 @@ export class FuelTypeService {
   constructor(private http: HttpClient) { }
 
   getFuelTypes() :Observable<FuelType[]> {
-    return this.http.get<FuelType[]>(`${environment.apiUrl}/api/fueltype`);
+    return this.http.get<FuelType[]>(`${environment.apiUrl}/api/fueltype/get-fueltypes`);
   }
 }

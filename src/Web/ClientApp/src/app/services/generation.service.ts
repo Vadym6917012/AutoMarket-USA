@@ -12,11 +12,11 @@ export class GenerationService {
   constructor(private http: HttpClient) { }
 
   getGenerations() :Observable<Generation[]>{
-    return this.http.get<Generation[]>(`${environment.apiUrl}/api/generation`);
+    return this.http.get<Generation[]>(`${environment.apiUrl}/api/generation/get-generations`);
   }
 
   getGeneration(id: number) :Observable<Generation>{
-    return this.http.get<Generation>(`${environment.apiUrl}/api/generation/${id}`);
+    return this.http.get<Generation>(`${environment.apiUrl}/api/generation/get-generation/${id}`);
   }
 
   getGenerationByModel(modelId: number): Observable<Generation[]>{
@@ -32,6 +32,6 @@ export class GenerationService {
   }
 
   deleteGeneration(id: number) :Observable<Generation> {
-    return this.http.delete<Generation>(`${environment.apiUrl}/api/generation/${id}`);
+    return this.http.delete<Generation>(`${environment.apiUrl}/api/generation/delete-generation/${id}`);
   }
 }

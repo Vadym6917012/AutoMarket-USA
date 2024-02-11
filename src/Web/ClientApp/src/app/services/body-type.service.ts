@@ -12,6 +12,6 @@ export class BodyTypeService {
   constructor(private http: HttpClient) { }
 
   getBodyTypes() :Observable<BodyType[]> {
-    return this.http.get<BodyType[]>(`${environment.apiUrl}/api/bodytype`);
+    return this.http.get<BodyType[]>(`${environment.apiUrl}/api/bodytype/get-bodytypes`);
   }
 }

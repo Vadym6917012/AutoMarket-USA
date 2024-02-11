@@ -77,10 +77,10 @@ namespace Web.Endpoints
             return Results.NoContent();
         }
 
-        [HttpGet("get-model-by-make/{makeId:int}")]
+        [HttpGet("get-model-by-make/{makeId}")]
         public async Task<IResult> GetModelsByMake(int makeId)
         {
-            var model = _mediator.Send(new GetModelsByMake { Id = makeId });
+            var model = await _mediator.Send(new GetModelsByMake { Id = makeId });
 
             return TypedResults.Ok(model);
         }

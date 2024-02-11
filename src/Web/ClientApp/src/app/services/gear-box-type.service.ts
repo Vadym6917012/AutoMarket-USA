@@ -12,6 +12,6 @@ export class GearBoxTypeService {
   constructor(private http: HttpClient) { }
 
   getGearBoxes(): Observable<GearBox[]> {
-    return this.http.get<GearBox[]>(`${environment.apiUrl}/api/gearboxtype`);
+    return this.http.get<GearBox[]>(`${environment.apiUrl}/api/gearboxtype/get-gearboxtypes`);
   }
 }

@@ -398,3 +398,5 @@ FodyWeavers.xsd
 *.sln.iml
 /Backend/AutoMarket.Server/appsettings.json
 /Backend/AutoMarket.Server/appsettings.Development.json
+/src/Web/appsettings.json
+/src/Web/appsettings.Development.json

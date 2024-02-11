@@ -12,6 +12,6 @@ export class TechnicalConditionService {
   constructor(private http: HttpClient) { }
 
   getTechnicalConditions() :Observable<TechnicalCondition[]> {
-    return this.http.get<TechnicalCondition[]>(`${environment.apiUrl}/api/technicalcondition`);
+    return this.http.get<TechnicalCondition[]>(`${environment.apiUrl}/api/technicalcondition/get-technicalconditions`);
   }
 }

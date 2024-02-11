@@ -12,6 +12,6 @@ export class ProducingCountryService {
   constructor(private http: HttpClient) { }
 
   getProducingCountries (): Observable<ProducingCountry[]> {
-    return this.http.get<ProducingCountry[]>(`${environment.apiUrl}/api/producingcountry`);
+    return this.http.get<ProducingCountry[]>(`${environment.apiUrl}/api/producingcountry/get-countries`);
   }
 }

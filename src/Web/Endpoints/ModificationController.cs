@@ -81,7 +81,7 @@ namespace Web.Endpoints
         public async Task<IResult> GetModificationsByModel(int modelId)
         {
             var modification = await _mediator.Send(new GetModificationsByModel { Id = modelId });
-            var modificationDto = _mapper.Map<ModificationDTO>(modification);
+            var modificationDto = _mapper.Map<IEnumerable<ModificationDTO>>(modification);
 
             return TypedResults.Ok(modificationDto);
         }
