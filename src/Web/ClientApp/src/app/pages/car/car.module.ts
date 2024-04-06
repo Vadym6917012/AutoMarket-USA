@@ -8,13 +8,15 @@ import { CarAddComponent } from './car-add/car-add.component';
 import { CarDetailsComponent } from './car-details/car-details.component';
 import { CarUpdateComponent } from './car-update/car-update.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { PaginationComponent } from './pagination/pagination.component';
 
 @NgModule({
   declarations: [
     CarListComponent,
     CarAddComponent,
     CarDetailsComponent,
-    CarUpdateComponent
+    CarUpdateComponent,
+    PaginationComponent
   ],
   imports: [
     CommonModule,

@@ -55,32 +55,34 @@
       <ng-container *ngIf="cars.length < 4">
         <p class="text-center">Ще немає оголошень</p>
       </ng-container>
-      <owl-carousel-o id="slider" [options]="customOptions" *ngIf="cars.length == 4">
-        <ng-container>
-          <ng-template carouselSlide *ngFor="let car of cars">
-            <div class="home-card card">
-              <div class="card-image">
-                <img [src]="car.imagesPath[0]" alt="">
+      <ng-container *ngIf="cars.length > 4">
+        <owl-carousel-o id="slider" [options]="customOptions" *ngIf="cars.length >= 4">
+          <ng-container>
+            <ng-template carouselSlide *ngFor="let car of cars; let index = index">
+              <div class="home-card card">
+                <div class="card-image">
+                  <img [src]="car.imagesPath[0]" alt="">
+                </div>
+                <div class="card-heading">
+                  <h5><a class="text-light-black" routerLink="car/car-details/{{car.id}}">{{car.makeName}}
+                      {{car.modelName}}</a></h5>
+                </div>
+                <div class="card-text d-flex justify-content-between">
+                  <span class="text-dark-white"><i class="bi bi-cash text-orange me-2"></i>${{car.price}}</span>
+                  <span class="text-dark-white"><i class="bi bi-car-front text-orange me-2"></i>{{car.year}} рік</span>
+                </div>
+                <div class="card-text d-flex justify-content-between">
+                  <span class="text-dark-white"><i class="bi bi-speedometer2 text-orange me-2"></i>{{car.mileage}}
+                    км</span>
+                  <span class="text-dark-white"><i
+                      class="bi bi-fuel-pump text-orange me-2"></i>{{car.driveTrainName}}</span>
+                </div>
+                <a routerLink="car/car-details/{{car.id}}" class="card-button">Детальніше</a>
               </div>
-              <div class="card-heading">
-                <h5><a class="text-light-black" routerLink="car/car-details/{{car.id}}">{{car.makeName}}
-                    {{car.modelName}}</a></h5>
-              </div>
-              <div class="card-text d-flex justify-content-between">
-                <span class="text-dark-white"><i class="bi bi-cash text-orange me-2"></i>${{car.price}}</span>
-                <span class="text-dark-white"><i class="bi bi-car-front text-orange me-2"></i>{{car.year}} рік</span>
-              </div>
-              <div class="card-text d-flex justify-content-between">
-                <span class="text-dark-white"><i class="bi bi-speedometer2 text-orange me-2"></i>{{car.mileage}}
-                  км</span>
-                <span class="text-dark-white"><i
-                    class="bi bi-fuel-pump text-orange me-2"></i>{{car.driveTrainName}}</span>
-              </div>
-              <a routerLink="car/car-details/{{car.id}}" class="card-button">Детальніше</a>
-            </div>
-          </ng-template>
-        </ng-container>
-      </owl-carousel-o>
+            </ng-template>
+          </ng-container>
+        </owl-carousel-o>
+      </ng-container>
     </div>
   </div>
 </section>

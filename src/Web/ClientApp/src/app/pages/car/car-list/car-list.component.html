@@ -22,33 +22,35 @@
             <div class="col-lg-6 col-md-6">
               <div class="row justify-content-between">
                 <div class="products-ordering-list col"> <span>Ціна</span>
-                  <select [(ngModel)]="selectedSortOption" class="form-select car-list-select shadow-none"
+                  <select [(ngModel)]="selectedSortPriceOption" class="form-select car-list-select shadow-none"
                     [ngModelOptions]="{standalone: true}">
                     <option value="" disabled selected>Сортувати за ціною</option>
-                    <option value="default" (click)="sortCars()">За замовчуванням</option>
-                    <option value="asc" (click)="sortCars()">За зростанням</option>
-                    <option value="desc" (click)="sortCars()">За спаданням</option>
+                    <option value="default" (click)="sortCarsByPrice()">За замовчуванням</option>
+                    <option value="asc" (click)="sortCarsByPrice()">За зростанням</option>
+                    <option value="desc" (click)="sortCarsByPrice()">За спаданням</option>
                   </select>
                 </div>
                 <div class="products-ordering-list col"> <span>Дата</span>
-                  <select [(ngModel)]="selectedSortOption" class="form-select car-list-select shadow-none"
+                  <select [(ngModel)]="selectedSortDateOption" class="form-select car-list-select shadow-none"
                     [ngModelOptions]="{standalone: true}">
                     <option value="" disabled selected>Сортувати за датою</option>
-                    <option value="default" (click)="sortCars()">За замовчуванням</option>
-                    <option value="asc" (click)="sortCars()">Від нових</option>
-                    <option value="desc" (click)="sortCars()">Від старих</option>
+                    <option value="default" (click)="sortCarsByDate()">За замовчуванням</option>
+                    <option value="asc" (click)="sortCarsByDate()">Від нових</option>
+                    <option value="desc" (click)="sortCarsByDate()">Від старих</option>
                   </select>
                 </div>
               </div>
             </div>
-            
+
             <div class="col-lg-3 col-md-6">
               <div class="filter-by-grid-list"> <span>Переглянути як: </span>
                 <div class="filter-tab-area">
                   <ul class="nav nav-tabs" role="tablist">
-                    <li> <a (click)="toggleView('grid')" data-toggle="tab" aria-selected="false"><i [ngClass]="{'active': !isListView}" class="bi bi-border-all"></i></a>
+                    <li> <a (click)="toggleView('grid')" data-toggle="tab" aria-selected="false"><i
+                          [ngClass]="{'active': !isListView}" class="bi bi-border-all"></i></a>
                     </li>
-                    <li> <a  (click)="toggleView('list')" data-toggle="tab" aria-selected="true"><i [ngClass]="{'active': isListView}" class="bi bi-border-width"></i></a>
+                    <li> <a (click)="toggleView('list')" data-toggle="tab" aria-selected="true"><i
+                          [ngClass]="{'active': isListView}" class="bi bi-border-width"></i></a>
                     </li>
                   </ul>
                 </div>
@@ -59,7 +61,7 @@
       </div>
     </div>
     <div class="tab-content">
-      <div  class="tab-pane active">
+      <div class="tab-pane active">
         <div class="row">
           <div class="col-lg-8">
 
@@ -68,7 +70,7 @@
             </ng-container>
 
             <ng-container *ngIf="isListView === true" id="listing_list">
-              <div class="car-model-layout-list" *ngFor="let car of carInfo">
+              <div class="car-model-layout-list" *ngFor="let car of paginatedData">
                 <div class="car-thumbnail-area">
                   <div class="item-thumb">
                     <img src="{{car.imagesPath[0]}}" class="img-fluid full-width" alt="image">
@@ -79,7 +81,8 @@
                 </div>
                 <div class="car-description-area">
                   <div class="car-description-content whitebg">
-                    <h5 class="title"><a routerLink="/car/car-details/{{car.id}}" class="text-light-black">{{car.makeName}} {{car.modelName}}
+                    <h5 class="title"><a routerLink="/car/car-details/{{car.id}}"
+                        class="text-light-black">{{car.makeName}} {{car.modelName}}
                         {{car.generationName}}</a></h5>
                     <div class="car-rating">
                       <div class="rating-value">
@@ -110,28 +113,30 @@
 
             <ng-container>
               <div *ngIf="isListView === false" id="listing-grid" class="tab-pane active">
-                    <div class="row">
-                      <div class="col-md-4 col-sm-6 mb-3" *ngFor="let car of carInfo">
-                          <div class="car-grid-card whitebg">
-                            <a routerLink="/car/car-details/{{car.id}}">
-                              <img src="{{car.imagesPath[0]}}" class="full-width car-img-grid" style="width: 270px; height: 175px;" alt="Car Image">
-                            </a>
-                            <div class="car-grid-details">
-                              <div class="car-grid-price">
-                                <h5><span class="text-orange">${{car.price}}</span></h5>
-                              </div>
-                              <div class="car-grid-title">
-                                <h5><a routerLink="/car/car-details/{{car.id}}" class="text-light-black">{{car.makeName}} {{car.modelName}} {{car.year}}</a></h5>
-                              </div>
-                              <div class="car-grid-summary d-flex flex-column mt-1">
-                                <span class="text-dark-grey">VIN: {{car.vin}}</span>
-                                <span class="text-dark-grey">Пробіг: {{car.mileage}} км.</span>
-                              </div>
-                            </div>
+                <div class="row">
+                  <div class="col-md-4 col-sm-6 mb-3" *ngFor="let car of carInfo">
+                    <div class="car-grid-card whitebg">
+                      <a routerLink="/car/car-details/{{car.id}}">
+                        <img src="{{car.imagesPath[0]}}" class="full-width car-img-grid"
+                          style="width: 270px; height: 175px;" alt="Car Image">
+                      </a>
+                      <div class="car-grid-details">
+                        <div class="car-grid-price">
+                          <h5><span class="text-orange">${{car.price}}</span></h5>
+                        </div>
+                        <div class="car-grid-title">
+                          <h5><a routerLink="/car/car-details/{{car.id}}" class="text-light-black">{{car.makeName}}
+                              {{car.modelName}} {{car.year}}</a></h5>
+                        </div>
+                        <div class="car-grid-summary d-flex flex-column mt-1">
+                          <span class="text-dark-grey">VIN: {{car.vin}}</span>
+                          <span class="text-dark-grey">Пробіг: {{car.mileage}} км.</span>
                         </div>
                       </div>
                     </div>
                   </div>
+                </div>
+              </div>
             </ng-container>
           </div>
           <aside class="col-lg-4">
@@ -157,13 +162,15 @@
                     <div class="form-group mb-3">
                       <select formControlName="generationId" class="car-list-filter-select form-control shadow-none">
                         <option value="" selected>Обрати покоління</option>
-                        <option *ngFor="let generation of filteredGenerations" [value]="generation.id">{{generation.name}}</option>
+                        <option *ngFor="let generation of filteredGenerations" [value]="generation.id">
+                          {{generation.name}}</option>
                       </select>
                     </div>
                     <div class="form-group mb-3">
                       <select formControlName="modificationId" class="car-list-filter-select form-control shadow-none">
                         <option value="" selected>Обрати модифікацію</option>
-                        <option *ngFor="let modification of filteredModifications" [value]="modification.id">{{modification.name}}</option>
+                        <option *ngFor="let modification of filteredModifications" [value]="modification.id">
+                          {{modification.name}}</option>
                       </select>
                     </div>
                     <div class="form-group mb-3">
@@ -175,13 +182,16 @@
                     <div class="form-group mb-3">
                       <select formControlName="driveTrainId" class="car-list-filter-select form-control shadow-none">
                         <option value="" selected>Обрати тип приводу</option>
-                        <option *ngFor="let drivetrain of drivetrains" [value]="drivetrain.id">{{drivetrain.name}}</option>
+                        <option *ngFor="let drivetrain of drivetrains" [value]="drivetrain.id">{{drivetrain.name}}
+                        </option>
                       </select>
                     </div>
                     <div class="form-group mb-3">
-                      <select formControlName="technicalConditionId" class="car-list-filter-select form-control shadow-none">
+                      <select formControlName="technicalConditionId"
+                        class="car-list-filter-select form-control shadow-none">
                         <option value="" selected>Обрати тип технічного стану</option>
-                        <option *ngFor="let technicalCondition of technicalconditions" [value]="technicalCondition.id">{{technicalCondition.name}}</option>
+                        <option *ngFor="let technicalCondition of technicalconditions" [value]="technicalCondition.id">
+                          {{technicalCondition.name}}</option>
                       </select>
                     </div>
                     <div class="form-group mb-3">
@@ -199,31 +209,37 @@
                     <div class="form-group d-flex mb-3">
                       <div class="input-wrap mr-3">
                         <label for="yearFrom">Рік від:</label>
-                        <input formControlName="yearFrom" type="text" placeholder="Рік від" id="yearFrom" class="form-control shadow-none car-list-filter-select">
+                        <input formControlName="yearFrom" type="text" placeholder="Рік від" id="yearFrom"
+                          class="form-control shadow-none car-list-filter-select">
                       </div>
                       <div class="input-wrap">
                         <label for="yearTo">Рік до:</label>
-                        <input formControlName="yearTo" type="text" placeholder="Рік до" class="form-control shadow-none car-list-filter-select">
+                        <input formControlName="yearTo" type="text" placeholder="Рік до"
+                          class="form-control shadow-none car-list-filter-select">
                       </div>
                     </div>
                     <div class="form-group d-flex mb-3">
                       <div class="input-wrap mr-3">
                         <label for="mileageFrom">Пробіг від:</label>
-                        <input formControlName="mileageFrom" type="text" placeholder="Пробіг від" id="mileageFrom" class="form-control shadow-none car-list-filter-select">
+                        <input formControlName="mileageFrom" type="text" placeholder="Пробіг від" id="mileageFrom"
+                          class="form-control shadow-none car-list-filter-select">
                       </div>
                       <div class="input-wrap">
                         <label for="mileageTo">Пробіг до:</label>
-                        <input formControlName="mileageTo" type="text" placeholder="Пробіг до" class="form-control shadow-none car-list-filter-select">
+                        <input formControlName="mileageTo" type="text" placeholder="Пробіг до"
+                          class="form-control shadow-none car-list-filter-select">
                       </div>
                     </div>
                     <div class="form-group d-flex mb-3">
                       <div class="input-wrap mr-3">
                         <label for="priceFrom">Ціна від:</label>
-                        <input formControlName="priceFrom" type="text" placeholder="$" id="priceFrom" class="form-control shadow-none car-list-filter-select">
+                        <input formControlName="priceFrom" type="text" placeholder="$" id="priceFrom"
+                          class="form-control shadow-none car-list-filter-select">
                       </div>
                       <div class="input-wrap">
                         <label for="priceTo">Ціна до:</label>
-                        <input formControlName="priceTo" type="text" placeholder="$" class="form-control shadow-none car-list-filter-select">
+                        <input formControlName="priceTo" type="text" placeholder="$"
+                          class="form-control shadow-none car-list-filter-select">
                       </div>
                     </div>
                     <div class="form-submit text-center">
@@ -237,20 +253,12 @@
         </div>
       </div>
       <div class="col-12">
-        <nav class="custom-pagination">
-          <ul class="pagination">
-            <li class="page-item "><a class="page-link" href="#">Previous</a>
-            </li>
-            <li class="page-item active"><a class="page-link" href="#">1</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">2</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">3</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">Next</a>
-            </li>
-          </ul>
-        </nav>
+        <app-pagination 
+        [totalItems]="carInfo.length" 
+        [itemsPerPage]="itemsPerPage"
+        [currentPage]="currentPage"
+        (onClick)="changePage($event)"
+        ></app-pagination>
       </div>
     </div>
   </div>

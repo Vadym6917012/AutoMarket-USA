@@ -1,0 +1,14 @@
+<nav class="custom-pagination">
+    <ul class="pagination">
+        <li class="page-item" [ngClass]="{disabled: currentPage === 1}"><a (click)="pageClicked(currentPage - 1)" class="page-link">Previous</a>
+        </li>
+        <li 
+        (click)="pageClicked(page)"
+        *ngFor="let page of pages" 
+        class="page-item" 
+        [ngClass]="{'active': page == currentPage }"><a class="page-link">{{page}}</a>
+        </li>
+        <li class="page-item" [ngClass]="{disabled: currentPage === totalPages}" ><a class="page-link" (click)="pageClicked(currentPage + 1)">Next</a>
+        </li>
+    </ul>
+</nav>

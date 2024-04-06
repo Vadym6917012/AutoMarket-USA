@@ -46,7 +46,7 @@
                             <li>
                                 <span>Модифікація:</span>{{car?.modificationName}}
                             </li>
-                            <li>
+                            <li onclick="copyVIN()">
                                 <span>VIN:</span>{{car?.vin}}
                             </li>
                             <li>
@@ -87,7 +87,7 @@
                                 <i class="bi bi-telephone-fill"></i><a href="tel:{{car?.userPhoneNumber}}">{{car?.userPhoneNumber}}</a>
                             </li>
                             <li>
-                                <i class="bi bi-telephone-fill"></i><a>{{car?.dateCreated | date}}</a>
+                                <i class="bi bi-calendar-check-fill"></i><a>{{car?.dateCreated | date}}</a>
                             </li>
                         </ul>
                     </div>

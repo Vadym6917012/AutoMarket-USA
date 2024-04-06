@@ -40,7 +40,11 @@ export class CarListComponent implements OnInit {
   filteredModifications: Modification[] = [];
 
   isListView = true;
-  selectedSortOption = '';
+  selectedSortPriceOption = '';
+  selectedSortDateOption = '';
+
+  itemsPerPage = 4;
+  currentPage = 1;
 
   carFilter: FormGroup = new FormGroup({});
 
@@ -94,6 +98,18 @@ export class CarListComponent implements OnInit {
         this.filteredModifications = data;
       });
     });
+
+    const savedSortDateOption = localStorage.getItem('selectedSortDateOption');
+    if (savedSortDateOption) {
+        this.selectedSortDateOption = savedSortDateOption;
+        this.sortCarsByDate();
+    }
+
+    const savedSortPriceOption = localStorage.getItem('selectedSortPriceOption');
+    if (savedSortPriceOption) {
+        this.selectedSortPriceOption = savedSortPriceOption;
+        this.sortCarsByPrice();
+    }
   }
 
   initializeForm() {
@@ -116,15 +132,37 @@ export class CarListComponent implements OnInit {
     });
   }
 
-  sortCars() {
-    if (this.selectedSortOption === 'default') {
+  sortCarsByPrice() {
+    if (this.selectedSortPriceOption === 'default') {
       this.showCars();
-    } else if (this.selectedSortOption === 'asc') {
+    } else if (this.selectedSortPriceOption === 'asc') {
       this.carInfo.sort((a: { price: number }, b: { price: number }) => a.price - b.price);
-    } else if (this.selectedSortOption === 'desc') {
+    } else if (this.selectedSortPriceOption === 'desc') {
       this.carInfo.sort((a: { price: number }, b: { price: number }) => b.price - a.price);
     }
+
+    localStorage.setItem('selectedSortPriceOption', this.selectedSortPriceOption);
   }
+
+  sortCarsByDate() {
+    if (this.selectedSortDateOption === 'default') {
+        this.showCars();
+    } else if (this.selectedSortDateOption === 'asc') {
+        this.carInfo.sort((a: any, b: any) => {
+            const dateA = new Date(a.dateCreated).getTime();
+            const dateB = new Date(b.dateCreated).getTime();
+            return dateA - dateB;
+        });
+    } else if (this.selectedSortDateOption === 'desc') {
+        this.carInfo.sort((a: any, b: any) => {
+            const dateA = new Date(a.dateCreated).getTime();
+            const dateB = new Date(b.dateCreated).getTime();
+            return dateB - dateA;
+        });
+    }
+
+    localStorage.setItem('selectedSortDateOption', this.selectedSortDateOption);
+}
 
   showCars() {
     this.carService.getCars().subscribe((data) => {
@@ -188,5 +226,16 @@ export class CarListComponent implements OnInit {
     this.carService.carFilter(filterValue).subscribe((data) => {
       this.carInfo = data;
     });
+  }
+
+  get paginatedData(){
+    const start = (this.currentPage - 1) * (this.itemsPerPage);
+    const end = start + this.itemsPerPage;
+
+    return this.carInfo.slice(start, end);
+  } 
+
+  changePage(page: number){
+    this.currentPage = page;
   }
 }

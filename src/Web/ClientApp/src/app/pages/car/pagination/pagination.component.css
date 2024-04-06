@@ -1,0 +1,43 @@
+nav.custom-pagination {
+    display: flex;
+    justify-content: center;
+}
+
+nav.custom-pagination .pagination {
+    text-align: center;
+    padding: 30px 0;
+    font-size: 1em;
+    font-weight: bold;
+    margin: 0;
+}
+
+nav.custom-pagination .pagination li.page-item {
+    display: inline-block;
+    margin: 0 5px;
+}
+
+nav.custom-pagination .pagination li.page-item a {
+    border: 0;
+    padding: 0;
+    display: block;
+    position: relative;
+    width: auto;
+    height: 42px;
+    width: 42px;
+    line-height: 42px;
+    color: #8f8f8f;
+    font-weight: 500;
+}
+
+nav.custom-pagination .pagination>li.active>a,
+nav.custom-pagination .pagination>li>a:hover {
+    background-color: #ff8500;
+    color: #fff;
+    cursor: pointer;
+}
+
+nav.custom-pagination .pagination li.page-item:first-child a,
+nav.custom-pagination .pagination li.page-item:last-child a {
+    width: auto;
+    padding: 0 22px;
+}
