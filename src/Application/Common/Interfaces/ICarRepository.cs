@@ -12,7 +12,7 @@ namespace Application.Common.Interfaces
         Task<IEnumerable<Car>> GetNotVerifiedCarsAsync();
         Task<Car> GetByIdAsync(int id);
         Car GetById(int id);
-        Task<string> CheckVin(string vin);
+        Task<bool> CheckVin(string vin);
         Task<IEnumerable<Car>> HomeFilter(CarHomeFilter filter);
         Task<IEnumerable<Car>> CarFilter(CarFilter filter);
         Task<IEnumerable<Car>> GetRecentCars(int count);

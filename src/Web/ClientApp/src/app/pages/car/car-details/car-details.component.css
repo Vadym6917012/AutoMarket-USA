@@ -104,3 +104,91 @@
 .details-description-content {
     padding: 0 30px 1rem 30px;
 }
+
+.check-vin-btn {
+    display: flex;
+    background: #ff8500;
+    color: #fff;
+    padding: 10px 25px;
+    border-radius: 0;
+    margin-bottom: 15px;
+}
+
+.check-vin-btn:hover {
+    background: #191919;
+    border-color: #191919;
+    color: #fff;
+}
+
+.top-title-carousel {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.top-title-carousel h3 {
+    font-size: 36px;
+    font-weight: 500;
+    color: #000;
+    position: relative;
+}
+
+.slide {
+    margin-right: 30px;
+}
+
+.home-card {
+	width: auto;
+	position: relative;
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 3px 3px 11px rgba(0, 0, 0, 0.07);
+}
+
+.card-image {
+	margin-bottom: 20px;
+	overflow: hidden;
+	cursor: pointer;
+}
+
+.card-image img {
+	width: 100%;
+	height: 180px;
+	border-radius: 8px 8px 0px 0;
+	transition: 0.5s linear;
+	object-fit: cover;
+}
+
+.card-image:hover img {
+	transform: scale(1.1);
+}
+
+.card-heading {
+	font-size: 18px;
+	font-weight: bold;
+	background: #fff;
+	text-align: center;
+}
+
+.card-text {
+	padding: 10px 15px;
+	background: #fff;
+	font-size: 16px;
+}
+
+.card-button {
+	display: flex;
+	justify-content: center;
+	padding: 10px 0;
+	width: 100%;
+	background-color: #ff8c00;
+	color: #fff;
+	border-radius: 0 0 8px 8px;
+	text-decoration: none;
+}
+
+.card-button:hover {
+	text-decoration: none;
+	background-color: #1c1d1f;
+	color: #fff;
+}
+

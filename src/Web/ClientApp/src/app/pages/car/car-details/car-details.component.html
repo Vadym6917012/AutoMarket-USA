@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-lg-8 col-md-12 col-xs-12">
                 <div class="car-details-section">
-                    <div class="car-details-content-header d-flex justify-content-xxl-between">
+                    <div class="car-details-content-header d-flex justify-content-between">
                         <div class="pull-left">
                             <h3>{{car?.makeName}} {{car?.modelName}}</h3>
                         </div>
@@ -67,15 +67,24 @@
                             <li>
                                 <span>Тип приводу:</span>{{car?.driveTrainName}}
                             </li>
+                            <li *ngIf="vinCheckMessage">
+                                <span>Результат перевірки:</span>{{vinCheckMessage}}
+                            </li>
+                            <li>
+                                <button class="btn check-vin-btn" *ngIf="car" (click)="checkVin(car.vin)">Перевірити VIN</button>
+                            </li>
                         </ul>
                     </div>
                 </div>
                 <div class="sidebar-right">
                     <div class="title-icon">
-                        <h5 class="title"><i class="bi bi-wrench"></i> Є запитання?</h5>
+                        <h5 class="title"><i class="bi bi-patch-question-fill"></i> Зв'язок з продавцем</h5>
                     </div>
                     <div class="sidebar-content">
                         <ul class="contact-info">
+                            <li>
+                                <i class="bi bi-person-check-fill"></i>{{car?.firstName | titlecase}} {{car?.lastName | titlecase}}
+                            </li>
                             <li>
                                 <i class="bi bi-geo-alt-fill"></i>Rivne, UA
                             </li>
@@ -93,6 +102,48 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+<div class="top-deal-section">
+    <div class="container">
+        <div class="top-title-carousel">
+            <h3>Найкращі пропозиції тижня</h3>
+        </div>
+        <div class="top-deal-carousel">
+            <div class="carousel_cards">
+                <ng-container *ngIf="relatedCars.length < 4">
+                  <p class="text-center">Ще немає оголошень</p>
+                </ng-container>
+                <ng-container *ngIf="relatedCars.length > 4">
+                    <owl-carousel-o id="slider" [options]="customOptionsTopDeal" *ngIf="relatedCars.length >= 3">
+                        <ng-container>
+                          <ng-template carouselSlide *ngFor="let relatedCar of relatedCars; let index = index">
+                            <div (click)="navigateToCarDetails(relatedCar.id)" class="home-card card">
+                              <div class="card-image">
+                                <img [src]="relatedCar.imagesPath[0]" alt="">
+                              </div>
+                              <div class="card-heading">
+                                <h5><a class="text-light-black" routerLink="/car/car-details/{{relatedCar.id}}">{{relatedCar.makeName}}
+                                    {{relatedCar.modelName}}</a></h5>
+                              </div>
+                              <div class="card-text d-flex justify-content-between">
+                                <span class="text-dark-white"><i class="bi bi-cash text-orange me-2"></i>${{relatedCar.price}}</span>
+                                <span class="text-dark-white"><i class="bi bi-car-front text-orange me-2"></i>{{relatedCar.year}} рік</span>
+                              </div>
+                              <div class="card-text d-flex justify-content-between">
+                                <span class="text-dark-white"><i class="bi bi-speedometer2 text-orange me-2"></i>{{relatedCar.mileage}}
+                                  км</span>
+                                <span class="text-dark-white"><i
+                                    class="bi bi-fuel-pump text-orange me-2"></i>{{relatedCar.driveTrainName}}</span>
+                              </div>
+                              <a  class="card-button">Детальніше</a>
+                            </div>
+                          </ng-template>
+                        </ng-container>
+                      </owl-carousel-o>
+                </ng-container>
+              </div>
         </div>
     </div>
 </div>

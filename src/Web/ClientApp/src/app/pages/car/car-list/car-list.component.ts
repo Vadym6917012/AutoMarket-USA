@@ -1,4 +1,4 @@
-import { Component, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { BodyType } from 'src/app/models/body-type/body-type';
 import { DriveTrain } from 'src/app/models/drive-train/drive-train';
@@ -64,6 +64,9 @@ export class CarListComponent implements OnInit {
 
     if (navigation && navigation.cars) {
       this.carInfo = navigation.cars;
+      console.log('List component: ')
+      console.log(this.carInfo)
+      console.log(navigation.cars);
     } else {
       this.showCars();
     }
@@ -98,18 +101,6 @@ export class CarListComponent implements OnInit {
         this.filteredModifications = data;
       });
     });
-
-    const savedSortDateOption = localStorage.getItem('selectedSortDateOption');
-    if (savedSortDateOption) {
-        this.selectedSortDateOption = savedSortDateOption;
-        this.sortCarsByDate();
-    }
-
-    const savedSortPriceOption = localStorage.getItem('selectedSortPriceOption');
-    if (savedSortPriceOption) {
-        this.selectedSortPriceOption = savedSortPriceOption;
-        this.sortCarsByPrice();
-    }
   }
 
   initializeForm() {
@@ -167,7 +158,6 @@ export class CarListComponent implements OnInit {
   showCars() {
     this.carService.getCars().subscribe((data) => {
       this.carInfo = data.filter(car => car.isAdvertisementApproved);
-      console.log(data);
     });
   }
 

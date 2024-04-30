@@ -7,7 +7,7 @@
                         <h3 class="mb-3 font-weight-normal">Реєстрація</h3>
                     </div>
                     <div class="form-floating mb-3">
-                        <input formControlName="firstName" type="text" placeholder="First name" class="form-control shadow-none"
+                        <input formControlName="firstName" type="text" placeholder="First name" class="form-control shadow-none register-input"
                             [class.is-invalid]="submitted && registerForm.get('firstName')?.errors">
                         <label for="firstName">Ім'я</label>
                         <span class="text-danger" *ngIf="submitted && registerForm.get('firstName')?.hasError('required')">
@@ -20,7 +20,7 @@
                         </span>
                     </div>
                     <div class="form-floating mb-3">
-                        <input formControlName="lastName" type="text" placeholder="Last name" class="form-control shadow-none"
+                        <input formControlName="lastName" type="text" placeholder="Last name" class="form-control shadow-none register-input"
                             [class.is-invalid]="submitted && registerForm.get('lastName')?.errors">
                         <label for="lastName">Прізвище</label>
                         <span class="text-danger" *ngIf="submitted && registerForm.get('lastName')?.hasError('required')">
@@ -33,7 +33,7 @@
                         </span>
                     </div>
                     <div class="form-floating mb-3">
-                        <input formControlName="email" type="text" placeholder="Email" class="form-control shadow-none"
+                        <input formControlName="email" type="text" placeholder="Email" class="form-control shadow-none register-input"
                             [class.is-invalid]="submitted && registerForm.get('email')?.errors">
                         <label for="email">Email</label>
                         <span class="text-danger" *ngIf="submitted && registerForm.get('email')?.hasError('required')">
@@ -48,7 +48,7 @@
                                 [class]="isTextFieldType ? 'bi bi-eye-slash' :'bi bi-eye'"></i></span>
                         <div class="form-floating ">
                             <input formControlName="password" [type]="isTextFieldType ? 'text' :'password'"
-                                placeholder="Password" class="form-control is-invalid shadow-none" id="password" aria-describedby="eye"
+                                placeholder="Password" class="form-control is-invalid shadow-none register-input" id="password" aria-describedby="eye"
                                 [class.is-invalid]="submitted && registerForm.get('password')?.errors">
                             <label for="password">Пароль</label>
                             <span class="text-danger"
@@ -70,7 +70,7 @@
                                 [class]="isTextFieldType ? 'bi bi-eye-slash' :'bi bi-eye'"></i></span>
                         <div class="form-floating">
                             <input formControlName="confirmPassword" [type]="isTextFieldType ? 'text' :'password'" placeholder="Confirm password"
-                                class="form-control shadow-none"
+                                class="form-control shadow-none register-input"
                                 [class.is-invalid]="submitted && 
                                 registerForm.get('confirmPassword')?.errors">
                             <label for="confirmPassword">Підтвердити пароль</label>

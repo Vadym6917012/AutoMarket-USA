@@ -160,6 +160,21 @@ namespace Web.Endpoints
             return Results.Ok(new JsonResult(new { title = "Оголошення видалено успішно", message = "Ваше оголошення було видалено успішно" }));
         }
 
+        [HttpGet("check-vin/{vin}")]
+        public async Task<IResult> CheckVin(string vin)
+        {
+            var isValid = await _mediator.Send(new CheckCarByVin { VIN = vin });
+
+            var response = new VinCheckResponse
+            {
+                IsValid = isValid,
+                Message = isValid ? "Перевірений VIN" : "Проблема з оголошенням, будьте обережні при купівлі цього автомобіля"
+            };
+
+            return TypedResults.Ok(response);
+            
+        }
+
         #region private Helpers
 
         private string AddImagesToDirectory(IFormFile? images)

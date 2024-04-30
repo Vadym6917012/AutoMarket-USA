@@ -51,7 +51,7 @@
                 <h6 class="mb-0">Email</h6>
               </div>
               <div class="col-sm-9 text-secondary">
-                <input formControlName="userName" type="text" placeholder="Username" class="form-control shadow-none"
+                <input formControlName="userName" type="text" placeholder="Username" class="form-control shadow-none "
                   [class.is-invalid]="submitted && memberForm.get('userName')?.errors">
                 <span class="text-danger" *ngIf="submitted && memberForm.get('userName')?.hasError('required')">
                   Email обов'язково

@@ -16,7 +16,7 @@ import { PaginationComponent } from './pagination/pagination.component';
     CarAddComponent,
     CarDetailsComponent,
     CarUpdateComponent,
-    PaginationComponent
+    PaginationComponent,
   ],
   imports: [
     CommonModule,

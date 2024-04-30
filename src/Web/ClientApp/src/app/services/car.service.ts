@@ -111,4 +111,8 @@ export class CarService {
 
     return this.http.get<Car[]>(`${environment.apiUrl}/api/car/car-filter`, {params});
   }
+
+  checkVin(vin: string): Observable<any> {
+    return this.http.get<any>(`${environment.apiUrl}/api/car/check-vin/${vin}`);
+  }
 }

@@ -26,3 +26,11 @@
     color: #ff8c00;
     text-decoration: underline;
 }
+
+.login-input:active {
+	border-color: #ff8500;
+}
+
+.login-input:focus {
+	border-color: #ff8500;
+}

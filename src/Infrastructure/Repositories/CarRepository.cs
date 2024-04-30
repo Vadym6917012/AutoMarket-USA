@@ -4,6 +4,8 @@ using Domain.Entities;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using Newtonsoft.Json;
+using Microsoft.Extensions.Configuration;
 
 namespace Infrastructure.Repositories
 {
@@ -11,11 +13,13 @@ namespace Infrastructure.Repositories
     {
         private readonly DataContext _ctx;
         private readonly IImagesRepository _imagesRepository;
+        private readonly IConfiguration _config;
 
-        public CarRepository(DataContext ctx, IImagesRepository imagesRepository)
+        public CarRepository(DataContext ctx, IImagesRepository imagesRepository, IConfiguration config)
         {
             _ctx = ctx ?? throw new ArgumentNullException(nameof(_ctx));
             _imagesRepository = imagesRepository ?? throw new ArgumentNullException(nameof(_imagesRepository));
+            _config = config;
         }
         public async Task<Car> AddAsync(Car entity)
         {
@@ -96,30 +100,51 @@ namespace Infrastructure.Repositories
             return _ctx.Set<Car>().Find(id);
         }
 
-        public async Task<string> CheckVin(string vin)
+        public async Task<bool> CheckVin(string vin)
         {
-            try
+            using (var client = new HttpClient())
             {
-                var apiUrl = $"https://api.api-ninjas.com/v1/vinlookup?vin={vin}";
-
-                using (var client = new HttpClient())
+                try
                 {
-                    using (HttpResponseMessage response = await client.GetAsync(apiUrl))
+                    var request = new HttpRequestMessage()
                     {
-                        response.EnsureSuccessStatusCode();
-                        string responseBody = await response.Content.ReadAsStringAsync();
+                        RequestUri = new Uri(@"https://api.api-ninjas.com/v1/vinlookup?vin=" + vin),
+                        Method = HttpMethod.Get,
+                    };
 
-                        return responseBody;
+                    request.Headers.Add("X-Api-Key", _config["VinLookup:ApiKey"]);
+
+                    var response = await client.SendAsync(request);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var responseContent = await response.Content.ReadAsStringAsync();
+
+                        var vinLookupResponse = JsonConvert.DeserializeObject<VinLookupResponse>(responseContent);
+
+                        var car = await _ctx.Set<Car>().FirstOrDefaultAsync(c => c.VIN == vinLookupResponse.Vin);
+
+                        if (car == null)
+                            return false;
+
+                        bool matchesAllFields = car.Model?.Make?.Name == vinLookupResponse.Manufacturer &&
+                            car.Year.ToString() == vinLookupResponse.Years.FirstOrDefault();
+
+                        return matchesAllFields;
+                    }
+                    else
+                    {
+                        return false;
                     }
                 }
-            }
-            catch (HttpRequestException ex)
-            {
-                return ex.Message;
-            }
-            catch (Exception ex)
-            {
-                return ex.Message;
+                catch (HttpRequestException e)
+                {
+                    throw;
+                }
+                catch (Exception e)
+                {
+                    throw;
+                }
             }
         }
 

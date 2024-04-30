@@ -1,8 +1,10 @@
 <section class="searchwrap section">
   <div class="container">
-    <h3>Пошук б/у <span class="text-orange">автомобілів</span> в США</h3>
-    <p>Шукайте серед понад 9000 активних оголошень та розміщуйте безкоштовні необмежені оголошення!</p>
-    <div class="car-search-form-sec">
+    <div class="main-title-text aos-animate" data-aos="fade-down">
+      <h3>Пошук б/у <span class="text-orange">автомобілів</span> в США</h3>
+      <p>Шукайте серед понад 9000 активних оголошень та розміщуйте безкоштовні необмежені оголошення!</p>
+    </div>
+    <div class="car-search-form-sec aos-animate" data-aos="fade-down">
       <div class="container">
         <div class="row">
           <div class="col-12">
@@ -48,10 +50,10 @@
 
 <section class="fetured-cars section whitebg">
   <div class="container">
-    <div class="top-title">
+    <div class="top-title aos-animate" data-aos="fade-down">
       <h3>Недавно створені <span class="text-orange">оголошення</span></h3>
     </div>
-    <div class="carousel_cards">
+    <div class="carousel_cards aos-animate" data-aos="fade-down">
       <ng-container *ngIf="cars.length < 4">
         <p class="text-center">Ще немає оголошень</p>
       </ng-container>
@@ -89,10 +91,10 @@
 
 <section class="browse-by-makes section">
   <div class="container">
-    <div class="top-title">
+    <div class="top-title aos-init aos-animate" data-aos="fade-down">
       <h3>Пошук автомобілів по <span class="text-orange">маркам</span></h3>
     </div>
-    <div class="make-wrap">
+    <div class="make-wrap aos-init aos-animate" data-aos="fade-down">
       <ul class="row make-list">
         <ng-container *ngFor="let make of makes">
           <li class="col-md-2 col-sm-3 col-xs-6">
@@ -109,15 +111,15 @@
 
 <section class="about-counter-sec section whitebg">
   <div class="container">
-    <div class="top-title">
+    <div class="top-title aos-init aos-animate" data-aos="fade-down">
       <h3>Про нас</h3>
     </div>
   </div>
-  <div class="row d-flex">
-    <div class="col-sm-6 col-md-6 col-lg-6">
+  <div class="row d-flex " >
+    <div class="col-sm-6 col-md-6 col-lg-6 aos-init aos-animate" data-aos="fade-down">
       <div class="about-img"></div>
     </div>
-    <div class="col-sm-6 col-md-6 col-lg-6">
+    <div class="col-sm-6 col-md-6 col-lg-6 aos-init aos-animate" data-aos="fade-down">
       <div class="about-info">
         <div class="title">
           <span class="text-dark-grey">Провідний у світі онлайн сервіс для продажу автомобілів з США</span>

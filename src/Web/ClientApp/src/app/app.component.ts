@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { SharedService } from './shared/shared.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
+import * as AOS from 'aos';
 
 @Component({
   selector: 'app-root',
@@ -28,7 +29,20 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.refreshUser();
-    
+    document.onreadystatechange = function () {
+      if (document.readyState == "complete") {
+        AOS.init({
+          initClassName: 'aos-init',
+          animatedClassName: 'aos-animate',
+          duration: 1200,
+          easing: 'ease',
+          delay: 0,
+          mirror: false,
+          useClassNames: true,
+        });
+        AOS.refresh();
+      }
+    };
   }
 
   private refreshUser() {

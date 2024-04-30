@@ -26,3 +26,11 @@
     color: #ff8c00;
     text-decoration: underline;
 }
+
+.register-input:active {
+	border-color: #ff8500;
+}
+
+.register-input:focus {
+	border-color: #ff8500;
+}

@@ -15,6 +15,8 @@ export interface Car {
     mileage: number;
     description: string;
     userEmail: string;
+    firstName: string;
+    lastName: string;
     userPhoneNumber: string;
     imagesPath: string[];
     isAdvertisementApproved: boolean;
