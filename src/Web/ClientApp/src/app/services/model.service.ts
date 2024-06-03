@@ -11,8 +11,18 @@ export class ModelService {
 
   constructor(private http: HttpClient) { }
 
+  getModel(id: number) :Observable<Model>{
+    return this.http.get<Model>(`${environment.apiUrl}/api/model/get-model/${id}`);
+  }
+
   getModels (): Observable<Model[]> {
     return this.http.get<Model[]>(`${environment.apiUrl}/api/model/get-models`);
+  }
+  
+  addModel(model: Model) :Observable<Model>{    
+    model.id = 0;
+
+    return this.http.post<Model>(`${environment.apiUrl}/api/model/create-model`, model);
   }
 
   getModelsByMake(makeId: number): Observable<Model[]> {
@@ -22,5 +32,4 @@ export class ModelService {
   deleteModel (id: number) {
     return this.http.delete<Model>(`${environment.apiUrl}/api/model/delete-model/${id}`, {});
   }
-
 }

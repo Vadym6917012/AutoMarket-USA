@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.Cars.QueryHandler
 {
-    public class CheckCarByVinHandler : IRequestHandler<CheckCarByVin, bool>
+    public class CheckCarByVinHandler : IRequestHandler<CheckCarByVin, VinLookupResponse>
     {
         private readonly ICarRepository _carRepository;
 
@@ -13,7 +13,7 @@ namespace Application.Cars.QueryHandler
             _carRepository = carRepository;
         }
 
-        public async Task<bool> Handle(CheckCarByVin request, CancellationToken cancellationToken)
+        public async Task<VinLookupResponse> Handle(CheckCarByVin request, CancellationToken cancellationToken)
         {
             return await _carRepository.CheckVin(request.VIN);
         }

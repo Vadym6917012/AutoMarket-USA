@@ -105,13 +105,14 @@
     margin-bottom: 30px;
     box-shadow: 3px 3px 11px rgba(0, 0, 0, 0.07);
     border: 1px solid #eee;
+    height: 240px;
+    overflow: hidden;
 }
 
 .car-thumbnail-area {
     position: relative;
     overflow: hidden;
     width: 50%;
-    max-height: 220px;
 }
 
 .item-thumb {
@@ -125,7 +126,6 @@
 
 .item-thumb img {
     object-fit: cover;
-    height: 220px;
 }
 
 .car-model-layout-list:hover .item-thumb>img {
@@ -407,6 +407,28 @@
     padding: 5px;
 }
 
-@media only screen and (max-width: 1200px) {
+@media (min-width: 320px) and (max-width: 480px) {
+	.car-model-layout-list {
+        flex-direction: row;
+        flex-wrap: wrap;
+        height: auto;
+    }
+    .car-thumbnail-area {
+        width: 100%;
+    }
+    .car-description-area {
+        width: 100%;
+    }
+    .filter-by-grid-list {
+        visibility: hidden;
+    }
+    .sub-header-img {
+        height: 200px;
+    }
+}
 
+@media screen and (max-device-width: 1400px) {
+    .item-thumb {
+        align-items: inherit;
+    }
 }

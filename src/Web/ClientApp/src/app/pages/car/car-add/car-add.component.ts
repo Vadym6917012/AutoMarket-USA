@@ -65,18 +65,21 @@ export class CarAddComponent implements OnInit {
     private formBuilder: FormBuilder,
     private sharedService: SharedService,
     private router: Router,
-    private accountService: AccountService) { }
+    private accountService: AccountService
+    ) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.initializeForm();
+    await Promise.all([
+      this.getCountries(),
+      this.getBodyTypes(),
+      this.getGearBoxes(),
+      this.getFuelTypes(),
+      this.getDriveTrain(),
+      this.getTechnicalCondition(),
+    ])
     this.getMakes();
-    this.getCountries();
-    this.getBodyTypes();
-    this.getGearBoxes();
-    this.getFuelTypes();
-    this.getDriveTrain();
-    this.getTechnicalCondition();
-
+    
     this.addCarForm.get('countryId')?.valueChanges.subscribe((countryId) => {
       if (countryId) {
         this.filteredModels = [];
@@ -178,7 +181,6 @@ export class CarAddComponent implements OnInit {
     };
   }
 
-
   addCar() {
     this.submitted = true;
     this.errorMessages = [];
@@ -192,10 +194,8 @@ export class CarAddComponent implements OnInit {
           if (response.value.id) {
             this.router.navigateByUrl(`/car/car-details/${response.value.id}`)
           }
-          console.log(response);
         },
         error: error => {
-          console.log('Error object:', error);
           if (error.error.error) {
             this.errorMessages = error.error.error;
           } else {

@@ -10,6 +10,7 @@ import { ModelsComponent } from './models/models.component';
 import { ModificationsComponent } from './modifications/modifications.component';
 import { UsersComponent } from './users/users.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AddEditModelComponent } from './add-edit-model/add-edit-model.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,8 @@ const routes: Routes = [
       { path: '', component: DashboardComponent},
       { path: 'add-edit-member', component: AddEditMemberComponent},
       { path: 'add-edit-member/:id', component: AddEditMemberComponent},
+      { path: 'add-edit-model', component: AddEditModelComponent},
+      { path: 'add-edit-model/:id', component: AddEditModelComponent},
       { path: 'add-edit-generation', component: AddEditGenerationComponent},
       { path: 'add-edit-generation/:id', component: AddEditGenerationComponent},
       { path: 'generations', component: GenerationsComponent},

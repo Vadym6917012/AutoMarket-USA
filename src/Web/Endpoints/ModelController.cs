@@ -1,4 +1,5 @@
-﻿using Application.DTOs.Model;
+﻿using Application.DTOs.Generation;
+using Application.DTOs.Model;
 using Application.Models.Commands;
 using Application.Models.Queries;
 using AutoMapper;
@@ -39,18 +40,18 @@ namespace Web.Endpoints
         }
 
         [HttpPost("create-model")]
-        public async Task<IActionResult> CreateModel([FromBody] ModelDTO modelDTO)
+        public async Task<IResult> CreateModel([FromBody] ModelDTO modelDTO)
         {
             if (modelDTO == null)
             {
-                return BadRequest("Invalid model data");
+                return Results.BadRequest("Invalid model data");
             }
 
             var model = _mapper.Map<CreateModel>(modelDTO);
             var addedModel = await _mediator.Send(model);
 
             // Return the created product
-            return CreatedAtAction("GetById", new { id = addedModel.Id }, _mapper.Map<ModelDTO>(addedModel));
+            return Results.Ok(new JsonResult(new { title = "Модель додано успішно", message = $"Модель {modelDTO.Name}  додано успішно", id = modelDTO.Id }));
         }
 
         [HttpPut("update-model/{id}")]

@@ -12,6 +12,7 @@ import { ModelsComponent } from './models/models.component';
 import { ModificationsComponent } from './modifications/modifications.component';
 import { UsersComponent } from './users/users.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AddEditModelComponent } from './add-edit-model/add-edit-model.component';
 
 @NgModule({
     declarations: [
@@ -25,6 +26,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
         ModificationsComponent,
         UsersComponent,
         DashboardComponent,
+        AddEditModelComponent,
     ],
     imports: [
         CommonModule,

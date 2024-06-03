@@ -1,4 +1,5 @@
 <div class="car-details-page section content-area-6">
+    <div id="car-details-page"></div>
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-12 col-xs-12">
@@ -66,9 +67,6 @@
                             </li>
                             <li>
                                 <span>Тип приводу:</span>{{car?.driveTrainName}}
-                            </li>
-                            <li *ngIf="vinCheckMessage">
-                                <span>Результат перевірки:</span>{{vinCheckMessage}}
                             </li>
                             <li>
                                 <button class="btn check-vin-btn" *ngIf="car" (click)="checkVin(car.vin)">Перевірити VIN</button>

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.Cars.Queries
 {
-    public class CheckCarByVin : IRequest<bool>
+    public class CheckCarByVin : IRequest<VinLookupResponse>
     {
         public string VIN {  get; set; }
     }

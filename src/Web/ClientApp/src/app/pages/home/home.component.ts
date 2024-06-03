@@ -8,6 +8,7 @@ import { Model } from 'src/app/models/model/model';
 import { Make } from 'src/app/models/make/make';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -58,7 +59,10 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.initializeForm();
 
-    this.homeFormFilter.get('makeId')?.valueChanges.subscribe((makeId) => {
+    this.homeFormFilter.get('makeId')?.valueChanges
+    .pipe(debounceTime(500))
+    .pipe(distinctUntilChanged())
+    .subscribe((makeId) => {
       this.modelService.getModelsByMake(makeId).subscribe(data => {
         this.models = data;
     })
@@ -101,8 +105,6 @@ export class HomeComponent implements OnInit {
       this.carService.homeFilter(filterValue).subscribe((data) => {
         const cars = data;
         this.router.navigate(['car/car-list'], { state: { cars } });
-        console.log('Home component: ')
-        console.log(cars);
       });
     }
 

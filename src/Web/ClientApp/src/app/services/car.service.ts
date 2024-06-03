@@ -6,6 +6,7 @@ import { Car } from '../models/car/car';
 import { CarAdd } from '../models/car/car-add';
 import { CarHomeFilter } from '../models/car/car-home-filter';
 import { CarFilter } from '../models/car/car-filter';
+import { VinCheckResponce } from '../models/car/VinCheckResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -112,7 +113,7 @@ export class CarService {
     return this.http.get<Car[]>(`${environment.apiUrl}/api/car/car-filter`, {params});
   }
 
-  checkVin(vin: string): Observable<any> {
-    return this.http.get<any>(`${environment.apiUrl}/api/car/check-vin/${vin}`);
+  checkVin(vin: string): Observable<VinCheckResponce> {
+    return this.http.get<VinCheckResponce>(`${environment.apiUrl}/api/car/check-vin/${vin}`);
   }
 }

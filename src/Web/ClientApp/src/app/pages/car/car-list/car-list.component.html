@@ -1,5 +1,5 @@
 <div class="sub-header">
-  <img src="../../../../assets/images/subbanner.jpg" alt="sub-banner">
+  <img class="sub-header-img" src="../../../../assets/images/subbanner.jpg" alt="sub-banner">
   <div class="sub-header-wrapper">
     <div class="container">
       <div class="row">
@@ -13,7 +13,7 @@
   </div>
 </div>
 
-<section class="section car-list">
+<section id="car-list" class="section car-list">
   <div class="container">
     <div class="row">
       <div class="col-12">
@@ -105,7 +105,7 @@
                     </div>
                   </div>
                   <div class="car-description-footer">
-                    <a routerLink="/car/car-details/{{car.id}}" class="view btn-car"><b>Детальніше</b></a>
+                    <a routerLink="/car/car-details/{{car.id}}" ariaCurrentWhenActive="page" class="view btn-car"><b>Детальніше</b></a>
                   </div>
                 </div>
               </div>
@@ -254,7 +254,7 @@
       </div>
       <div class="col-12">
         <app-pagination 
-        [totalItems]="carInfo.length" 
+        [totalItems]="carInfo?.length || 0" 
         [itemsPerPage]="itemsPerPage"
         [currentPage]="currentPage"
         (onClick)="changePage($event)"

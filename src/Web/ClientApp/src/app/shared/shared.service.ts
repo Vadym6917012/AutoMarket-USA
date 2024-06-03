@@ -2,6 +2,8 @@ import { NotificationComponent } from './components/modals/notification/notifica
 import { Injectable } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
+import { VinCheckNotificationComponent } from './components/modals/vin-check-notification/vin-check-notification.component';
+import { VinCheckResponce } from '../models/car/VinCheckResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +32,18 @@ export class SharedService {
     };
 
     this.bsModalRef = this.modalService.show(NotificationComponent, initialState);
+  }
+
+  showVinNotification(response: VinCheckResponce) {
+    const initialState: ModalOptions = {
+      initialState: {
+        isSuccess: response.isFound,
+        title: response.vin,
+        message: response.message,
+        data: response
+      }
+    };
+
+    this.bsModalRef = this.modalService.show(VinCheckNotificationComponent, initialState);
   }
 }

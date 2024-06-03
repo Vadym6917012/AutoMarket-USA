@@ -1,0 +1,56 @@
+<div class="d-flex justify-content-center" *ngIf="formInitialized">
+    <div class="col-12 col-lg-5">
+        <main class="form-signin">
+            <form [formGroup]="modelForm" (ngSubmit)="submit()" autocomplete="off">
+                <div class="text-center mb-4">
+                    <h3 class="mb-3 font-weight-normal">
+                        <span class="text-warning" *ngIf="addNew">Додати</span>
+                        <span class="text-warning" *ngIf="!addNew">Редагувати</span>
+                        модель
+                    </h3>
+                </div>
+
+                <div class="form-floating mb-3 col-md-12">
+                    <select formControlName="makeId" class="form-select shadow-none">
+                        <option selected disabled value="">Марка</option>
+                        <option *ngFor="let make of makes" [value]="make.id">{{make.name}}</option>
+                    </select>
+                    <span class="text-danger" *ngIf="submitted && modelForm.get('makeId')?.hasError('required')">
+                        Марка обов'язкова
+                    </span>
+                </div>
+
+                <div class="form-floating col-md-12 mb-3">
+                    <input formControlName="name" type="text" placeholder="Name" class="form-control"
+                        [class.is-invalid]="submitted && modelForm.get('name')?.errors">
+                    <label for="name">Назва</label>
+                    <span class="text-danger" *ngIf="submitted && modelForm.get('name')?.hasError('required')">
+                        Назва обов'язкове
+                    </span>
+                </div>
+
+                <div class="form-floatin" *ngIf="errorMessages.length > 0">
+                    <app-validation-messages [errorMessages]="errorMessages"></app-validation-messages>
+                </div>
+
+                <div class="row my-4">
+                    <div class="col-6">
+                        <div class="d-grid">
+                            <button class="btn btn-block btn-info" type="submit">
+                                {{addNew ? 'Додати' : 'Оновити'}} Модель
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-grid">
+                            <button class="btn btn-block btn-danger" type="button" routerLink="/admin">
+                                Назад
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </main>
+    </div>
+</div>

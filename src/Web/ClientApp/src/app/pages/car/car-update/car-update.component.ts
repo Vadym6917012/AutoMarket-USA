@@ -74,7 +74,6 @@ export class CarUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
       this.carId = params['id'];
-      console.log('Car ID:', this.carId);
     });
 
     this.carService.getCarForUpdate(this.carId).subscribe((carData: any) => {
@@ -98,7 +97,6 @@ export class CarUpdateComponent implements OnInit {
   }
 
   initializeFormWithData() {
-    console.log('Before setting form values:', this.updateCarForm.value);
 
     this.updateCarForm = this.formBuilder.group({
       id: [null],
@@ -117,8 +115,6 @@ export class CarUpdateComponent implements OnInit {
       description: [null, [Validators.required]],
       userId: [null]
     });
-
-    console.log('After setting form values:', this.updateCarForm.value);
   }
 
   yearWithinGenerationRangeValidator(): ValidatorFn {
@@ -146,7 +142,6 @@ export class CarUpdateComponent implements OnInit {
     this.submitted = true;
     this.errorMessages = [];
 
-    console.log(this.updateCarForm.value);
     if (this.updateCarForm.valid) {
       const carData = this.updateCarForm.value;
 
@@ -156,10 +151,8 @@ export class CarUpdateComponent implements OnInit {
           if (response.value.id) {
             this.router.navigateByUrl(`/car/car-details/${response.value.id}`)
           }
-          console.log(response);
         },
         error: error => {
-          console.log('Error object:', error);
           if (error.error.error) {
             this.errorMessages = error.error.error;
           } else {

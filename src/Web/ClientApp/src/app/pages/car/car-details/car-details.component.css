@@ -106,12 +106,14 @@
 }
 
 .check-vin-btn {
-    display: flex;
+    display: inline-block;
     background: #ff8500;
     color: #fff;
     padding: 10px 25px;
     border-radius: 0;
     margin-bottom: 15px;
+    width: 100%;
+    text-align: center;
 }
 
 .check-vin-btn:hover {
@@ -190,5 +192,11 @@
 	text-decoration: none;
 	background-color: #1c1d1f;
 	color: #fff;
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+	.home-card {
+		width: 100%;
+	}
 }
 

@@ -30,6 +30,7 @@ namespace Application.Mapper
             CreateMap<UpdateCar, CarCreateDTO>().ReverseMap();
             CreateMap<CarAdvanceFilter, CarFilter>().ReverseMap();
             CreateMap<CarAdvanceFilter, CarHomeFilter>().ReverseMap();
+            CreateMap<VinLookupResponse, VinCheckResponse>().ReverseMap();
         }
     }
 }

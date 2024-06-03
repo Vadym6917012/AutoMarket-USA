@@ -1,3 +1,4 @@
+import { ViewportScroller } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { BodyType } from 'src/app/models/body-type/body-type';
@@ -58,15 +59,13 @@ export class CarListComponent implements OnInit {
     private fuelTypeService: FuelTypeService,
     private driveTrainService: DriveTrainService,
     private technicalConditionService: TechnicalConditionService,
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,
+    private viewportScroller: ViewportScroller) {
       
     const navigation = window.history.state;
 
     if (navigation && navigation.cars) {
       this.carInfo = navigation.cars;
-      console.log('List component: ')
-      console.log(this.carInfo)
-      console.log(navigation.cars);
     } else {
       this.showCars();
     }
@@ -158,6 +157,7 @@ export class CarListComponent implements OnInit {
   showCars() {
     this.carService.getCars().subscribe((data) => {
       this.carInfo = data.filter(car => car.isAdvertisementApproved);
+      console.log(this.carInfo);
     });
   }
 
@@ -221,11 +221,12 @@ export class CarListComponent implements OnInit {
   get paginatedData(){
     const start = (this.currentPage - 1) * (this.itemsPerPage);
     const end = start + this.itemsPerPage;
-
-    return this.carInfo.slice(start, end);
+    
+    return (this.carInfo ?? []).slice(start, end);
   } 
 
   changePage(page: number){
     this.currentPage = page;
+    this.viewportScroller.scrollToAnchor('car-list');
   }
 }

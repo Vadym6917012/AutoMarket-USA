@@ -163,16 +163,11 @@ namespace Web.Endpoints
         [HttpGet("check-vin/{vin}")]
         public async Task<IResult> CheckVin(string vin)
         {
-            var isValid = await _mediator.Send(new CheckCarByVin { VIN = vin });
+            var checkedVin = await _mediator.Send(new CheckCarByVin { VIN = vin });
 
-            var response = new VinCheckResponse
-            {
-                IsValid = isValid,
-                Message = isValid ? "Перевірений VIN" : "Проблема з оголошенням, будьте обережні при купівлі цього автомобіля"
-            };
+            var checkedVinDTOs = _mapper.Map<VinCheckResponse>(checkedVin);
 
-            return TypedResults.Ok(response);
-            
+            return TypedResults.Ok(checkedVinDTOs);
         }
 
         #region private Helpers

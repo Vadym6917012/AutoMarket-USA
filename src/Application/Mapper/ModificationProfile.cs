@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.Modification;
+using Application.Modifications.Commands;
 using AutoMapper;
 
 namespace Application.Mapper
@@ -8,6 +9,7 @@ namespace Application.Mapper
         public ModificationProfile()
         {
             CreateMap<Modification, ModificationDTO>().ReverseMap();
+            CreateMap<CreateModification, ModificationDTO>().ReverseMap();
         }
     }
 }

@@ -20,15 +20,12 @@ export class AppComponent implements OnInit {
         filter((event) => event instanceof NavigationEnd)
       ).subscribe(() => {
         const currentPath = this.router.routerState.snapshot.url;
-        console.log('Current Path:', currentPath);
   
         this.isAdminComponent = currentPath.includes('/admin');
-        console.log('isAdminComponent:', this.isAdminComponent);
       });
     }
 
   ngOnInit(): void {
-    this.refreshUser();
     document.onreadystatechange = function () {
       if (document.readyState == "complete") {
         AOS.init({
@@ -39,10 +36,12 @@ export class AppComponent implements OnInit {
           delay: 0,
           mirror: false,
           useClassNames: true,
+          disable: 'mobile',
         });
         AOS.refresh();
       }
     };
+    this.refreshUser();
   }
 
   private refreshUser() {

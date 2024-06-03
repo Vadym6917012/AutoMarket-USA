@@ -100,8 +100,10 @@ namespace Infrastructure.Repositories
             return _ctx.Set<Car>().Find(id);
         }
 
-        public async Task<bool> CheckVin(string vin)
+        public async Task<VinLookupResponse> CheckVin(string vin)
         {
+            var vinLookupResponse = new VinLookupResponse();
+
             using (var client = new HttpClient())
             {
                 try
@@ -119,31 +121,60 @@ namespace Infrastructure.Repositories
                     if (response.IsSuccessStatusCode)
                     {
                         var responseContent = await response.Content.ReadAsStringAsync();
+                        vinLookupResponse = JsonConvert.DeserializeObject<VinLookupResponse>(responseContent);
 
-                        var vinLookupResponse = JsonConvert.DeserializeObject<VinLookupResponse>(responseContent);
+                        var car = await _ctx.Set<Car>()
+                            .Include(x => x.Model)
+                            .ThenInclude(x => x.Make)
+                            .ThenInclude(x => x.ProducingCountry)
+                            .FirstOrDefaultAsync(c => c.VIN == vinLookupResponse.Vin);
 
-                        var car = await _ctx.Set<Car>().FirstOrDefaultAsync(c => c.VIN == vinLookupResponse.Vin);
+                        if (car != null)
+                        {
+                            bool matchesAllFields = car.Model.Make.ProducingCountry.Name == vinLookupResponse.Country || car.Year == vinLookupResponse.Year;
 
-                        if (car == null)
-                            return false;
+                            vinLookupResponse.IsFound = true;
 
-                        bool matchesAllFields = car.Model?.Make?.Name == vinLookupResponse.Manufacturer &&
-                            car.Year.ToString() == vinLookupResponse.Years.FirstOrDefault();
+                            if (matchesAllFields)
+                            {
+                                vinLookupResponse.Model = car.Model.Name;
+                                vinLookupResponse.Manufacturer = car.Model.Make.Name;
+                                vinLookupResponse.Year = car.Year;
+                                vinLookupResponse.Country = car.Model.Make.ProducingCountry.Name;
 
-                        return matchesAllFields;
+                                vinLookupResponse.Message = "VIN-код успішно перевірено та підтверджено.";
+                            }
+                            else
+                            {
+                                vinLookupResponse.Message = "Перевірка VIN-коду виявила розбіжності з даним оголошенням. Будьте уважні при купівлі цього автомобіля.";
+                            }
+                        } 
+                        else
+                        {
+                            vinLookupResponse.IsFound = false;
+                            vinLookupResponse.Message = "У базі даних за таким VIN не знайдено відповідного автомобіля";
+                        }
+
                     }
                     else
                     {
-                        return false;
+                        vinLookupResponse.IsFound = false;
+                        vinLookupResponse.Message = "Помилка API-запиту";
                     }
+
+                    return vinLookupResponse;
                 }
                 catch (HttpRequestException e)
                 {
-                    throw;
+                    vinLookupResponse.IsFound = false;
+                    vinLookupResponse.Message = "Помилка API-запиту: " + e.Message;
+                    return vinLookupResponse;
                 }
                 catch (Exception e)
                 {
-                    throw;
+                    vinLookupResponse.IsFound = false;
+                    vinLookupResponse.Message = "Загальна помилка: " + e.Message;
+                    return vinLookupResponse;
                 }
             }
         }
