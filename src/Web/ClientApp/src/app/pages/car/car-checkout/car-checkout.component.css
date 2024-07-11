@@ -1,0 +1,75 @@
+.sidebar {
+    margin: 0 0 30px 0;
+    background: #fff;
+    box-shadow: 3px 3px 11px rgba(0, 0, 0, 0.06);
+    border: 1px solid #eee;
+    margin-bottom: 30px;
+}
+
+.title-head {
+    padding: 20px 30px 0px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #eee;
+    border-top: 1px solid #eee;
+}
+
+.content {
+    padding: 0 30px 1rem 30px;
+}
+
+.payment-box {
+    padding: 1rem 30px 1rem 30px;
+}
+
+.form-check {
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.form-check-input:checked {
+    background-color: #ff8500;
+    border-color: #ff8500;
+    transition: 0.5s;
+}
+
+.active-payment-check {
+    color: #ff8500;
+}
+
+.required {
+    color: #ff0000;
+}
+
+.subtext {
+    color: #686868;
+}
+
+.payment-check {
+    cursor: pointer;
+    display: block;
+    font-weight: 600;
+    position: relative;
+    margin-bottom: 8px;
+    font-size: 15px;
+}
+
+.payment-check:checked {
+    color: #fb621b;
+}
+
+.payment-btn {
+    display: inline-block;
+    background: #ff8500;
+    color: #fff;
+    padding: 10px 25px;
+    border-radius: 0;
+    margin-bottom: 15px;
+    width: 100%;
+    text-align: center;
+}
+
+.payment-btn:hover {
+    background: #191919;
+    border-color: #191919;
+    color: #fff;
+}

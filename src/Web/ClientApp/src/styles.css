@@ -154,3 +154,7 @@ td {
 .form-floating > label {
     padding: 1rem 1.5rem;
 }
+
+.form-control:active, .form-control:focus, .form-select:active, .form-select:focus {
+    border-color: #ff8500;
+}

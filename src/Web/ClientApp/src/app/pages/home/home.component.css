@@ -127,6 +127,8 @@
 
 .home-card {
 	width: auto;
+	display: flex;
+	flex-shrink: 0;
 	position: relative;
 	border-radius: 8px;
 	overflow: hidden;

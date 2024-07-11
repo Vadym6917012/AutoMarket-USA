@@ -71,6 +71,9 @@
                             <li>
                                 <button class="btn check-vin-btn" *ngIf="car" (click)="checkVin(car.vin)">Перевірити VIN</button>
                             </li>
+                            <li>
+                                <button routerLink="/car/car-checkout/{{car?.id}}" class="btn check-vin-btn me-5">Придбати<i class="bi bi-cart-plus"></i></button>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -135,7 +138,7 @@
                                 <span class="text-dark-white"><i
                                     class="bi bi-fuel-pump text-orange me-2"></i>{{relatedCar.driveTrainName}}</span>
                               </div>
-                              <a  class="card-button">Детальніше</a>
+                              <a class="card-button">Детальніше</a>
                             </div>
                           </ng-template>
                         </ng-container>

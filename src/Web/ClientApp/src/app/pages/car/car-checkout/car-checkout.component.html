@@ -1,0 +1,168 @@
+<div class="car-checkout-page section content-area-6">
+    <div class="container">
+        <form [formGroup]="checkoutForm" (ngSubmit)="buy()">
+            <div class="row">
+                <div class="col-lg-6 col-md-12">
+                    <div class="billing-details sidebar">
+                        <div class="billing-details-title title-head">
+                            <h5 class="title">Деталі рахунку</h5>
+                        </div>
+                        <div class="billing-details-content content">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select checkot-select shadow-none" name=""
+                                            id="selectCountry">
+                                            <option selected disabled value="" tabindex="0">Вибрати країну</option>
+                                            <option value="5">United Arab Emirates</option>
+                                            <option value="1">China</option>
+                                            <option value="2">United Kingdom</option>
+                                            <option value="0">Germany</option>
+                                            <option value="3">France</option>
+                                            <option value="4">Japan</option>
+                                        </select>
+                                        <label for="selectCountry">Країна <span class="required">*</span></label>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control shadow-none">
+                                        <label>Ім'я <span class="required">*</span></label>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control shadow-none">
+                                        <label>Прізвище <span class="required">*</span></label>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control shadow-none">
+                                        <label>По батькові <span class="required">*</span></label>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control shadow-none">
+                                        <label>Поштовий індекс / Zip <span class="required">*</span></label>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12 col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control shadow-none">
+                                        <label>Місто <span class="required">*</span></label>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12 col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control shadow-none">
+                                        <label>Адреса <span class="required">*</span></label>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="email" class="form-control shadow-none">
+                                        <label>Email пошта <span class="required">*</span></label>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control shadow-none">
+                                        <label>Телефон <span class="required">*</span></label>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="form-floating mb-3">
+                                        <textarea name="notes" id="notes" cols="30" rows="5" placeholder="Order Notes"
+                                            class="form-control shadow-none" style="height: 17px;"></textarea>
+                                        <label for="notes">Коментарі</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <div class="order-details">
+                        <div class="order-table table-responsive sidebar">
+                            <div class="order-details-title title-head">
+                                <h5 class="title">Ваше замовлення</h5>
+                            </div>
+                            <div class="order-details-content content">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Назва оголошення</th>
+                                            <th scope="col">Ціна</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="product-name">
+                                                <p>{{car?.makeName}} {{car?.modelName}}</p>
+                                            </td>
+                                            <td class="product-price">
+                                                <span class="subtotal-amount">{{car?.price}} $</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="payment-box sidebar">
+                            <div class="payment-method">
+                                <div class="form-check">
+                                    <input class="form-check-input shadow-none" type="radio" id="direct-bank-transfer"
+                                    (change)="updateRadioGroup('direct-bank-transfer')" value="direct-bank-transfer"
+                                        name="radio-group" checked="true">
+                                    <label class="form-check-label shadow-none payment-check"
+                                    [class.active-payment-check]="radioGroup === 'direct-bank-transfer'"
+                                        for="direct-bank-transfer">Прямий банківський переказ</label>
+
+                                    <span class="subtext">
+                                        Здійсніть оплату безпосередньо на наш банківський рахунок.
+                                        Будь ласка, використовуйте свій Ідентифікатор замовлення, як платіжне
+                                        досвідчення.
+                                        Ваше замовлення не буде відправлено, доки кошти не будуть зараховані на наш
+                                        рахунок.
+                                    </span>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input shadow-none" type="radio" id="paypal"
+                                    (change)="updateRadioGroup('paypal')" value="paypal"
+                                        name="radio-group">
+                                    <label class="form-check-label shadow-none payment-check"
+                                    [class.active-payment-check]="radioGroup === 'paypal'"
+                                        for="paypal">PayPal</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input shadow-none" type="radio" id="cash-on-delivery"
+                                        name="radio-group"
+                                        (change)="updateRadioGroup('cash-on-delivery')" value="cash-on-delivery">
+                                    <label class="form-check-label shadow-none payment-check"
+                                    [class.active-payment-check]="radioGroup === 'cash-on-delivery'"
+                                        for="cash-on-delivery">Післяплата</label>
+                                </div>
+                            </div>
+
+                            <button class="btn payment-btn">
+                                Замовлення підтверджую
+                                <i class="bx bx-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

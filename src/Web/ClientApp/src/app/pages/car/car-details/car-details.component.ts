@@ -41,8 +41,23 @@ export class CarDetailsComponent implements OnInit {
     dots: true,
     items: 4,
     autoplay: true,
+    margin: 10,
     navSpeed: 600,
-    responsiveRefreshRate: 200
+    responsiveRefreshRate: 200,
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 2
+      },
+      760: {
+        items: 3
+      },
+      1000: {
+        items: 4
+      }
+    },
   }
 
   constructor(private carService: CarService,
@@ -63,7 +78,6 @@ export class CarDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.getCarById();
     this.fetchRelatedCars();
-
   }
 
   getCarById() {

@@ -5,10 +5,12 @@ import { CarAddComponent } from './car-add/car-add.component';
 import { AuthorizationGuard } from 'src/app/guards/authorization.guard';
 import { CarDetailsComponent } from './car-details/car-details.component';
 import { CarUpdateComponent } from './car-update/car-update.component';
+import { CarCheckoutComponent } from './car-checkout/car-checkout.component';
 
 const routes: Routes = [
   { path: 'car-list', component: CarListComponent },
   { path: 'car-details/:id', component: CarDetailsComponent},
+  { path: 'car-checkout/:id', component: CarCheckoutComponent},
   {
     path: '',
     runGuardsAndResolvers: 'always',
